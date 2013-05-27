@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cocosw.framework</groupId>
+	<artifactId>framework</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>apklib</packaging>
+	<name>framework</name>
+
+	<properties>
+        <abs.version>4.3.1</abs.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<platform.version> 4.1.1.4</platform.version>
+		<android.plugin.version>3.5.3</android.plugin.version>
+        <accessory.version>0.1-SNAPSHOT</accessory.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>${platform.version}</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>android.support</groupId>
+            <artifactId>compatibility-v4</artifactId>
+            <version>13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cocosw.accessory</groupId>
+            <artifactId>utils</artifactId>
+            <version>${accessory.version}</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.cocosw.accessory</groupId>
+            <artifactId>views</artifactId>
+            <version>${accessory.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cocosw.accessory</groupId>
+            <artifactId>connectivity</artifactId>
+            <version>${accessory.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.actionbarsherlock</groupId>
+            <artifactId>actionbarsherlock</artifactId>
+            <version>${abs.version}</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.cocosw</groupId>
+            <artifactId>undobar</artifactId>
+            <version>0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>de.keyboardsurfer.android.widget</groupId>
+            <artifactId>crouton</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kevinsawicki</groupId>
+            <artifactId>wishlist</artifactId>
+            <version>0.9</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.viewpagerindicator</groupId>
+            <artifactId>library</artifactId>
+            <version>2.4.1</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.android-query</groupId>
+            <artifactId>android-query</artifactId>
+            <version>0.25.9</version>
+        </dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<version>${android.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<sdk>
+						<platform>16</platform>
+					</sdk>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="Theme.Bootstrap.Dark" parent="@style/Theme.Sherlock">
+        <item name="android:windowBackground">@color/pager_background</item>
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>        
+    </style>
+
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">
+        <item name="background">@drawable/actionbar_background</item>
+        <item name="android:background">@drawable/actionbar_background</item>
+    </style>
+
+    <style name="ThemeActivity" parent="@style/Theme.Sherlock">
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:windowBackground">@color/pager_background</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="android:windowContentOverlay">@drawable/colorstrip_shadow</item>
+        <item name="windowContentOverlay">@drawable/colorstrip_shadow</item>
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="spinnerItemStyle">@style/SpinnerItem</item>
+
+    </style>
+
+    <style name="WelcomeTheme" parent="ThemeActivity">
+        <item name="android:windowActionBar">false</item>
+        <!--<item name="android:background">@drawable/welcome</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+</resources>
