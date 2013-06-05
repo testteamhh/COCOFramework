@@ -55,6 +55,7 @@
             <groupId>com.cocosw</groupId>
             <artifactId>undobar</artifactId>
             <version>0.3</version>
+            <type>apklib</type>
         </dependency>
         <dependency>
             <groupId>de.keyboardsurfer.android.widget</groupId>
