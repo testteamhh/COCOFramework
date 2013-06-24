@@ -17,10 +17,9 @@
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:windowBackground">@color/pager_background</item>
         <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <!--<item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>-->
         <item name="android:windowContentOverlay">@drawable/colorstrip_shadow</item>
         <item name="windowContentOverlay">@drawable/colorstrip_shadow</item>
-        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="spinnerItemStyle">@style/SpinnerItem</item>
 
     </style>

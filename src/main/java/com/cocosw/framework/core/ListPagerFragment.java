@@ -102,7 +102,7 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
 
 	@Override
 	public int title() {
-		return R.string.app_name;
+		return R.string.homepage;
 	}
 
 	/**

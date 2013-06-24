@@ -17,18 +17,18 @@
         <item name="android:paddingRight">0dp</item>
     </style>
 
-    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
-        <!--<item name="android:background">@drawable/tab_indicator_ab_example</item>-->
-        <item name="android:textColor">@color/light_text</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:divider">@drawable/abs__list_divider_holo_dark</item>
-        <item name="android:dividerPadding">8dp</item>
-        <item name="android:showDividers">middle</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:fadingEdgeLength">8dp</item>
-    </style>
+    <!--<style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">-->
+        <!--&lt;!&ndash;<item name="android:background">@drawable/tab_indicator_ab_example</item>&ndash;&gt;-->
+        <!--<item name="android:textColor">@color/light_text</item>-->
+        <!--<item name="android:textSize">14sp</item>-->
+        <!--<item name="android:divider">@drawable/abs__list_divider_holo_dark</item>-->
+        <!--<item name="android:dividerPadding">8dp</item>-->
+        <!--<item name="android:showDividers">middle</item>-->
+        <!--<item name="android:paddingLeft">8dp</item>-->
+        <!--<item name="android:paddingRight">8dp</item>-->
+        <!--<item name="android:fadingEdge">horizontal</item>-->
+        <!--<item name="android:fadingEdgeLength">8dp</item>-->
+    <!--</style>-->
 
     <style name="SettingText">
         <item name="android:layout_width">wrap_content</item>
