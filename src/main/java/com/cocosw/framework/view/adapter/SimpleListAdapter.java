@@ -53,8 +53,7 @@ public abstract class SimpleListAdapter<T> extends BaseAdapter implements
 
 	/**
 	 * 默认会构造为arraylist以后可以换
-	 * 
-	 * @param dataList
+	 *
 	 */
 	public SimpleListAdapter(final Context context) {
 		this.mInflater = LayoutInflater.from(context);
@@ -225,8 +224,6 @@ public abstract class SimpleListAdapter<T> extends BaseAdapter implements
 	 * 
 	 * @param item
 	 *            Item to be verified whether it is in the adapter.
-	 * @return Returns <code>true</code> in case the {@link ListElement} is in
-	 *         the adapter, <code>false</code> otherwise.
 	 */
 	public boolean contains(final T item) {
 		return getDataList().contains(item);

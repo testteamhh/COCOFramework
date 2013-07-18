@@ -15,7 +15,7 @@ import com.cocosw.framework.R;
  * 
  * @author kaliao
  */
-public class SinglePaneActivity extends Base<Void> implements
+public class SinglePaneActivity<V> extends Base<V> implements
 		DialogResultListener {
 
 	/**

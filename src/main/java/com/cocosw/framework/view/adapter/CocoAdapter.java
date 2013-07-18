@@ -34,6 +34,8 @@ public interface CocoAdapter<T> {
      */
     public void append(T values);
 
+    void updateList(List<T> values);
+
     /**
      * 通知UI更新
      */
