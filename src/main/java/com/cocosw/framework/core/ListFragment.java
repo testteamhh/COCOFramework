@@ -14,6 +14,7 @@ import com.cocosw.accessory.views.ItemViewClickLisener;
 import com.cocosw.framework.R;
 import com.cocosw.framework.R.id;
 import com.cocosw.framework.exception.CocoException;
+import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
 import com.cocosw.framework.view.adapter.SimpleListAdapter;
@@ -230,7 +231,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	 */
 	@Override
 	public void refresh() {
-		Utils.dout("页面有更新,刷新中");
+		Log.d("页面有更新,刷新中");
 		if (!isUsable()) {
 			return;
 		}
@@ -328,7 +329,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 			init(view, bundle);
 			q.recycle(view);
 		} catch (final Exception e) {
-			Utils.dout("exception in" + this.getClass().getSimpleName());
+			Log.d("exception in" + this.getClass().getSimpleName());
 			e.printStackTrace();
 			getActivity().finish();
 		}

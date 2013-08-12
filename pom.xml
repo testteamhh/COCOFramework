@@ -9,10 +9,10 @@
 	<name>framework</name>
 
 	<properties>
-        <abs.version>4.3.1</abs.version>
+        <abs.version>4.4.0</abs.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version> 4.1.1.4</platform.version>
-		<android.plugin.version>3.5.3</android.plugin.version>
+		<android.plugin.version>3.6.1</android.plugin.version>
         <accessory.version>0.1-SNAPSHOT</accessory.version>
 	</properties>
 
@@ -32,7 +32,6 @@
             <groupId>com.cocosw.accessory</groupId>
             <artifactId>utils</artifactId>
             <version>${accessory.version}</version>
-            <type>apklib</type>
         </dependency>
         <dependency>
             <groupId>com.cocosw.accessory</groupId>

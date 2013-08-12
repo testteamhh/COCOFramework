@@ -299,7 +299,6 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
 	}
 
 	public void toast(final Exception e) {
-		Utils.dout(e);
 		toast(e.getMessage());
 	}
 

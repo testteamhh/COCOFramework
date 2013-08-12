@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.cocosw.accessory.utils.Utils;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
+import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 
 public abstract class BaseDialog<T> extends DialogFragment implements
@@ -208,7 +209,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
 	 */
 	@Override
 	public void showError(final Exception e) {
-		Utils.dout(e);
+		Log.d(e);
 		q.toast(e.getMessage());
 	}
 

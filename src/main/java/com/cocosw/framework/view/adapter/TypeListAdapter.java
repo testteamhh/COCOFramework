@@ -33,9 +33,9 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         super(context, layoutResourceId);
         this.context = context;
         if (dataList == null) {
-            setItems(dataList);
-        }
-        this.dataList = dataList;
+            this.dataList = new ArrayList<T>();
+        } else
+            this.dataList = dataList;
         q = new CocoQuery(context);
     }
 

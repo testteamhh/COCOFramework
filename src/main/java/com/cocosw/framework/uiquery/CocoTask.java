@@ -11,6 +11,7 @@ import com.androidquery.util.AQUtility;
 import com.androidquery.util.Common;
 import com.cocosw.accessory.utils.Utils;
 import com.cocosw.framework.core.Base;
+import com.cocosw.framework.log.Log;
 
 
 import java.lang.ref.WeakReference;
@@ -177,7 +178,7 @@ public abstract class CocoTask<T> implements CocoQueryCallBack<T>,
 				try {
 					return backgroundWork();
 				} catch (final Exception e) {
-					Utils.dout(e);
+					Log.d(e);
 					this.e = e;
 				}
 				return null;
