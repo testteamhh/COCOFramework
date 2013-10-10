@@ -11,8 +11,8 @@
 	<properties>
         <abs.version>4.4.0</abs.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version> 4.1.1.4</platform.version>
-		<android.plugin.version>3.6.1</android.plugin.version>
+		<platform.version>4.1.1.4</platform.version>
+		<android.plugin.version>3.7.0</android.plugin.version>
         <accessory.version>0.1-SNAPSHOT</accessory.version>
 	</properties>
 
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>android.support</groupId>
             <artifactId>compatibility-v4</artifactId>
-            <version>13</version>
+            <version>18</version>
         </dependency>
         <dependency>
             <groupId>com.cocosw.accessory</groupId>
@@ -68,13 +68,6 @@
             <type>apklib</type>
         </dependency>
         <dependency>
-            <groupId>com.viewpagerindicator</groupId>
-            <artifactId>library</artifactId>
-            <version>2.4.1</version>
-            <type>apklib</type>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>com.googlecode.android-query</groupId>
             <artifactId>android-query</artifactId>
             <version>0.25.9</version>
@@ -85,7 +78,7 @@
 		<plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>3.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>

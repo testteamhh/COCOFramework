@@ -2,14 +2,14 @@ package com.cocosw.framework.log;
 
 import android.database.Cursor;
 import com.cocosw.framework.BuildConfig;
-import java.util.logging.Logger;
 
 /**
- * User: Administrator
+ * User: soarcn
  * Date: 13-8-12
  * Time: 下午10:40
  */
 public class Log {
+
     private static boolean debugFlag = BuildConfig.DEBUG;
 
     /**
@@ -89,7 +89,7 @@ public class Log {
     public static void d(final String str, final String str2) {
         if (Log.debugFlag) {
             // Views.showToast(str + " " + str2);
-            Log.d("[dout]", "str>>>>>>>>>>>>>" + str + " " + str2);
+            android.util.Log.d("[dout]", "str>>>>>>>>>>>>>" + str + " " + str2);
         }
     }
 

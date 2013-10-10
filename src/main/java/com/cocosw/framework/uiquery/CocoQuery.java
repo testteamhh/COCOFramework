@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -26,9 +25,8 @@ import com.androidquery.callback.BitmapAjaxCallback;
 import com.androidquery.callback.ImageOptions;
 import com.androidquery.util.AQUtility;
 import com.androidquery.util.Common;
-import com.androidquery.util.Constants;
 import com.androidquery.util.XmlDom;
-import com.cocosw.accessory.utils.Utils;
+import com.cocosw.accessory.utils.ImageUtils;
 import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.R;
 import com.cocosw.framework.view.adapter.CocoAdapter;
@@ -484,5 +482,23 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
 		}
 		return this;
 	}
+
+
+    public CocoQuery image(final String url,final int maxH,final int maxW,final int viewholder) {
+        image(url,true,true,0,viewholder,new BitmapAjaxCallback() {
+
+            @Override
+            protected void callback(String url, ImageView iv, Bitmap bm, AjaxStatus status) {
+                if (bm!=null) {
+                    Bitmap result = ImageUtils.scale(bm,AQUtility.dip2pixel(getContext(),maxW),AQUtility.dip2pixel(getContext(),maxH));
+//                    if (result != bm) {
+//                        bm.recycle();
+//                    }
+                    iv.setImageBitmap(result);
+                }
+            }
+        });
+        return this;
+    }
 
 }
