@@ -1,7 +1,14 @@
 package com.cocosw.framework.log;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
+import android.text.Html;
+import android.webkit.WebView;
 import com.cocosw.framework.BuildConfig;
+import timber.log.Timber;
 
 /**
  * User: soarcn
@@ -10,7 +17,27 @@ import com.cocosw.framework.BuildConfig;
  */
 public class Log {
 
-    private static boolean debugFlag = BuildConfig.DEBUG;
+    static {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+    }
+
+
+    /** A tree which logs important information for crash reporting. */
+    private static class CrashReportingTree extends Timber.DebugTree {
+
+        @Override
+        public void e(String message, Object... args) {
+            super.e(message, args);
+        }
+
+        @Override
+        public void e(Throwable t, String message, Object... args) {
+            super.e(t, message, args);
+        }
+    }
+
 
     /**
      * 打印log
@@ -18,80 +45,45 @@ public class Log {
      * @param obj
      */
     private static void dout(final Object obj) {
-        if (Log.debugFlag) {
-            // Views.showToast(obj.toString());
-            if (obj != null) {
-                Log.d("[dout]", "obj>>>>>>>>>>>>>" + obj.getClass().getName()
-                        + ">>" + obj.toString());
-            } else {
-                Log.d("[dout]", "obj>>>>>>>>>>>>>NULL");
-            }
+        if (obj != null) {
+            Timber.d("obj>>>>>>>>>>>>>" + obj.getClass().getName()
+                    + ">>" + obj.toString());
+        } else {
+            Timber.d("obj>>>>>>>>>>>>>NULL");
         }
     }
 
-    public static void d(final Object... obj) {
+    public static void dout(final Object... obj) {
         for (final Object object : obj) {
             Log.dout(object);
         }
     }
 
-    public static void d(final int obj) {
-        if (Log.debugFlag) {
-            Log.d("[dout]", "int>>>>>>>>>>>>>" + obj);
-        }
+    public static void i(String str) {
+        Timber.i(str);
     }
 
-    public static void d(final String str) {
-        if (Log.debugFlag) {
-            // Views.showToast(str);
-            Log.d("[dout]", "str>>>>>>>>>>>>>" + str);
-        }
+    public static void d(String str) {
+        Timber.d(str);
+    }
+
+    public static void w(String str) {
+        Timber.w(str);
+    }
+
+    public static void e(String str) {
+        Timber.e(str);
+    }
+
+
+    public static void d(final Object str) {
+        Timber.d(str.toString());
     }
 
     public static void d(final Cursor str) {
-        if (Log.debugFlag) {
-            Log.d("[dout]", Log.cur2Str(str));
-        }
+        Timber.d(Log.cur2Str(str));
     }
 
-    public static void doutCursor(final Cursor cursor) {
-        final StringBuilder retval = new StringBuilder();
-
-        retval.append("|");
-        final int numcolumns = cursor.getColumnCount();
-        for (int column = 0; column < numcolumns; column++) {
-            final String columnName = cursor.getColumnName(column);
-            retval.append(String.format("%-20s |",
-                    columnName.substring(0, Math.min(20, columnName.length()))));
-        }
-        retval.append("\n|");
-        for (int column = 0; column < numcolumns; column++) {
-            for (int i = 0; i < 21; i++) {
-                retval.append("-");
-            }
-            retval.append("+");
-        }
-        retval.append("\n|");
-
-        while (cursor.moveToNext()) {
-            for (int column = 0; column < numcolumns; column++) {
-                final String columnValue = cursor.getString(column);
-                retval.append(columnValue);
-            }
-            retval.append("\n");
-
-        }
-        if (Log.debugFlag) {
-            Log.d("[dout]", retval.toString());
-        }
-    }
-
-    public static void d(final String str, final String str2) {
-        if (Log.debugFlag) {
-            // Views.showToast(str + " " + str2);
-            android.util.Log.d("[dout]", "str>>>>>>>>>>>>>" + str + " " + str2);
-        }
-    }
 
     /**
      * 把游标内容显示出来
@@ -99,7 +91,7 @@ public class Log {
      * @param cur
      * @return
      */
-    public static String cur2Str(final Cursor cur) {
+    private static String cur2Str(final Cursor cur) {
         final StringBuffer buf = new StringBuffer();
         final String[] col = cur.getColumnNames();
         for (int i = 0; i < col.length; i++) {
@@ -115,14 +107,41 @@ public class Log {
     }
 
     public static void d(final String[] str) {
-        if (Log.debugFlag) {
             for (int i = 0; i < str.length; i++) {
-                Log.d("[dout]", "str[" + i + "]>>>>>>>>>>>>>" + str[i]);
+                d("str[" + i + "]>>>>>>>>>>>>>" + str[i]);
             }
-        }
     }
 
     public static void d(final Throwable t) {
-        Log.dout(android.util.Log.getStackTraceString(t));
+        Timber.d(t,"Exception");
     }
+
+    /**
+     * Show huge amount info with a dialog, HTML is allowed
+     *
+     * @param str
+     */
+    public static void dialog(Context context, String content, String... str) {
+        //TODO html/non-html
+        create(context,content,str).show();
+    }
+
+    private static Dialog create(Context mContext, String mLicensesText,String... str) {
+        //Get resources
+        final WebView webView = new WebView(mContext);
+        webView.loadDataWithBaseURL(null, mLicensesText, "text/html", "utf-8", null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+
+                .setView(webView)
+                .setPositiveButton("Close", new Dialog.OnClickListener() {
+                    public void onClick(final DialogInterface dialogInterface, final int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        if (str!=null)
+            builder.setTitle(str[0]);
+        final AlertDialog dialog = builder.create();
+        return dialog;
+    }
+
 }
