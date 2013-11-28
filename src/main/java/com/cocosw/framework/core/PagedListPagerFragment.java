@@ -12,6 +12,7 @@ import com.cocosw.accessory.views.CocoBundle;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
 
+import com.cocosw.framework.view.adapter.CocoAdapter;
 import com.cocosw.framework.view.adapter.SimpleListAdapter;
 
 
@@ -38,8 +39,8 @@ public abstract class PagedListPagerFragment<T, K extends Carousel> extends
 	}
 
 	@Override
-	public SimpleListAdapter<T> getAdapter() {
-		return mAdapter;
+	public CocoAdapter<T> getAdapter() {
+		return (CocoAdapter<T>) mAdapter;
 	}
 
 	@Override
@@ -55,9 +56,9 @@ public abstract class PagedListPagerFragment<T, K extends Carousel> extends
 			return;
 		}
 		if (items != null && mAdapter != null) {
-			mAdapter.add(items);
+            getAdapter().add(items);
 		}
-		mAdapter.notifyDataChange();
+        getAdapter().notifyDataChange();
 		onLoaderDone(items);
 
 		showList();

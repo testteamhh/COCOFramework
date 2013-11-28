@@ -20,6 +20,8 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
 
+import java.util.List;
+
 public abstract class BaseFragment<T> extends SherlockFragment implements
 		DialogResultListener, CocoLoader<T> {
 

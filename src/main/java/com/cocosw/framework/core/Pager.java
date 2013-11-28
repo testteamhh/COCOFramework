@@ -42,26 +42,11 @@ public interface Pager<K extends Carousel> {
 
 	public void onPagerSelected();
 
-	/**
-	 * 编辑模式
-	 */
-	public void editMode();
-
-	/**
-	 * 浏览模式
-	 */
-	public void viewMode();
-
-	/**
+    /**
 	 * 获得actionBar对象
 	 * 
 	 * @return
 	 */
 	public ActionBar actionBar();
-
-	/**
-	 * shake事件处理
-	 */
-	public void onShake();
 
 }

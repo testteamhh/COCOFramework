@@ -18,7 +18,7 @@ public abstract class CocoIntentService extends IntentService {
 
 	public CocoIntentService(final String name) {
 		super(name);
-		q = new CocoQuery(CocoApp.getInstance());
+		q = new CocoQuery(CocoApp.getApp());
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class ExceptionHandler {
 		try {
 			ExceptionHandler.handle(e, null);
 		} catch (final CocoException e1) {
-			Toast.makeText(CocoApp.getInstance(), e1.getMessage(),
+			Toast.makeText(CocoApp.getApp(), e1.getMessage(),
 					ExceptionHandler.TOAST_DISPLAY_TIME).show();
 			return;
 		}

@@ -3,39 +3,37 @@
 package com.cocosw.framework.app;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import com.androidquery.util.AQUtility;
-import com.cocosw.accessory.utils.FakeX509TrustManager;
 import com.cocosw.accessory.utils.UIUtils;
 import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.network.Network;
-import com.github.kevinsawicki.http.HttpRequest;
-import com.squareup.okhttp.OkHttpClient;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.Proxy;
-import java.net.URL;
-
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.FROYO;
+import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat;
+import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
 
 
 /**
  * Android Bootstrap application
  */
-public class CocoApp extends Application {
+public abstract class CocoApp extends Application {
 
-    private static CocoApp instance;
+    protected static CocoApp instance;
+
+    private static String TAG = "Coco";
 
     /**
      * Create main application
      */
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public CocoApp() {
+        instance = this;
+        TAG = getString(getApplicationInfo().labelRes);
         Network.init();
         if (BuildConfig.DEBUG) {
             AQUtility.setDebug(true);
@@ -44,9 +42,14 @@ public class CocoApp extends Application {
                         .setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                                 .detectNetwork().penaltyLog().build());
             }
+            if (showActivityLiftcycle())
+            ApplicationHelper.registerActivityLifecycleCallbacks(this, mDebugCallbacks);
         }
     }
 
+    protected boolean showActivityLiftcycle() {
+        return false;
+    }
 
 
     /**
@@ -64,8 +67,47 @@ public class CocoApp extends Application {
         super.onCreate();
     }
 
-
-    public static CocoApp getInstance() {
+    public static Application getApp() {
+        if (instance==null) {
+            throw new IllegalAccessError("Please create your own Application class inherit from CocoApp, and add it to manifest");
+        }
         return instance;
     }
+
+    private ActivityLifecycleCallbacksCompat mDebugCallbacks = new ActivityLifecycleCallbacksCompat() {
+        @Override
+        public void onActivityStopped(Activity activity) {
+            Log.d(TAG, "onActivityStopped activity=" + activity);
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+            Log.d(TAG, "onActivityStarted activity=" + activity);
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            Log.d(TAG, "onActivitySaveInstanceState activity=" + activity);
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+            Log.d(TAG, "onActivityResumed activity=" + activity);
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+            Log.d(TAG, "onActivityPaused activity=" + activity);
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+            Log.d(TAG, "onActivityDestroyed activity=" + activity);
+        }
+
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            Log.d(TAG, "onActivityCreated activity=" + activity);
+        }
+    };
 }

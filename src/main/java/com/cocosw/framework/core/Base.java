@@ -38,6 +38,8 @@ import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
+import org.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -60,12 +62,11 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 		// Intentionally left blank
 	}
 
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
 		q = q == null ? new CocoQuery(this) : q;
 
 		setContentView(layoutId());
@@ -88,6 +89,8 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 		getSupportLoaderManager().initLoader(0, getIntent().getExtras(), this);
 		q.v(this + "Activity:----> onCreateView End");
 	}
+
+
 
 	@Override
 	public Loader<T> onCreateLoader(final int arg0, final Bundle arg) {
@@ -201,6 +204,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityDestroyed(this);
 		hideLoading();
 		q.CleanAllTask();
 		// hack for null point exception
@@ -218,6 +222,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 	protected void onStart() {
 		invalidateOptionsMenu();
 		super.onStart();
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityStarted(this);
 	}
 
 	@Override
@@ -232,19 +237,33 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		//MobclickAgent.onResume(this);
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityResumed(this);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		//MobclickAgent.onPause(this);
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityPaused(this);
 	}
 
 	protected void refresh() {
 		onStartLoading();
 		getSupportLoaderManager().restartLoader(0, new Bundle(), this);
 	}
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityStopped(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivitySaveInstanceState(this, outState);
+    }
+
 
 	protected void onStartLoading() {
 

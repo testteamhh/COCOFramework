@@ -56,23 +56,7 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
 		}
 	}
 
-	@Override
-	public void onShake() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void editMode() {
-		// q.toast("编辑模式");
-	}
-
-	@Override
-	public void viewMode() {
-		// q.toast("浏览模式");
-	}
-
-	protected void navigate(final Class<? extends Fragment> clz) {
+    protected void navigate(final Class<? extends Fragment> clz) {
 		getSource().nav(clz);
 	}
 

@@ -11,7 +11,7 @@
 
 
 
-    <style name="SpinnerItem" parent="@style/Widget">
+    <style name="SpinnerItem">
         <item name="android:textAppearance">@style/SettingText</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
@@ -207,7 +207,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Widget.LandingBlurb" parent="@style/Widget">
+    <style name="Widget.LandingBlurb">
         <item name="android:textSize">22.0sp</item>
         <item name="android:textColor">@color/landing_info_text</item>
         <item name="android:padding">3.0dip</item>

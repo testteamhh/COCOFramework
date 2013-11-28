@@ -78,7 +78,6 @@
     <color name="past_background_color">#11000000</color>
     <color name="list_divider_top">#E2E2E2</color>
     <color name="list_divider_bottom">#FFFFFF</color>
-    <color name="text_link">#4183C4</color>
     <color name="dark_text_shadow">#ffffffff</color>
     <color name="dark_text">#ff303438</color>
     <color name="light_text_on_dark_background_shadow">#88333333</color>

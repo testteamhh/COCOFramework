@@ -1,10 +1,12 @@
 package com.cocosw.framework.view.adapter;
 
 import android.view.View;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 
 import java.util.List;
 
-public interface CocoAdapter<T> {
+public interface CocoAdapter<T> extends ListAdapter {
 
     /**
      * 往数据后面加入数据

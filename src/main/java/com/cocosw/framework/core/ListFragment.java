@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.*;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
-import com.cocosw.accessory.utils.Utils;
 import com.cocosw.accessory.views.HeaderFooterListAdapter;
 import com.cocosw.accessory.views.ItemViewClickLisener;
 import com.cocosw.framework.R;
@@ -17,7 +16,6 @@ import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
-import com.cocosw.framework.view.adapter.SimpleListAdapter;
 import com.github.kevinsawicki.wishlist.ViewUtils;
 
 import java.util.Collections;
@@ -36,8 +34,8 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	/**
 	 * 这个是没有wrapper的实际的adapter
 	 */
-	SimpleListAdapter<T> mAdapter;
-	HeaderFooterListAdapter<SimpleListAdapter<T>> wrapAdapter;
+    BaseAdapter mAdapter;
+	HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
 
 	private ListView mListContainer;
 	private View progressBar;
@@ -52,10 +50,10 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	 * @return adapter
 	 * @throws Exception
 	 */
-	private HeaderFooterListAdapter<SimpleListAdapter<T>> createAdapter()
+	private HeaderFooterListAdapter<BaseAdapter> createAdapter()
 			throws Exception {
-		mAdapter = createAdapter(items);
-		wrapAdapter = new HeaderFooterListAdapter<SimpleListAdapter<T>>(
+		mAdapter = (BaseAdapter) createAdapter(items);
+		wrapAdapter = new HeaderFooterListAdapter<BaseAdapter>(
 				mListContainer, mAdapter);
 		return wrapAdapter;
 	}
@@ -67,7 +65,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	 * @return adapter
 	 * @throws Exception
 	 */
-	protected abstract SimpleListAdapter<T> createAdapter(final List<T> items)
+	protected abstract CocoAdapter<T> createAdapter(final List<T> items)
 			throws Exception;
 
 	/**
@@ -79,8 +77,8 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 		return LayoutInflater.from(context).inflate(R.layout.empty, null);
 	}
 
-	public BaseAdapter getAdapter() {
-		return mAdapter;
+	public CocoAdapter<T> getAdapter() {
+		return (CocoAdapter<T>) mAdapter;
 	}
 
 	protected View getEmptyView(final int layout, final int msg,
@@ -100,7 +98,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	 * 
 	 * @return list adapter
 	 */
-	protected HeaderFooterListAdapter<SimpleListAdapter<T>> getHeaderAdapter() {
+	protected HeaderFooterListAdapter<BaseAdapter> getHeaderAdapter() {
 		if (mListContainer != null) {
 			return wrapAdapter;
 		} else {
@@ -216,8 +214,8 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 			return;
 		}
 		if (items != null && mAdapter != null) {
-			mAdapter.add(items);
-			mAdapter.notifyDataChange();
+            ((CocoAdapter)mAdapter).add(items);
+            ((CocoAdapter)mAdapter).notifyDataChange();
 		}
 		onLoaderDone(items);
 		showList();
@@ -366,7 +364,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	}
 
 	protected void updateList(final List<T> items) {
-		getHeaderAdapter().getWrappedAdapter().updateList(items);
+        ((CocoAdapter)getHeaderAdapter().getWrappedAdapter()).updateList(items);
 	}
 
 	private ListFragment<T> show(final View view) {

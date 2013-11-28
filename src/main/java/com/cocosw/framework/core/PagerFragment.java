@@ -17,23 +17,7 @@ public abstract class PagerFragment<T, K extends Carousel> extends
 	int id;
 	private K source;
 
-	@Override
-	public void onShake() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void editMode() {
-		// q.toast("编辑模式");
-	}
-
-	@Override
-	public void viewMode() {
-		// q.toast("浏览模式");
-	}
-
-	@Override
+    @Override
 	public void onPagerSelected() {
 		q.v(this.getClass().getSimpleName() + " onPagerSelected");
 		// q.toast(this);

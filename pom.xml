@@ -12,7 +12,7 @@
         <abs.version>4.4.0</abs.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version>4.1.1.4</platform.version>
-		<android.plugin.version>3.7.0</android.plugin.version>
+		<android.plugin.version>3.8.0</android.plugin.version>
         <accessory.version>0.1-SNAPSHOT</accessory.version>
         <okhttp.version>1.2.1</okhttp.version>
         <gson.version>2.2.4</gson.version>
@@ -40,7 +40,11 @@
             <artifactId>views</artifactId>
             <version>${accessory.version}</version>
         </dependency>
-
+        <dependency>
+            <artifactId>activitylifecyclecallbackscompat</artifactId>
+            <groupId>org.jraf</groupId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>net.simonvt.menudrawer</groupId>
             <artifactId>menudrawer</artifactId>
