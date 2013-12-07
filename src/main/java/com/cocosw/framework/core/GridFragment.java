@@ -32,8 +32,6 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
 
     private boolean updated;
     private View emptyView;
-    private View footerView;
-    private View headerView;
     protected List<T> items = Collections.emptyList();
     protected boolean listShown;
 
@@ -158,8 +156,6 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
     public void onDestroyView() {
         mAdapter = null;
         mListContainer = null;
-        headerView = null;
-        footerView = null;
         listShown = false;
         progressBar = null;
         emptyView = null;
@@ -170,7 +166,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
     public void onItemClick(final AdapterView<?> parent, final View view,
                             final int position, final long id) {
         final T item = getItem(position);
-        q.v(item);
+        //  q.v(item);
         if (item != null) {
             onItemClick(item, position, id, view);
         }
@@ -271,7 +267,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
                 getList().setEmptyView(emptyView);
                 ((FrameLayout) emptyView).addView(emptyView());
             }
-
+            mAdapter = (BaseAdapter) createAdapter(items);
             mListContainer.setAdapter(mAdapter);
             setOnViewClickInList();
             init(view, bundle);

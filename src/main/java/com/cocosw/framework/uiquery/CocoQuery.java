@@ -347,53 +347,6 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
 		return this;
 	}
 
-	public CocoQuery d(final Object obj) {
-		if (BuildConfig.DEBUG) {
-			// Views.showToast(obj.toString());
-			if (obj != null) {
-				Log.d(obj.getClass().getSimpleName(), "obj>>>>>>>>>>>>>"
-						+ obj.getClass().getName() + ">>" + obj.toString());
-			} else {
-				Log.d("[dout]", "obj>>>>>>>>>>>>>NULL");
-			}
-		}
-		return this;
-	}
-
-	public CocoQuery v(final Object obj) {
-		if (BuildConfig.DEBUG) {
-			// Views.showToast(obj.toString());
-			if (obj != null) {
-				Log.v(obj.getClass().getSimpleName(), "obj>>>>>>>>>>>>>"
-						+ obj.getClass().getName() + ">>" + obj.toString());
-			} else {
-				Log.v("[dout]", "obj>>>>>>>>>>>>>NULL");
-			}
-		}
-		return this;
-	}
-
-	public CocoQuery w(final Object obj) {
-		// Views.showToast(obj.toString());
-		if (obj != null) {
-			Log.w(obj.getClass().getSimpleName(), "obj>>>>>>>>>>>>>"
-					+ obj.getClass().getName() + ">>" + obj.toString());
-		} else {
-			Log.w("[dout]", "obj>>>>>>>>>>>>>NULL");
-		}
-		return this;
-	}
-
-	public CocoQuery i(final Object obj) {
-		// Views.showToast(obj.toString());
-		if (obj != null) {
-			Log.i(obj.getClass().getSimpleName(), "obj>>>>>>>>>>>>>"
-					+ obj.getClass().getName() + ">>" + obj.toString());
-		} else {
-			Log.i("[dout]", "obj>>>>>>>>>>>>>NULL");
-		}
-		return this;
-	}
 
 	/**
 	 * 终结所有的cocotask
@@ -434,7 +387,7 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
 	 * @param url
 	 */
 	public File downloadFile(final String url, final String folder) {
-		v(folder + getFilenameFromUrl(url));
+
 		final AjaxCallback<File> cb = new AjaxCallback<File>();
 		cb.url(url).type(File.class)
 				.targetFile(new File(folder + getFilenameFromUrl(url)));

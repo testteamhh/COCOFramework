@@ -32,7 +32,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	protected boolean listShown;
 
 	/**
-	 * 这个是没有wrapper的实际的adapter
+	 * The actual adapter without any wrapper
 	 */
     BaseAdapter mAdapter;
 	HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
@@ -44,19 +44,29 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 		q.id(R.id.list).scrolled(listener);
 	}
 
-	/**
-	 * Create adapter to display items
-	 * 
-	 * @return adapter
-	 * @throws Exception
-	 */
-	private HeaderFooterListAdapter<BaseAdapter> createAdapter()
-			throws Exception {
-		mAdapter = (BaseAdapter) createAdapter(items);
-		wrapAdapter = new HeaderFooterListAdapter<BaseAdapter>(
-				mListContainer, mAdapter);
-		return wrapAdapter;
-	}
+    /**
+     * If you need to wrap the adpter, this is the interface you are looking for
+     *
+     * @param adapter
+     * @return
+     */
+    protected BaseAdapter wrapperAdapter(BaseAdapter adapter) {
+        return adapter;
+    }
+
+    /**
+     * Create adapter to display items
+     *
+     * @return adapter
+     * @throws Exception
+     */
+    private HeaderFooterListAdapter<BaseAdapter> createAdapter()
+            throws Exception {
+        mAdapter = (BaseAdapter) createAdapter(items);
+        wrapAdapter = new HeaderFooterListAdapter<BaseAdapter>(
+                mListContainer, wrapperAdapter(mAdapter));
+        return wrapAdapter;
+    }
 
 	/**
 	 * Create adapter to display items
@@ -197,7 +207,7 @@ public abstract class ListFragment<T> extends BaseFragment<List<T>> implements
 	public void onItemClick(final AdapterView<?> parent, final View view,
 			final int position, final long id) {
 		final T item = getItem(position);
-		q.v(item);
+        //q.v(item);
 		if (item != null) {
 			onItemClick(item, position, id, view);
 		}

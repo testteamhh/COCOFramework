@@ -143,20 +143,18 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 		// super.onCreateView(inflater, container, savedInstanceState);
 		v = inflater.inflate(layoutId(), null);
 		q.recycle(v);
-		q.v(this + "----> onCreateView start");
 		try {
     		setupUI(v, savedInstanceState);
 		} catch (final Exception e) {
             ExceptionHandler.reportError(this, Log.getStackTraceString(e));
 			e.printStackTrace();
 		}
-		q.v(this + "----> onCreateView end");
 		return v;
 	}
 
 	@Override
 	public void onDestroyView() {
-		q.v(this + "----> onDestroyView");
+
 		super.onDestroyView();
 		v = null;
 		q = null;

@@ -87,7 +87,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 		}
 		onStartLoading();
 		getSupportLoaderManager().initLoader(0, getIntent().getExtras(), this);
-		q.v(this + "Activity:----> onCreateView End");
+
 	}
 
 

@@ -42,11 +42,4 @@ public interface Pager<K extends Carousel> {
 
 	public void onPagerSelected();
 
-    /**
-	 * 获得actionBar对象
-	 * 
-	 * @return
-	 */
-	public ActionBar actionBar();
-
 }

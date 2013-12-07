@@ -207,7 +207,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Widget.LandingBlurb">
+    <style name="LandingBlurb">
         <item name="android:textSize">22.0sp</item>
         <item name="android:textColor">@color/landing_info_text</item>
         <item name="android:padding">3.0dip</item>

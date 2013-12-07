@@ -33,7 +33,7 @@ public abstract class CocoApp extends Application {
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public CocoApp() {
         instance = this;
-        TAG = getString(getApplicationInfo().labelRes);
+
         Network.init();
         if (BuildConfig.DEBUG) {
             AQUtility.setDebug(true);
@@ -65,6 +65,7 @@ public abstract class CocoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        TAG = getString(getApplicationInfo().labelRes);
     }
 
     public static Application getApp() {

@@ -70,8 +70,7 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
 		this.pager = pager;
 	}
 
-	@Override
-	public ActionBar actionBar() {
+	private ActionBar actionBar() {
 		return getSherlockActivity().getSupportActionBar();
 	}
 

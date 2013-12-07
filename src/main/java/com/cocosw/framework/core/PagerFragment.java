@@ -1,7 +1,6 @@
 package com.cocosw.framework.core;
 
 import android.support.v4.app.Fragment;
-import com.actionbarsherlock.app.ActionBar;
 import com.cocosw.accessory.views.CocoPager;
 import com.cocosw.framework.R;
 
@@ -19,7 +18,7 @@ public abstract class PagerFragment<T, K extends Carousel> extends
 
     @Override
 	public void onPagerSelected() {
-		q.v(this.getClass().getSimpleName() + " onPagerSelected");
+        //q.v(this.getClass().getSimpleName() + " onPagerSelected");
 		// q.toast(this);
 	}
 
@@ -37,12 +36,7 @@ public abstract class PagerFragment<T, K extends Carousel> extends
 		this.pager = pager;
 	}
 
-	@Override
-	public ActionBar actionBar() {
-		return getSherlockActivity().getSupportActionBar();
-	}
-
-	/**
+    /**
 	 * 首次使用本应用的独立入口，page被select的时候触发，可以用于帮助
 	 */
 	@Override

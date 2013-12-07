@@ -104,7 +104,7 @@ public abstract class PagedListPagerFragment<T, K extends Carousel> extends
 	}
 
 	private void loadmore() {
-		q.v("start loading more");
+        //q.v("start loading more");
 		ended.set(false);
 		onStartLoading();
 		getLoaderManager()

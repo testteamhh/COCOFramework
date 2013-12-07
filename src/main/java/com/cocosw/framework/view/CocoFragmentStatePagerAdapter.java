@@ -87,6 +87,7 @@ public class CocoFragmentStatePagerAdapter extends
 
 		if (object instanceof Pager) {
 			selected = (Pager<?>) object;
+            selected.setPager(source.getViewPager());
 		} else {
 			selected = null;
 		}
