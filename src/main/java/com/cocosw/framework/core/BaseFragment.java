@@ -13,14 +13,12 @@ import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ErrorCode;
-import com.cocosw.framework.exception.ExceptionHandler;
+import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
-
-import java.util.List;
 
 public abstract class BaseFragment<T> extends SherlockFragment implements
 		DialogResultListener, CocoLoader<T> {
@@ -146,8 +144,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 		try {
     		setupUI(v, savedInstanceState);
 		} catch (final Exception e) {
-            ExceptionHandler.reportError(this, Log.getStackTraceString(e));
-			e.printStackTrace();
+            ExceptionManager.handle(e,context,this);
 		}
 		return v;
 	}
@@ -224,7 +221,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 	@Override
 	public void showError(final Exception e) {
 		try {
-			ExceptionHandler.handle(e, getActivity());
+			ExceptionManager.handle(e, getActivity(),this);
 		} catch (final CocoException e1) {
 			showRefresh(e1);
 		}

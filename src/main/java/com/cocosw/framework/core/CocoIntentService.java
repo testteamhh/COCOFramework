@@ -8,7 +8,7 @@ import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoApp;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ErrorCode;
-import com.cocosw.framework.exception.ExceptionHandler;
+import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.uiquery.CocoQuery;
 
 public abstract class CocoIntentService extends IntentService {
@@ -44,7 +44,7 @@ public abstract class CocoIntentService extends IntentService {
 
 	protected void onError(final Exception e) {
 		try {
-			ExceptionHandler.handle(e, this);
+			ExceptionManager.handle(e, this);
 		} catch (final CocoException e1) {
 			e1.printStackTrace();
 			Toast.makeText(this, e1.getMessage(), Toast.LENGTH_SHORT).show();

@@ -1,6 +1,6 @@
 package com.cocosw.framework.exception;
 
-public class CocoException extends Exception {
+public class CocoException extends RuntimeException {
 	/**
      *
      */

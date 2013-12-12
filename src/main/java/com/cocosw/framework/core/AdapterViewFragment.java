@@ -26,7 +26,7 @@ import java.util.List;
  * Date: 13-11-28
  * Time: 下午12:31
  */
-public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
+public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseFragment<List<T>> implements
         AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
 
@@ -41,7 +41,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
     BaseAdapter mAdapter;
     // HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
 
-    private GridView mListContainer;
+    private A mListContainer;
     private View progressBar;
 
     protected void setOnScrollListener(final AbsListView.OnScrollListener listener) {
@@ -85,11 +85,11 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
         return (T) mAdapter.getItem(position);
     }
 
-    public GridView getList() {
+    public A getList() {
         return mListContainer;
     }
 
-    private GridFragment<T> hide(final View view) {
+    private AdapterViewFragment<T,A> hide(final View view) {
         ViewUtils.setGone(view, true);
         return this;
     }
@@ -226,7 +226,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
      * @param shown
      * @return this fragment
      */
-    protected GridFragment<T> setListShown(final boolean shown) {
+    protected AdapterViewFragment<T,A> setListShown(final boolean shown) {
         if (!isUsable()) {
             return this;
         }
@@ -248,7 +248,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
                 @Override
                 public void onClick(final View v) {
                     final int position = getList().getPositionForView(v);
-                    ((ItemViewClickLisener) GridFragment.this).onItemViewClick(
+                    ((ItemViewClickLisener) AdapterViewFragment.this).onItemViewClick(
                             position, v);
                 }
             };
@@ -259,7 +259,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
     @Override
     protected void setupUI(final View view, final Bundle bundle) {
         try {
-            mListContainer = (GridView) q.id(R.id.list).itemClicked(this)
+            mListContainer = (A) q.id(R.id.list).itemClicked(this)
                     .scrolled(this).getView();
             progressBar = q.id(R.id.listprogressBar).getView();
             emptyView = q.id(R.id.empty).getView();
@@ -313,7 +313,7 @@ public abstract class GridFragment<T> extends BaseFragment<List<T>> implements
         ((CocoAdapter<T>) mAdapter).updateList(items);
     }
 
-    private GridFragment<T> show(final View view) {
+    private AdapterViewFragment<T,A> show(final View view) {
         ViewUtils.setGone(view, false);
         return this;
     }

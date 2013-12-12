@@ -10,7 +10,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.View;
 import com.androidquery.util.Common;
-import com.cocosw.framework.exception.ExceptionHandler;
+import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.ThrowableLoader;
 
 import java.lang.ref.WeakReference;
@@ -72,8 +72,7 @@ public abstract class Loader<T> implements CocoQueryCallBack<T>,
 		if (callback != null) {
 			callback.failcallback(object, e);
 		} else {
-            ExceptionHandler.reportError(this, Log.getStackTraceString(e));
-			e.printStackTrace();
+            ExceptionManager.handle(e,context);
 		}
 	}
 

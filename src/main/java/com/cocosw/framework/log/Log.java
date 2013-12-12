@@ -116,6 +116,10 @@ public class Log {
         Timber.d(t,"Exception");
     }
 
+    public static void e(final Throwable t) {
+        Timber.e(t,"Exception");
+    }
+
     /**
      * Show huge amount info with a dialog, HTML is allowed
      *

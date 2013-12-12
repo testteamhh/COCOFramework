@@ -13,7 +13,7 @@ import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
 
 import com.cocosw.framework.view.adapter.CocoAdapter;
-import com.cocosw.framework.view.adapter.SimpleListAdapter;
+import com.cocosw.framework.view.adapter.MultiTypeListAdatper;
 
 
 import java.util.List;
@@ -77,12 +77,12 @@ public abstract class PagedListPagerFragment<T, K extends Carousel> extends
 	}
 
 	@Override
-	protected SimpleListAdapter<T> createAdapter(final List<T> items)
+	protected CocoAdapter<T> createAdapter(final List<T> items)
 			throws Exception {
 		return createEndlessAdapter(items);
 	}
 
-	protected abstract SimpleListAdapter<T> createEndlessAdapter(List<T> items)
+	protected abstract CocoAdapter<T> createEndlessAdapter(List<T> items)
 			throws Exception;
 
 	private final Bundle bundel = new Bundle();

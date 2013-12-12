@@ -30,7 +30,7 @@ import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ErrorCode;
-import com.cocosw.framework.exception.ExceptionHandler;
+import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
@@ -74,14 +74,10 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 		try {
 			init(savedInstanceState);
 		} catch (final RuntimeException e) {
-			e.printStackTrace();
-            ExceptionHandler.reportError(this, Log.getStackTraceString(e));
-
+            ExceptionManager.handle(e,this);
 			return;
 		} catch (final Exception e) {
-			// 这里可以处理一些
-			e.printStackTrace();
-            ExceptionHandler.reportError(this, Log.getStackTraceString(e));
+            ExceptionManager.handle(e,this);
 			finish();
 			return;
 		}
@@ -146,7 +142,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 	@Override
 	public void showError(final Exception e) {
 		try {
-			ExceptionHandler.handle(e, this);
+			ExceptionManager.handle(e, this);
 		} catch (final CocoException e1) {
 			q.toast(e1.getMessage());
 			showRefresh(e1);
