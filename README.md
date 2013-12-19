@@ -10,13 +10,14 @@ How to start
 
 Firstly, create a maven based android project with this dependency in your POM
 
+```xml
 <dependency>
   <groupId>com.cocosw.framework</groupId>
   <artifactId>framework</artifactId>
   <version>1.1-SNAPSHOT</version>
   <type>apklib</type>
 </dependency>
-
+```
 
 FAQ
 ============
@@ -32,17 +33,17 @@ Not too much popular libraries has gradle support when I develop this framework,
 
 Dependency
 ============
-COCO accessory
-okhttp
-http-request
-actionbarsherlock
-timber
-android-query
-crouton
-undobar
-activitylifecyclecallbackscompat
-gson
-wishlist
+- COCO accessory
+- okhttp
+- http-request
+- actionbarsherlock
+- timber
+- android-query
+- crouton
+- undobar
+- activitylifecyclecallbackscompat
+- gson
+- wishlist
 
 TODO
 =============

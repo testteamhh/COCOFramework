@@ -130,7 +130,7 @@ public abstract class SimpleListAdapter<T> extends BaseAdapter implements
 			final ViewGroup parent) {
 		ViewHolder holder = null;
 		if (convertView == null) {
-			holder = newView(position);
+			holder = newView(position,parent);
 			holder.contentView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -147,7 +147,7 @@ public abstract class SimpleListAdapter<T> extends BaseAdapter implements
 	}
 
 	// 创建一个新的View
-	public abstract ViewHolder newView(int position);
+	public abstract ViewHolder newView(int position, ViewGroup parent);
 
 	// 填充这个View
 	public abstract void fillView(ViewHolder viewHolder, int position,

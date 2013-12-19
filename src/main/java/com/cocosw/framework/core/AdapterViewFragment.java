@@ -48,6 +48,16 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
         q.id(R.id.list).scrolled(listener);
     }
 
+    /**
+     * If you need to wrap the adpter, this is the interface you are looking for
+     *
+     * @param adapter
+     * @return
+     */
+    protected BaseAdapter wrapperAdapter(BaseAdapter adapter) {
+        return adapter;
+    }
+
 
     /**
      * Create adapter to display items
@@ -82,7 +92,7 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
 
 
     protected T getItem(final int position) {
-        return (T) mAdapter.getItem(position);
+        return (T) getList().getAdapter().getItem(position);
     }
 
     public A getList() {
@@ -111,6 +121,9 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
 //    }
 
     /**
+     *
+     *
+
      * 内容为空时显示的文字消息
      *
      * @param e
@@ -268,7 +281,7 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
                 ((FrameLayout) emptyView).addView(emptyView());
             }
             mAdapter = (BaseAdapter) createAdapter(items);
-            mListContainer.setAdapter(mAdapter);
+            mListContainer.setAdapter(wrapperAdapter(mAdapter));
             setOnViewClickInList();
             init(view, bundle);
             q.recycle(view);

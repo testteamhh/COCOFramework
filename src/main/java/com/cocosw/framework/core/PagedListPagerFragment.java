@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 适用于有分页需求的list fragment
+ * Paged ListFragment in ViewPager
  * 
  * @author kaliao
  * 

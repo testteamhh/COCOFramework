@@ -142,7 +142,7 @@ public class Log {
                         dialogInterface.dismiss();
                     }
                 });
-        if (str!=null)
+        if (str!=null && str.length>0)
             builder.setTitle(str[0]);
         final AlertDialog dialog = builder.create();
         return dialog;
