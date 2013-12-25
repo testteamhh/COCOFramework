@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.cocosw.accessory.utils.Utils;
+import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
+import com.squareup.otto.Bus;
 
 public abstract class BaseDialog<T> extends DialogFragment implements
 		CocoLoader<T> {
@@ -37,6 +39,8 @@ public abstract class BaseDialog<T> extends DialogFragment implements
 	 * Request code
 	 */
 	private static final String ARG_REQUEST_CODE = "requestCode";
+
+    protected Bus bus = CocoBus.getInstance();
 
 	protected Context context;
 	protected View v;
@@ -58,6 +62,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        bus.register(this);
 		context = getActivity();
 		setStyle(DialogFragment.STYLE_NO_FRAME, getStyle());
 		if (getArguments() != null) {
@@ -127,6 +132,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
 
 		d.show(ft, null);
 	}
+
 
 	public abstract int layoutId();
 
@@ -202,7 +208,13 @@ public abstract class BaseDialog<T> extends DialogFragment implements
 		BaseDialog.show(fm, d);
 	}
 
-	/**
+    @Override
+    public void onDestroy() {
+        bus.unregister(this);
+        super.onDestroy();
+    }
+
+    /**
 	 * Show exception in a {@link Toast}
 	 * 
 	 * @param e

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,11 +31,13 @@ import com.cocosw.accessory.utils.ImageUtils;
 import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.R;
 import com.cocosw.framework.view.adapter.CocoAdapter;
+import com.squareup.picasso.Picasso;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
@@ -223,50 +226,6 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
 		return this;
 	}
 
-	private CocoAdapter getAdapter(final AdapterView view) {
-		final Adapter ad = view.getAdapter();
-		if (ad instanceof HeaderViewListAdapter) {
-			return (CocoAdapter) ((HeaderViewListAdapter) ad)
-					.getWrappedAdapter();
-		}
-		return (CocoAdapter) ad;
-	}
-
-	@Deprecated
-	/**
-	 * 异步加载数据到listview
-	 * 
-	 * @param call
-	 * @return
-	 */
-	public CocoQuery listadd(final Callable<List<?>> call) {
-		if (call != null) {
-			if (view instanceof AdapterView) {
-				final CocoAdapter adapter = getAdapter((AdapterView) view);
-				if (adapter != null) {
-					task(new CocoTask<Boolean>() {
-
-						@Override
-						public void callback(final Boolean object) {
-							adapter.notifyDataChange();
-						}
-
-						@Override
-						public Boolean backgroundWork() throws Exception {
-							final List<?> list = call.call();
-							if (list != null) {
-								adapter.add(call.call());
-								return list.size() != 0;
-							}
-							return false;
-						}
-					});
-				}
-			}
-		}
-		return this;
-	}
-
 	/**
 	 * pager的adapter
 	 * 
@@ -422,28 +381,14 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
 		return this;
 	}
 
-	public CocoQuery loader(final Loader<?> loader, final Bundle bunle) {
-		if (getContext() instanceof FragmentActivity) {
-			if (progress != null) {
-				loader.progress(progress);
-			}
-			if (fragment != null) {
-				loader.async(fragment, (FragmentActivity) getContext(), bunle);
-			} else {
-				loader.async((FragmentActivity) getContext(), bunle);
-			}
-		}
-		return this;
-	}
-
 
     public CocoQuery image(final String url,final int maxH,final int maxW,final int viewholder) {
-        image(url,true,true,0,viewholder,new BitmapAjaxCallback() {
+        image(url, true, true, 0, viewholder, new BitmapAjaxCallback() {
 
             @Override
             protected void callback(String url, ImageView iv, Bitmap bm, AjaxStatus status) {
-                if (bm!=null) {
-                    Bitmap result = ImageUtils.scale(bm,AQUtility.dip2pixel(getContext(),maxW),AQUtility.dip2pixel(getContext(),maxH));
+                if (bm != null) {
+                    Bitmap result = ImageUtils.scale(bm, AQUtility.dip2pixel(getContext(), maxW), AQUtility.dip2pixel(getContext(), maxH));
 //                    if (result != bm) {
 //                        bm.recycle();
 //                    }
@@ -454,4 +399,122 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
         return this;
     }
 
+    @Override
+    public CocoQuery image(final String url) {
+        Picasso.with(getContext()).load(url).into(getImageView());
+        return this;
+    }
+
+    @Override
+    public CocoQuery image(int resid) {
+        Picasso.with(getContext()).load(resid).into(getImageView());
+        return this;
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(String url, boolean memCache, boolean fileCache) {
+        Picasso.with(getContext()).load(url).into(getImageView());
+        return this;
+    }
+
+    public CocoQuery image(String url, boolean cache) {
+        if (cache) {
+            image(url);
+        } else {
+            Picasso.with(getContext()).load(url).skipCache().into(getImageView());
+        }
+        return this;
+    }
+
+    public CocoQuery image(String url, int holder) {
+            Picasso.with(getContext()).load(url).placeholder(holder).into(getImageView());
+        return this;
+    }
+
+    public CocoQuery image(String url, Drawable holder) {
+        Picasso.with(getContext()).load(url).placeholder(holder).into(getImageView());
+        return this;
+    }
+
+    public CocoQuery image(String url, Drawable holder,int fallbackId) {
+        Picasso.with(getContext()).load(url).error(fallbackId).placeholder(holder).into(getImageView());
+        return this;
+    }
+
+    public CocoQuery image(String url, Drawable holder,Drawable fallbackId) {
+        Picasso.with(getContext()).load(url).error(fallbackId).placeholder(holder).into(getImageView());
+        return this;
+    }
+
+    public final <E extends View> E view () {
+            return (E) getView();
+    }
+
+
+    @Deprecated
+    @Override
+    public CocoQuery image(String url, boolean memCache, boolean fileCache, int targetWidth, int fallbackId) {
+        return this;
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(String url, boolean memCache, boolean fileCache, int targetWidth, int fallbackId, Bitmap preset, int animId) {
+        return super.image(url, memCache, fileCache, targetWidth, fallbackId, preset, animId);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(String url, boolean memCache, boolean fileCache, int targetWidth, int fallbackId, Bitmap preset, int animId, float ratio) {
+        return super.image(url, memCache, fileCache, targetWidth, fallbackId, preset, animId, ratio);
+    }
+
+    @Deprecated
+    @Override
+    protected CocoQuery image(String url, boolean memCache, boolean fileCache, int targetWidth, int fallbackId, Bitmap preset, int animId, float ratio, int round, String networkUrl) {
+        return super.image(url, memCache, fileCache, targetWidth, fallbackId, preset, animId, ratio, round, networkUrl);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(String url, ImageOptions options) {
+        return super.image(url, options);
+    }
+
+    @Deprecated
+    @Override
+    protected CocoQuery image(String url, ImageOptions options, String networkUrl) {
+        return super.image(url, options, networkUrl);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(BitmapAjaxCallback callback) {
+        return super.image(callback);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(String url, boolean memCache, boolean fileCache, int targetWidth, int resId, BitmapAjaxCallback callback) {
+        return super.image(url, memCache, fileCache, targetWidth, resId, callback);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(File file, int targetWidth) {
+        return super.image(file, targetWidth);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(File file, boolean memCache, int targetWidth, BitmapAjaxCallback callback) {
+        return super.image(file, memCache, targetWidth, callback);
+    }
+
+    @Deprecated
+    @Override
+    public CocoQuery image(Bitmap bm, float ratio) {
+        return super.image(bm, ratio);
+    }
 }

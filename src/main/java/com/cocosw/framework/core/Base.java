@@ -28,6 +28,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
+import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ErrorCode;
 import com.cocosw.framework.exception.ExceptionManager;
@@ -36,6 +37,7 @@ import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
+import com.squareup.otto.Bus;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
@@ -55,6 +57,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 
 	protected CocoQuery q;
 	private ThrowableLoader<T> loader;
+    protected Bus bus = CocoBus.getInstance();
 
 	@Override
 	public void onDialogResult(final int requestCode, final int resultCode,
@@ -66,6 +69,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        bus.register(this);
         if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
 		q = q == null ? new CocoQuery(this) : q;
 
@@ -200,6 +204,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+        bus.register(this);
         if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityDestroyed(this);
 		hideLoading();
 		q.CleanAllTask();

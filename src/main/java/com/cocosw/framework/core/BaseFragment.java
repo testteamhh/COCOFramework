@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
+import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ErrorCode;
 import com.cocosw.framework.exception.ExceptionManager;
@@ -19,6 +20,7 @@ import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
+import com.squareup.otto.Bus;
 
 public abstract class BaseFragment<T> extends SherlockFragment implements
 		DialogResultListener, CocoLoader<T> {
@@ -31,6 +33,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 	CocoDialog parentDialog;
 	protected CocoQuery q;
 	protected View v;
+    protected Bus bus = CocoBus.getInstance();
 
 	/**
 	 * 用于检查网络情况
@@ -109,6 +112,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        bus.register(this);
 		context = getActivity();
 		setHasOptionsMenu(true);
 		q = new CocoQuery(getActivity());
@@ -250,7 +254,13 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 		getBase().showLoading(str);
 	}
 
-	protected void hideLoading() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bus.unregister(this);
+    }
+
+    protected void hideLoading() {
 		getBase().hideLoading();
 	}
 }

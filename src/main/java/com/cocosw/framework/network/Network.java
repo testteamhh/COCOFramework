@@ -1,5 +1,7 @@
 package com.cocosw.framework.network;
 
+import android.content.Context;
+import android.os.StatFs;
 import com.cocosw.accessory.utils.FakeX509TrustManager;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.log.Log;
@@ -7,8 +9,10 @@ import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
+import com.squareup.okhttp.HttpResponseCache;
 import com.squareup.okhttp.OkHttpClient;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.HttpURLConnection;
@@ -41,9 +45,9 @@ public class Network {
     /**
      * use for app initialization
      */
-    public static void init() {
+    public static void init(Context context) {
         FakeX509TrustManager.allowAllSSL();
-        HttpRequest.setConnectionFactory(new OkConnectionFactory());
+        HttpRequest.setConnectionFactory(new OkConnectionFactory(context));
         if (SDK_INT <= FROYO)
             HttpRequest.keepAlive(false);
     }
@@ -122,17 +126,25 @@ public class Network {
      * this class to enable.
      */
     private static class OkConnectionFactory implements HttpRequest.ConnectionFactory {
+        private static final String COCO_CACHE = "coco-cache";
+        private static final int MIN_DISK_CACHE_SIZE = 5 * 1024 * 1024; // 5MB
+        private static final int MAX_DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
+
         private final OkHttpClient client;
 
-        public OkConnectionFactory() {
-            this(new OkHttpClient());
+        public OkConnectionFactory(Context context) {
+            this(new OkHttpClient(),context);
         }
 
-        public OkConnectionFactory(OkHttpClient client) {
+        public OkConnectionFactory(OkHttpClient client,Context context) {
             if (client == null) {
                 throw new NullPointerException("Client must not be null.");
             }
             this.client = client;
+            try {
+                this.client.setResponseCache(new HttpResponseCache(createDefaultCacheDir(context), calculateDiskCacheSize(createDefaultCacheDir(context))));
+            } catch (IOException ignored) {
+            }
         }
 
         public HttpURLConnection create(URL url) throws IOException {
@@ -142,6 +154,21 @@ public class Network {
         public HttpURLConnection create(URL url, Proxy proxy) throws IOException {
             throw new UnsupportedOperationException(
                     "Per-connection proxy is not supported. Use OkHttpClient's setProxy instead.");
+        }
+
+        private File createDefaultCacheDir(Context context) {
+            File cache = new File(context.getApplicationContext().getCacheDir(), COCO_CACHE);
+            if (!cache.exists()) {
+                cache.mkdirs();
+            }
+            return cache;
+        }
+
+        private int calculateDiskCacheSize(File dir) {
+            StatFs statFs = new StatFs(dir.getAbsolutePath());
+            int available = statFs.getBlockCount() * statFs.getBlockSize();
+            int size = available / 50;
+            return Math.max(Math.min(size, MAX_DISK_CACHE_SIZE), MIN_DISK_CACHE_SIZE);
         }
     }
 
