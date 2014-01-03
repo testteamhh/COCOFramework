@@ -58,6 +58,7 @@
 
 
     <dependencies>
+
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
@@ -83,6 +84,11 @@
             <artifactId>activitylifecyclecallbackscompat</artifactId>
             <groupId>org.jraf</groupId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.rxjava</groupId>
+            <artifactId>rxjava-android</artifactId>
+            <version>0.15.1</version>
         </dependency>
         <dependency>
             <groupId>net.simonvt.menudrawer</groupId>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import com.androidquery.util.AQUtility;
+import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.accessory.utils.UIUtils;
 import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.network.Network;
@@ -63,6 +64,7 @@ public abstract class CocoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        NetworkConnectivity.getInstance(this);
         Network.init(this);
         TAG = getString(getApplicationInfo().labelRes);
     }

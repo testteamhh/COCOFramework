@@ -33,6 +33,7 @@ public class ExceptionManager {
     public static final ExceptionHandler logHandler = new ExceptionHandler() {
         @Override
         public boolean exception(Exception e, Context ctx, Object source) throws CocoException {
+            e.printStackTrace();
             Log.e(e);
             return false;
         }
@@ -45,7 +46,7 @@ public class ExceptionManager {
 
     public static void handle(final Exception e, final Context source)
 			throws CocoException {
-            handle(e,(Context)source,source);
+            handle(e,source,source);
 	}
 
     public static void handle(final Exception e, final Context ctx,final Object source) throws CocoException {
