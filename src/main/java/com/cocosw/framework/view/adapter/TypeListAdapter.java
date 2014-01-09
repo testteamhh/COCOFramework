@@ -2,11 +2,9 @@ package com.cocosw.framework.view.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
-import com.github.kevinsawicki.wishlist.TypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
  * Time: 下午6:32
  */
 public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
-        CocoAdapter<T>{
+        CocoAdapter<T> {
 
     private List<T> dataList;
     protected Context context;
@@ -130,8 +128,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
     /**
      * Check whether a {@link android.app.LauncherActivity.ListItem} is already in this adapter.
      *
-     * @param item
-     *            Item to be verified whether it is in the adapter.
+     * @param item Item to be verified whether it is in the adapter.
      */
     public boolean contains(final T item) {
         return getDataList().contains(item);

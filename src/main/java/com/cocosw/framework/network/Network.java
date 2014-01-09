@@ -25,12 +25,12 @@ import static android.os.Build.VERSION_CODES.FROYO;
 /**
  * This class is for provide convenient interface for sync http access using OKHttp
  * especially get json object from url
- *
+ * <p/>
  * Usage:
- *     public static App getApp(long id) throws CocoException {
-            return request(HOST + "apps/" + id, App.class);
-       }
- *
+ * public static App getApp(long id) throws CocoException {
+ * return request(HOST + "apps/" + id, App.class);
+ * }
+ * <p/>
  * User: soarcn
  * Date: 13-11-15
  * Time: 下午6:17
@@ -64,29 +64,44 @@ public class Network {
      * Execute request
      *
      * @param target
-     * @return
      * @return request
      * @throws IOException
      * @throws com.cocosw.framework.exception.CocoException
      */
-    protected static <T extends Object> T request(String url, Class<T> target,String rawjson)
+    protected static <T extends Object> T request(String url, Class<T> target, String rawjson)
+            throws CocoException {
+        return fromRequest(requestHttp(url, rawjson), target);
+    }
+
+    /**
+     * Execute request
+     *
+     * @return request
+     * @throws IOException
+     * @throws com.cocosw.framework.exception.CocoException
+     */
+    protected static HttpRequest requestHttp(String url, String rawjson)
             throws CocoException {
         Log.d(url);
         HttpRequest request = HttpRequest.get(url);
         request.connectTimeout(TIMEOUT).readTimeout(TIMEOUT);
         request.contentType(HttpRequest.CONTENT_TYPE_JSON);
         //TODO preset header setter
-       // request.header("imei",IMEI);
+        // request.header("imei",IMEI);
         request.header("Connection", "close");
         request.acceptJson();
         request.acceptCharset(HttpRequest.CHARSET_UTF8);
         request.useCaches(true);
-        if (rawjson!=null)
+        if (rawjson != null)
             request.send(rawjson);
         if (!request.ok()) {
             Log.d(request.message());
             throw new CocoException("当前网络出了一些问题，请稍后重试");
         }
+        return request;
+    }
+
+    protected static <T extends Object> T fromRequest(HttpRequest request, Class<T> target) {
         Reader reader = request.bufferedReader();
         Log.i(request.body());
         try {
@@ -107,16 +122,14 @@ public class Network {
      * Execute request
      *
      * @param target
-     * @return
      * @return request
      * @throws IOException
      * @throws CocoException
      */
     protected static <T extends Object> T request(String url, Class<T> target)
             throws CocoException {
-        return request(url,target,null);
+        return request(url, target, null);
     }
-
 
 
     /**
@@ -133,10 +146,10 @@ public class Network {
         private final OkHttpClient client;
 
         public OkConnectionFactory(Context context) {
-            this(new OkHttpClient(),context);
+            this(new OkHttpClient(), context);
         }
 
-        public OkConnectionFactory(OkHttpClient client,Context context) {
+        public OkConnectionFactory(OkHttpClient client, Context context) {
             if (client == null) {
                 throw new NullPointerException("Client must not be null.");
             }
@@ -171,7 +184,6 @@ public class Network {
             return Math.max(Math.min(size, MAX_DISK_CACHE_SIZE), MIN_DISK_CACHE_SIZE);
         }
     }
-
 
 
 }

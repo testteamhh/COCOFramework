@@ -2,19 +2,14 @@ package com.cocosw.framework.exception;
 
 import android.content.Context;
 import android.widget.Toast;
-import com.cocosw.framework.app.CocoApp;
 import com.cocosw.framework.log.Log;
-
-import java.util.logging.Handler;
 
 /**
  * ExcetionManager is a exception router in UI layer.
- *
- *
  */
 public class ExceptionManager {
 
-	private static final int TOAST_DISPLAY_TIME = 4000;
+    private static final int TOAST_DISPLAY_TIME = 4000;
 
     /**
      * preset handler will display exception msg as toast bar
@@ -33,7 +28,6 @@ public class ExceptionManager {
     public static final ExceptionHandler logHandler = new ExceptionHandler() {
         @Override
         public boolean exception(Exception e, Context ctx, Object source) throws CocoException {
-            e.printStackTrace();
             Log.e(e);
             return false;
         }
@@ -42,16 +36,14 @@ public class ExceptionManager {
     private static ExceptionHandler handler = logHandler;
 
 
-
-
     public static void handle(final Exception e, final Context source)
-			throws CocoException {
-            handle(e,source,source);
-	}
+            throws CocoException {
+        handle(e, source, source);
+    }
 
-    public static void handle(final Exception e, final Context ctx,final Object source) throws CocoException {
+    public static void handle(final Exception e, final Context ctx, final Object source) throws CocoException {
 
-        if (handler!=null && handler.exception(e,ctx,source))
+        if (handler != null && handler.exception(e, ctx, source))
             return;
         if (e instanceof CocoException) {
             throw (CocoException) e;
@@ -75,6 +67,6 @@ public class ExceptionManager {
          * @return
          * @throws CocoException
          */
-        boolean exception(final Exception e, final Context ctx,final Object source) throws CocoException;
+        boolean exception(final Exception e, final Context ctx, final Object source) throws CocoException;
     }
 }

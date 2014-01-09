@@ -8,17 +8,15 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.Toast;
 import com.androidquery.AbstractAQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
@@ -28,19 +26,14 @@ import com.androidquery.util.AQUtility;
 import com.androidquery.util.Common;
 import com.androidquery.util.XmlDom;
 import com.cocosw.accessory.utils.ImageUtils;
-import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.R;
-import com.cocosw.framework.view.adapter.CocoAdapter;
 import com.squareup.picasso.Picasso;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.List;
 import java.util.WeakHashMap;
-import java.util.concurrent.Callable;
 
 public class CocoQuery extends AbstractAQuery<CocoQuery> {
 
@@ -422,7 +415,7 @@ public class CocoQuery extends AbstractAQuery<CocoQuery> {
         if (cache) {
             image(url);
         } else {
-            Picasso.with(getContext()).load(url).skipCache().into(getImageView());
+            Picasso.with(getContext()).load(url).skipMemoryCache().into(getImageView());
         }
         return this;
     }

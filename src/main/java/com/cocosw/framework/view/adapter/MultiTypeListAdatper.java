@@ -2,10 +2,8 @@ package com.cocosw.framework.view.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.AdapterView;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.github.kevinsawicki.wishlist.MultiTypeAdapter;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +13,10 @@ import java.util.List;
  * Date: 13-7-17
  * Time: 下午6:32
  */
-public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
-        CocoAdapter<Object>{
+public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implements
+        CocoAdapter<T> {
 
-    private List<Object> dataList;
+    private List<T> dataList;
     protected Context context;
     protected CocoQuery q;
     protected View.OnClickListener onViewClickInListListener;
@@ -28,11 +26,11 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
         this(context, null);
     }
 
-    public MultiTypeListAdatper(Context context, List<Object> dataList) {
+    public MultiTypeListAdatper(Context context, List<T> dataList) {
         super(context);
         this.context = context;
         if (dataList == null) {
-            this.dataList = new ArrayList<Object>();
+            this.dataList = new ArrayList<T>();
         } else
             this.dataList = dataList;
         q = new CocoQuery(context);
@@ -40,6 +38,7 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
 
     /**
      * get object item type
+     *
      * @param obj
      * @return
      */
@@ -52,10 +51,10 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
      * @param values
      */
     @Override
-    public void add(final List<Object> values) {
-        if (values != null&&values.size()>0) {
+    public void add(final List<T> values) {
+        if (values != null && values.size() > 0) {
             this.dataList.addAll(values);
-            for (Object obj:values) {
+            for (T obj : values) {
                 add(obj);
             }
         }
@@ -67,10 +66,10 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
      * @param value
      */
     @Override
-    public void add(final Object value) {
+    public void add(final T value) {
         if (value != null) {
             this.dataList.add(value);
-            addItem(getType(value),value);
+            addItem(getType(value), value);
         }
     }
 
@@ -80,7 +79,7 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
      * @param values
      */
     @Override
-    public void append(final List<Object> values) {
+    public void append(final List<T> values) {
         this.dataList.addAll(values);
     }
 
@@ -90,12 +89,12 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
      * @param values
      */
     @Override
-    public void append(final Object values) {
+    public void append(final T values) {
         this.dataList.add(values);
     }
 
     @Override
-    public void updateList(List<Object> values) {
+    public void updateList(List<T> values) {
         this.dataList = values;
     }
 
@@ -117,8 +116,7 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
     /**
      * Check whether a {@link android.app.LauncherActivity.ListItem} is already in this adapter.
      *
-     * @param item
-     *            Item to be verified whether it is in the adapter.
+     * @param item Item to be verified whether it is in the adapter.
      */
     public boolean contains(final Object item) {
         return getDataList().contains(item);
@@ -139,7 +137,7 @@ public abstract class MultiTypeListAdatper extends MultiTypeAdapter implements
         return getDataList().size() == 0 & !loading;
     }
 
-    protected List<Object> getDataList() {
+    protected List<T> getDataList() {
         return dataList;
     }
 
