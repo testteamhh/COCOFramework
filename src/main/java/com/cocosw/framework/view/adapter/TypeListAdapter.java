@@ -61,6 +61,11 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         }
     }
 
+    @Override
+    public void remove(int position) {
+        this.dataList.remove(position);
+    }
+
     /**
      * 往数据后面加入数据
      *

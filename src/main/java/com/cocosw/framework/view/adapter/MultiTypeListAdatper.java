@@ -36,13 +36,14 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implement
         q = new CocoQuery(context);
     }
 
+
     /**
      * get object item type
      *
      * @param obj
      * @return
      */
-    public abstract int getType(Object obj);
+    public abstract int getType(T obj);
 
 
     /**
@@ -98,6 +99,11 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implement
         this.dataList = values;
     }
 
+    @Override
+    public void remove(int position) {
+        this.dataList.remove(position);
+    }
+
     /**
      * 通知UI更新
      */
@@ -118,7 +124,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implement
      *
      * @param item Item to be verified whether it is in the adapter.
      */
-    public boolean contains(final Object item) {
+    public boolean contains(final T item) {
         return getDataList().contains(item);
     }
 

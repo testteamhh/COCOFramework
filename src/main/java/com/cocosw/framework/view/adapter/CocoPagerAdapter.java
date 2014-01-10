@@ -1,73 +1,53 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * Project  : CdutHelperAndroid
- * Package  : net.solosky.cduthelper.android.adapter
- * File     : SimpleListAdapter.java
- * Author   : solosky < solosky772@qq.com >
- * Created  : 2011-5-20
- * License  : Apache License 2.0
- */
 package com.cocosw.framework.view.adapter;
 
-import android.app.LauncherActivity.ListItem;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import com.cocosw.framework.uiquery.CocoQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author solosky <solosky772@qq.com>
+ * Adapter for viewpager with view recycle
+ * <p/>
+ * Project: app-parent
+ * User: Liao Kai(soarcn@gmail.com)
+ * Date: 13-12-12
+ * Time: 下午4:41
  */
-public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAdapter implements
-        CocoAdapter<T> {
+public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implements CocoAdapter<T> {
 
     private final LayoutInflater mInflater;
     private List<T> dataList;
     protected Context context;
-    protected OnClickListener onViewClickInListListener;
+    protected CocoQuery q;
+    protected View.OnClickListener onViewClickInListListener;
     private boolean loading = true;
 
     /**
      * 默认会构造为arraylist以后可以换
      */
-    public SimpleListAdapter(final Context context) {
+    public CocoPagerAdapter(final Context context) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.dataList = new ArrayList<T>();
+        q = new CocoQuery(context);
     }
 
     /**
      * @param dataList
      */
-    public SimpleListAdapter(final Context context, List<T> dataList) {
+    public CocoPagerAdapter(final Context context, List<T> dataList) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         if (dataList == null) {
             dataList = new ArrayList<T>(0);
         }
         this.dataList = dataList;
+        q = new CocoQuery(context);
     }
 
     /**
@@ -123,15 +103,14 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
     @Override
     public View getView(final int position, final View convertView,
                         final ViewGroup parent) {
-        V holder = null;
+        ViewHolder holder = null;
         if (convertView == null) {
-            holder = newView(position, parent);
+            holder = newView(position);
             holder.contentView.setTag(holder);
         } else {
-            holder = (V) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
-        holder.position = position;
-        holder.parent = parent;
+        q.recycle(holder.contentView);
         fillView(holder, position, parent);
         return holder.contentView;
     }
@@ -141,10 +120,10 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
     }
 
     // 创建一个新的View
-    public abstract V newView(int position, ViewGroup parent);
+    public abstract ViewHolder newView(int position);
 
     // 填充这个View
-    public abstract void fillView(V viewHolder, int position,
+    public abstract void fillView(ViewHolder viewHolder, int position,
                                   ViewGroup parent);
 
     // 展开一个View
@@ -204,11 +183,6 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
         this.dataList.add(values);
     }
 
-    @Override
-    public void remove(int position) {
-        this.dataList.remove(position);
-    }
-
     /**
      * 通知UI更新
      */
@@ -218,8 +192,13 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
         notifyDataSetChanged();
     }
 
+    @Override
+    public void remove(int position) {
+        this.dataList.remove(position);
+    }
+
     /**
-     * Check whether a {@link ListItem} is already in this adapter.
+     * Check whether a {@link android.app.LauncherActivity.ListItem} is already in this adapter.
      *
      * @param item Item to be verified whether it is in the adapter.
      */
@@ -228,7 +207,7 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
     }
 
     @Override
-    public void setListWatch(final OnClickListener listener) {
+    public void setListWatch(final View.OnClickListener listener) {
         this.onViewClickInListListener = listener;
     }
 
@@ -242,4 +221,18 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
         return getDataList().size() == 0 & !loading;
     }
 
+    @Override
+    public boolean areAllItemsEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return true;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
 }

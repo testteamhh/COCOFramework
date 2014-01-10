@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,7 +166,11 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
 		// Intentionally left blank
 	}
 
-	/**
+    protected final <E extends View> E view(int resourceId) {
+        return (E) v.findViewById(resourceId);
+    }
+
+    /**
 	 * 完成数据载入后的接口
 	 * 
 	 * @param items

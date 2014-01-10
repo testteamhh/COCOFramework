@@ -1,7 +1,6 @@
 package com.cocosw.framework.view.adapter;
 
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 
 import java.util.List;
@@ -54,4 +53,11 @@ public interface CocoAdapter<T> extends ListAdapter {
      * 重新载入数据接口
      */
     public void refresh();
+
+    /**
+     * remove item from position
+     *
+     * @param position
+     */
+    public void remove(int position);
 }

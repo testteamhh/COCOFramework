@@ -13,22 +13,25 @@ import com.github.kevinsawicki.wishlist.ViewUtils;
 
 public class ViewHolder {
 
-	protected final CocoQuery q;
-	public View contentView;
+    protected CocoQuery q;
+    public View contentView;
 	int position;
 	ViewGroup parent;
 
-	public ViewHolder(final CocoQuery q) {
-		this.q = q;
-	}
+    public ViewHolder() {
+    }
 
-	public ViewHolder(final CocoQuery q, final View view) {
-		this.q = q;
-		contentView = view;
-	}
+    public ViewHolder(final View view) {
+        setContentView(view);
+    }
 
-	public void gone(final View view) {
-		ViewUtils.setGone(view, true);
+    public void setContentView(View contentView) {
+        this.contentView = contentView;
+        q = new CocoQuery(contentView);
+    }
+
+    public void gone(final View view) {
+        ViewUtils.setGone(view, true);
 	}
 
 	public void visible(final View view) {
@@ -48,11 +51,11 @@ public class ViewHolder {
 		return (CheckBox) contentView.findViewById(id);
 	}
 
-	protected View view(final int id) {
-		return contentView.findViewById(id);
-	}
+    protected final <E extends View> E view(int resourceId) {
+        return (E) contentView.findViewById(resourceId);
+    }
 
-	public void delayImage(final ImageView view, final String url) {
+    public void delayImage(final ImageView view, final String url) {
 		delayImage(view, url, getPlaceHolder());
 	}
 
