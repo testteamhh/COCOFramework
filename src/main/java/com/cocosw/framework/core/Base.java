@@ -38,7 +38,6 @@ import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
-import com.jakewharton.scalpel.ScalpelFrameLayout;
 import com.squareup.otto.Bus;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -92,17 +91,17 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 
     }
 
-    @Override
-    public void setContentView(int layoutResId) {
-        if (BuildConfig.DEBUG) {
-            LayoutInflater layoutInflater = LayoutInflater.from(this);
-            ScalpelFrameLayout contentView = (ScalpelFrameLayout) layoutInflater.inflate(R.layout.ui_scalpel, null);
-            contentView.addView(layoutInflater.inflate(layoutResId, null));
-            super.setContentView(contentView);
-        } else {
-            super.setContentView(layoutResId);
-        }
-    }
+//    @Override
+//    public void setContentView(int layoutResId) {
+//        if (BuildConfig.DEBUG) {
+//            LayoutInflater layoutInflater = LayoutInflater.from(this);
+//            ScalpelFrameLayout contentView = (ScalpelFrameLayout) layoutInflater.inflate(R.layout.ui_scalpel, null);
+//            contentView.addView(layoutInflater.inflate(layoutResId, null));
+//            super.setContentView(contentView);
+//        } else {
+//            super.setContentView(layoutResId);
+//        }
+//    }
 
     @Override
     public Loader<T> onCreateLoader(final int arg0, final Bundle arg) {
@@ -264,11 +263,6 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
         getSupportLoaderManager().restartLoader(0, new Bundle(), this);
     }
 
-    protected ScalpelFrameLayout getScalpel() {
-        if (!BuildConfig.DEBUG)
-            throw new IllegalStateException("Only in DEBUG Mode!");
-        return view(R.id.scalpel);
-    }
 
     protected final <E extends View> E view(int resourceId) {
         return (E) findViewById(resourceId);
