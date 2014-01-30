@@ -17,27 +17,25 @@
 buildscript {
     repositories {
         mavenCentral()
-
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:0.8.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.2'
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.0.+'
     }
 }
-
-apply from: 'config/android-library.gradle'
-apply plugin: 'android-apt'
-apply plugin: 'hugo'
-apply from: 'config/maven_push.gradle'
-
 
 allprojects {
     groupId = POM_GROUP_ID
     artifactId = POM_ARTIFACT_ID
     version = POM_VERSION
 
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+		maven { url "file:///D:/develop/mvn" }
+        maven { url "https://raw.github.com/soarcn/mvn/master" }
+    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -49,57 +47,4 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.10'
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "file:///D:/develop/mvn" }
-    maven { url "https://raw.github.com/soarcn/mvn/master" }
-}
-
-dependencies {
-    compile 'com.android.support:support-v4:19.0.+'
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-
-    compile 'com.cocosw.accessory:utils:0.4'
-    compile 'com.cocosw.accessory:views:0.4'
-    compile 'com.cocosw.accessory:connectivity:0.4'
-
-    compile 'com.squareup:otto:1.3.4'
-    compile ('com.joanzapata.android:base-adapter-helper:1.1.3') {
-        exclude group: 'com.squareup'
-    }
-    compile 'com.github.kevinsawicki:http-request:5.5'
-    compile 'com.cocosw:undobar:0.5@aar'
-    compile 'de.keyboardsurfer.android.widget:crouton:1.8.2'
-    compile ('com.github.kevinsawicki:wishlist:0.10'){
-        exclude module: 'support-v4'
-    }
-
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.googlecode.android-query:android-query:0.25.9'
-    compile 'com.path:android-priority-jobqueue:1.0'
-
-    compile 'com.squareup.dagger:dagger:1.2.0'
-    apt 'com.squareup.dagger:dagger-compiler:1.2.0'
-
-    compile ('net.simonvt.menudrawer:menudrawer:3.0.5@aar') {
-        optional = true
-    }
-
-    compile ('org.jraf:activitylifecyclecallbackscompat:1.0'){
-        exclude module: 'support-v4'
-    }
-
-    compile 'com.squareup.okhttp:okhttp:1.3.0'
-    compile 'com.squareup.picasso:picasso:2.1.1'
-
-    compile 'com.jakewharton:butterknife:4.0.1'
-    compile 'com.jakewharton.timber:timber:2.1.0'
-    debugCompile 'com.jakewharton.madge:madge:1.1.1'
-    debugCompile 'com.jakewharton.scalpel:scalpel:1.1.1'
-
-    compile 'com.netflix.rxjava:rxjava-android:0.16.1'
-
-}
 
