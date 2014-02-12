@@ -2,6 +2,7 @@ package com.cocosw.framework.exception;
 
 import android.content.Context;
 import android.widget.Toast;
+
 import com.cocosw.framework.log.Log;
 
 /**
@@ -20,25 +21,47 @@ public class ExceptionManager {
             Toast.makeText(ctx, e.getMessage(), ExceptionManager.TOAST_DISPLAY_TIME).show();
             return false;
         }
+
+        @Override
+        public void error(Exception e, Context ctx, Object source) {
+            Toast.makeText(ctx, e.getMessage(), ExceptionManager.TOAST_DISPLAY_TIME).show();
+        }
     };
 
     /**
      * preset handler will only log the exception
      */
-    public static final ExceptionHandler logHandler = new ExceptionHandler() {
+    public static class LogExceptionHandler implements ExceptionHandler {
         @Override
         public boolean exception(Exception e, Context ctx, Object source) throws CocoException {
             Log.e(e);
             return false;
         }
-    };
 
-    private static ExceptionHandler handler = logHandler;
+        @Override
+        public void error(Exception e, Context ctx, Object source) {
+            Log.e(e);
+        }
+    }
+
+    ;
+
+    private static ExceptionHandler handler = new LogExceptionHandler();
 
 
     public static void handle(final Exception e, final Context source)
             throws CocoException {
         handle(e, source, source);
+    }
+
+    public static void error(final Exception e, final Context source) {
+        error(e, source, source);
+    }
+
+    public static void error(Exception e, Context ctx, Object source) {
+        if (handler != null) {
+            handler.error(e, ctx, source);
+        }
     }
 
     public static void handle(final Exception e, final Context ctx, final Object source) throws CocoException {
@@ -68,5 +91,14 @@ public class ExceptionManager {
          * @throws CocoException
          */
         boolean exception(final Exception e, final Context ctx, final Object source) throws CocoException;
+
+        /**
+         * Some error happened and can't recover from disaster
+         *
+         * @param e
+         * @param ctx
+         * @param source
+         */
+        void error(Exception e, Context ctx, Object source);
     }
 }
