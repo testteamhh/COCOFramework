@@ -1,45 +1,44 @@
 package com.cocosw.framework.core;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.cocosw.accessory.views.CocoPager;
 
 public interface Pager<K extends Carousel> {
 
-	public int title();
+    public int title();
 
-	public void setPager(final CocoPager pager);
+    public void setPager(final CocoPager pager);
 
-	public CocoPager getPager();
+    public CocoPager getPager();
 
-	public void first();
+    public void first();
 
-	/**
-	 * 获得当前fragment的id,可以表示其所在的位置
-	 * 
-	 * @return
-	 */
-	public int getID();
+    /**
+     * 获得当前fragment的id,可以表示其所在的位置
+     *
+     * @return
+     */
+    public int getID();
 
-	public void setID(int id);
+    public void setID(int id);
 
-	/**
-	 * 下一个Pager
-	 * 
-	 * @return
-	 */
-	public Pager<?> nextPager();
+    /**
+     * 下一个Pager
+     *
+     * @return
+     */
+    public Pager<?> nextPager();
 
-	/**
-	 * 上一个pager
-	 * 
-	 * @return
-	 */
-	public Pager<?> prevPager();
+    /**
+     * 上一个pager
+     *
+     * @return
+     */
+    public Pager<?> prevPager();
 
-	K getSource();
+    K getSource();
 
-	void setSource(K s);
+    void setSource(K s);
 
-	public void onPagerSelected();
+    public void onPagerSelected();
 
 }

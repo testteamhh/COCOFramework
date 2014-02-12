@@ -2,19 +2,21 @@ package com.cocosw.framework.extend;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import com.cocosw.accessory.utils.FragmentUtils;
 import com.cocosw.framework.R;
 import com.cocosw.framework.core.Base;
+
 import net.simonvt.menudrawer.MenuDrawer;
 
 /**
  * This is design for list+detail mode activity
- *
+ * <p/>
  * list/detail fragment can be set up separately
  * detail fragment will slide from right with animation if you try to open it and can be closed by swipe right
- *
+ * <p/>
  * you have to add dependency in your pom to enable this feature
- *
+ * <p/>
  * User: Administrator
  * Date: 13-11-15
  * Time: 下午7:08
@@ -67,7 +69,7 @@ public abstract class DetailActivity<T> extends Base<T> {
 
     protected void setContentFragment(Fragment fragment) {
         contentFragment = fragment;
-        FragmentUtils.replaceFragment(this,R.id.mdContent,fragment);
+        FragmentUtils.replaceFragment(this, R.id.mdContent, fragment);
     }
 
     public Fragment getContentFragment() {

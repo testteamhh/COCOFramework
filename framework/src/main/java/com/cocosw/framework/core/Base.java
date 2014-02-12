@@ -18,18 +18,19 @@
 package com.cocosw.framework.core;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
-import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
+import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ErrorCode;
 import com.cocosw.framework.exception.ExceptionManager;
@@ -39,13 +40,14 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
+
 import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
 import org.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+
+import butterknife.ButterKnife;
 
 
 /**
@@ -71,24 +73,27 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bus.register(this);
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
+        if (ApplicationHelper.PRE_ICS)
+            MainLifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
         q = q == null ? new CocoQuery(this) : q;
-
         setContentView(layoutId());
-
+        ButterKnife.inject(this);
         try {
             init(savedInstanceState);
         } catch (final RuntimeException e) {
-            ExceptionManager.handle(e, this);
+            ExceptionManager.error(e, this);
             return;
         } catch (final Exception e) {
-            ExceptionManager.handle(e, this);
+            ExceptionManager.error(e, this);
             finish();
             return;
         }
         onStartLoading();
         getSupportLoaderManager().initLoader(0, getIntent().getExtras(), this);
+    }
 
+    protected void inject() {
+        Injector.inject(this);
     }
 
 //    @Override
@@ -208,8 +213,14 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     /**
      * 重启本activity
      */
-    public void restart() {
-        // TweetUtils.restartActivity(this, false);
+    protected void restart() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
     @Override
@@ -218,7 +229,6 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
         bus.register(this);
         if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityDestroyed(this);
         hideLoading();
-        q.CleanAllTask();
         // hack for null point exception
         try {
             final Field INSTANCES_MAP = LayoutInflater.class
@@ -232,8 +242,8 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
 
     @Override
     protected void onStart() {
-        invalidateOptionsMenu();
         super.onStart();
+        invalidateOptionsMenu();
         if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityStarted(this);
     }
 
@@ -278,7 +288,8 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivitySaveInstanceState(this, outState);
+        if (ApplicationHelper.PRE_ICS)
+            MainLifecycleDispatcher.get().onActivitySaveInstanceState(this, outState);
     }
 
 
@@ -334,14 +345,16 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
      */
     protected boolean finishWithConfirm() {
         if (System.currentTimeMillis() - exitTime > 3000) {
-            Crouton.cancelAllCroutons();
-            q.crouton(R.string.confirm_opt_exit, new Style.Builder().setBackgroundColor(R.color.purered)
-                    .setHeight(LayoutParams.WRAP_CONTENT).build());
+            showExitConfirm();
             exitTime = System.currentTimeMillis();
             return false;
         } else {
             finish();
             return true;
         }
+    }
+
+    protected void showExitConfirm() {
+        UndoBarController.show(this, getString(R.string.confirm_opt_exit));
     }
 }

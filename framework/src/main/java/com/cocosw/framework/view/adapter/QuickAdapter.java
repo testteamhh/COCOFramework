@@ -2,23 +2,22 @@ package com.cocosw.framework.view.adapter;
 
 import android.content.Context;
 import android.view.View;
-import com.joanzapata.android.BaseAdapterHelper;
 
 import java.util.List;
 
 /**
  * QuickAdapter
- *
- *
- *
- *
+ * <p/>
+ * <p/>
+ * <p/>
+ * <p/>
  * <p/>
  * Project: cocoframework
  * User: Liao Kai(soarcn@gmail.com)
  * Date: 14-1-14
  * Time: 下午8:29
  */
-public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapter<T> implements CocoAdapter<T>{
+public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapter<T> implements CocoAdapter<T> {
 
     protected View.OnClickListener onViewClickInListListener;
     private boolean loading = true;

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
+
 import com.cocosw.accessory.views.ItemViewClickLisener;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
@@ -26,7 +30,7 @@ import java.util.List;
  * Date: 13-11-28
  * Time: 下午12:31
  */
-public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseFragment<List<T>> implements
+public abstract class AdapterViewFragment<T, A extends AdapterView> extends BaseFragment<List<T>> implements
         AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
 
@@ -85,7 +89,8 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
     protected View getEmptyView(final int layout, final int msg,
                                 final int button, final View.OnClickListener listener) {
         final View view = LayoutInflater.from(context).inflate(layout, null);
-        final CocoQuery nq = new CocoQuery(view).id(R.id.empty_msg).text(msg);
+        final CocoQuery nq = new CocoQuery(view);
+        nq.id(R.id.empty_msg).text(msg);
         nq.id(R.id.empty_button).text(button).clicked(listener);
         return view;
     }
@@ -99,7 +104,7 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
         return mListContainer;
     }
 
-    private AdapterViewFragment<T,A> hide(final View view) {
+    private AdapterViewFragment<T, A> hide(final View view) {
         ViewUtils.setGone(view, true);
         return this;
     }
@@ -121,9 +126,6 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
 //    }
 
     /**
-     *
-     *
-
      * 内容为空时显示的文字消息
      *
      * @param e
@@ -239,7 +241,7 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
      * @param shown
      * @return this fragment
      */
-    protected AdapterViewFragment<T,A> setListShown(final boolean shown) {
+    protected AdapterViewFragment<T, A> setListShown(final boolean shown) {
         if (!isUsable()) {
             return this;
         }
@@ -286,7 +288,6 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
             init(view, bundle);
             q.recycle(view);
         } catch (final Exception e) {
-            Log.d("exception in" + this.getClass().getSimpleName());
             e.printStackTrace();
             getActivity().finish();
         }
@@ -326,7 +327,7 @@ public abstract class AdapterViewFragment<T,A extends AdapterView> extends BaseF
         ((CocoAdapter<T>) mAdapter).updateList(items);
     }
 
-    private AdapterViewFragment<T,A> show(final View view) {
+    private AdapterViewFragment<T, A> show(final View view) {
         ViewUtils.setGone(view, false);
         return this;
     }

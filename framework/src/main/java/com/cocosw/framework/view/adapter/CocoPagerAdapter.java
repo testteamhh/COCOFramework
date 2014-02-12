@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
 import com.cocosw.framework.uiquery.CocoQuery;
 
 import java.util.ArrayList;

@@ -5,6 +5,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -170,5 +171,15 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         if (refresh != null) {
             refresh.setActionView(R.layout.indeterminate_progress_action);
         }
+    }
+
+    /**
+     * helper method for getting index
+     *
+     * @param bundel
+     * @return
+     */
+    protected long getIndex(Bundle bundel) {
+        return CocoBundle.builder(bundel).getIndex();
     }
 }

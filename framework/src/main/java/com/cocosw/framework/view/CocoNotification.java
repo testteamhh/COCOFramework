@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.widget.RemoteViews;
+
 import com.cocosw.framework.R;
 
 
@@ -21,7 +22,7 @@ public class CocoNotification {
     private Handler handler;
     private Notification progNotification;
 
-    public CocoNotification(final Context ctx,final int id) {
+    public CocoNotification(final Context ctx, final int id) {
         context = ctx;
         notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);

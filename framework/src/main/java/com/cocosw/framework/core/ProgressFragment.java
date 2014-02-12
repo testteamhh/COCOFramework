@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.ExceptionManager;
+
+import butterknife.ButterKnife;
 
 /**
  * Fragement support emptyview and loading view
@@ -45,10 +48,11 @@ public abstract class ProgressFragment<T> extends BaseFragment<T> {
      */
     @Override
     public void onDestroyView() {
+        super.onDestroyView();
         mContentShown = false;
         mIsContentEmpty = false;
         mProgressContainer = mContentContainer = mContentView = mEmptyView = null;
-        super.onDestroyView();
+
     }
 
     /**
@@ -80,6 +84,7 @@ public abstract class ProgressFragment<T> extends BaseFragment<T> {
         super.onActivityCreated(savedInstanceState);
         setContentView(layoutId());
         v = getContentView();
+        ButterKnife.inject(this, v);
         q.recycle(v);
         try {
             setupUI(v, savedInstanceState);

@@ -3,6 +3,7 @@ package com.cocosw.framework.view.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
+
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 

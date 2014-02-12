@@ -14,12 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.cocosw.framework.app.CocoBus;
+import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.squareup.otto.Bus;
+
+import butterknife.ButterKnife;
 
 public abstract class BaseDialog<T> extends DialogFragment implements
         CocoLoader<T> {
@@ -94,11 +98,12 @@ public abstract class BaseDialog<T> extends DialogFragment implements
                              final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), container, false);
+        ButterKnife.inject(this, v);
         q = new CocoQuery(getActivity(), v);
         try {
             setupUI(v, savedInstanceState);
         } catch (final Exception e) {
-            e.printStackTrace();
+            ExceptionManager.error(e, context, this);
         }
         return v;
     }
@@ -205,6 +210,12 @@ public abstract class BaseDialog<T> extends DialogFragment implements
                             final Bundle arg) {
         d.setArguments(arg);
         BaseDialog.show(fm, d);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     @Override
