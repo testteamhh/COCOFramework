@@ -5,9 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.text.Html;
 import android.webkit.WebView;
+
 import com.cocosw.framework.BuildConfig;
+
 import timber.log.Timber;
 
 /**
@@ -22,22 +23,6 @@ public class Log {
             Timber.plant(new Timber.DebugTree());
         }
     }
-
-
-    /** A tree which logs important information for crash reporting. */
-    private static class CrashReportingTree extends Timber.DebugTree {
-
-        @Override
-        public void e(String message, Object... args) {
-            super.e(message, args);
-        }
-
-        @Override
-        public void e(Throwable t, String message, Object... args) {
-            super.e(t, message, args);
-        }
-    }
-
 
     /**
      * 打印log
@@ -59,6 +44,10 @@ public class Log {
         }
     }
 
+    public static void i(String str, Object... arg) {
+        Timber.i(str, arg);
+    }
+
     public static void i(String str) {
         Timber.i(str);
     }
@@ -67,14 +56,25 @@ public class Log {
         Timber.d(str);
     }
 
+    public static void d(String str, Object... arg) {
+        Timber.d(str, arg);
+    }
+
     public static void w(String str) {
         Timber.w(str);
+    }
+
+    public static void w(String str, Object... arg) {
+        Timber.w(str, arg);
     }
 
     public static void e(String str) {
         Timber.e(str);
     }
 
+    public static void e(String str, Object... arg) {
+        Timber.e(str, arg);
+    }
 
     public static void d(final Object str) {
         Timber.d(str.toString());
@@ -107,17 +107,21 @@ public class Log {
     }
 
     public static void d(final String[] str) {
-            for (int i = 0; i < str.length; i++) {
-                d("str[" + i + "]>>>>>>>>>>>>>" + str[i]);
-            }
+        for (int i = 0; i < str.length; i++) {
+            d("str[" + i + "]>>>>>>>>>>>>>" + str[i]);
+        }
     }
 
     public static void d(final Throwable t) {
-        Timber.d(t,"Exception");
+        Timber.d(t, "Exception");
     }
 
     public static void e(final Throwable t) {
-        Timber.e(t,"Exception");
+        Timber.e(t, "Exception");
+    }
+
+    public static void e(final Throwable t, String str, Object... arg) {
+        Timber.e(t, str, arg);
     }
 
     /**
@@ -127,10 +131,10 @@ public class Log {
      */
     public static void dialog(Context context, String content, String... str) {
         //TODO html/non-html
-        create(context,content,str).show();
+        create(context, content, str).show();
     }
 
-    private static Dialog create(Context mContext, String mLicensesText,String... str) {
+    private static Dialog create(Context mContext, String mLicensesText, String... str) {
         //Get resources
         final WebView webView = new WebView(mContext);
         webView.loadDataWithBaseURL(null, mLicensesText, "text/html", "utf-8", null);
@@ -142,7 +146,7 @@ public class Log {
                         dialogInterface.dismiss();
                     }
                 });
-        if (str!=null && str.length>0)
+        if (str != null && str.length > 0)
             builder.setTitle(str[0]);
         final AlertDialog dialog = builder.create();
         return dialog;
