@@ -33,12 +33,16 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
-		maven { url "file:///D:/develop/mvn" }
+        maven { url "file:///D:/develop/mvn" }
         maven { url "https://raw.github.com/soarcn/mvn/master" }
     }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
+    }
+
+    configurations.all {
+        exclude group: 'com.google.android', module: 'support-v4', version: 'r7'
     }
 }
 
