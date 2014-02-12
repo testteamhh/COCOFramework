@@ -1,6 +1,7 @@
 package com.cocosw.framework.app;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.ThreadEnforcer;
 
 /**
  * TODO Desc
@@ -15,8 +16,8 @@ public class CocoBus {
     private static Bus bus;
 
     public static Bus getInstance() {
-        if (bus==null)
-            bus = new Bus();
+        if (bus == null)
+            bus = new Bus(ThreadEnforcer.ANY);
         return bus;
     }
 
