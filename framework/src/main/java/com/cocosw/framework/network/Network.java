@@ -3,7 +3,6 @@ package com.cocosw.framework.network;
 import android.content.Context;
 import android.os.StatFs;
 
-import com.cocosw.accessory.utils.FakeX509TrustManager;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.log.Log;
 import com.github.kevinsawicki.http.HttpRequest;
@@ -47,7 +46,6 @@ public class Network {
      * use for app initialization
      */
     public static void init(Context context) {
-        FakeX509TrustManager.allowAllSSL();
         HttpRequest.setConnectionFactory(new OkConnectionFactory(context));
         if (SDK_INT <= FROYO)
             HttpRequest.keepAlive(false);

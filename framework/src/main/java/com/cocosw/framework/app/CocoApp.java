@@ -25,6 +25,8 @@ import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 
@@ -45,11 +47,6 @@ public abstract class CocoApp extends Application {
         instance = this;
     }
 
-    protected boolean showActivityLiftcycle() {
-        return false;
-    }
-
-
     public static CocoApp get(Context context) {
         return (CocoApp) context.getApplicationContext();
     }
@@ -67,21 +64,15 @@ public abstract class CocoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (BuildConfig.DEBUG) {
-            if (UIUtils.hasGingerbread()) {
-                StrictMode
-                        .setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                                .detectNetwork().penaltyLog().build());
-            }
-            if (showActivityLiftcycle())
-                registerActivityLifecycle(mDebugCallbacks);
-        }
         NetworkConnectivity.getInstance(this);
         TAG = getString(getApplicationInfo().labelRes);
         CocoQuery.setQueryClass(CocoQuery.ExtViewQuery.class);
         buildObjectGraphAndInject();
         if (getCrashTree() != null) {
             Timber.plant(getCrashTree());
+        }
+        if (config()!=null) {
+            config().run();
         }
     }
 
@@ -90,7 +81,7 @@ public abstract class CocoApp extends Application {
      *
      * @param callback
      */
-    protected void registerActivityLifecycle(ActivityLifecycleCallbacksCompat callback) {
+    public void registerActivityLifecycle(ActivityLifecycleCallbacksCompat callback) {
         ApplicationHelper.registerActivityLifecycleCallbacks(this, callback);
     }
 
@@ -106,11 +97,14 @@ public abstract class CocoApp extends Application {
 
         Injector.init(new SystemModule(this));
         Injector.init(new AndroidModule());
-
         long diff = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
         Log.i("Global object graph creation took %sms", diff);
     }
 
+
+    protected Config config() {
+        return null;
+    }
 
     /**
      * Provide CrashTree for upload your app exception to online service
@@ -121,43 +115,6 @@ public abstract class CocoApp extends Application {
         return null;
     }
 
-
-    private ActivityLifecycleCallbacksCompat mDebugCallbacks = new ActivityLifecycleCallbacksCompat() {
-        @Override
-        public void onActivityStopped(Activity activity) {
-            Log.d("onActivityStopped activity=" + activity);
-        }
-
-        @Override
-        public void onActivityStarted(Activity activity) {
-            Log.d("onActivityStarted activity=" + activity);
-        }
-
-        @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-            Log.d("onActivitySaveInstanceState activity=" + activity);
-        }
-
-        @Override
-        public void onActivityResumed(Activity activity) {
-            Log.d("onActivityResumed activity=" + activity);
-        }
-
-        @Override
-        public void onActivityPaused(Activity activity) {
-            Log.d("onActivityPaused activity=" + activity);
-        }
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-            Log.d("onActivityDestroyed activity=" + activity);
-        }
-
-        @Override
-        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-            Log.d("onActivityCreated activity=" + activity);
-        }
-    };
 
     // setup job manager configuration
     protected Configuration getJobManagerConfig() {
