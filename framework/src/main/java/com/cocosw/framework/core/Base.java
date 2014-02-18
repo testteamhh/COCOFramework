@@ -354,7 +354,10 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
         }
     }
 
+    /***
+     * UI will be shown when confirm activity finishing, call in finishWithConfirm()
+     */
     protected void showExitConfirm() {
-        UndoBarController.show(this, getString(R.string.confirm_opt_exit));
+        new UndoBarController.UndoBar(this).message(R.string.confirm_opt_exit).duration(3000).show();
     }
 }

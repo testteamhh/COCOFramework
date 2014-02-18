@@ -5,13 +5,16 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 
+import com.cocosw.accessory.views.HeaderFooterListAdapter;
 import com.cocosw.accessory.views.ItemViewClickLisener;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
+import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
@@ -35,12 +38,12 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 
 
     private boolean updated;
-    private View emptyView;
+    View emptyView;
     protected List<T> items = Collections.emptyList();
     protected boolean listShown;
 
     /**
-     * 这个是没有wrapper的实际的adapter
+     * The actual adapter without any wrapper
      */
     BaseAdapter mAdapter;
     // HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
@@ -78,7 +81,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
      *
      * @return
      */
-    public View emptyView() {
+    protected View emptyView() {
         return LayoutInflater.from(context).inflate(R.layout.empty, null);
     }
 
@@ -104,7 +107,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         return mListContainer;
     }
 
-    private AdapterViewFragment<T, A> hide(final View view) {
+    protected AdapterViewFragment<T, A> hide(final View view) {
         ViewUtils.setGone(view, true);
         return this;
     }
@@ -126,24 +129,24 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 //    }
 
     /**
-     * 内容为空时显示的文字消息
-     *
-     * @param e
-     * @return
-     */
-    protected String refreshText(final CocoException e) {
-        if (e != null) {
-            return e.getMessage();
-        }
-        return getString(R.string.empty_list);
-    }
+          * 内容为空时显示的文字消息
+          *
+          * @param e
+          * @return
+          */
+         protected String refreshText(final CocoException e) {
+             if (e != null) {
+                 return e.getMessage();
+             }
+             return getString(R.string.empty_list);
+         }
 
     /**
-     * 按了refresh后的反应
-     */
-    protected void refreshAction() {
-        refresh();
-    }
+          * 按了refresh后的反应
+          */
+         protected void refreshAction() {
+             refresh();
+         }
 
     /**
      * 初始化界面
@@ -199,10 +202,25 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         }
         if (items != null && mAdapter != null) {
             ((CocoAdapter) mAdapter).add(items);
-            ((CocoAdapter) mAdapter).notifyDataChange();
+            updateAdapter();
         }
         onLoaderDone(items);
         showList();
+    }
+
+    /**
+     * notifiy adapter to update
+     */
+    protected void updateAdapter() {
+        Adapter adapter = mListContainer.getAdapter();
+        if (adapter instanceof HeaderFooterListAdapter) {
+            ((HeaderFooterListAdapter)adapter).getWrappedAdapter().notifyDataSetChanged();
+            return;
+        }
+        if (adapter instanceof BaseAdapter) {
+            ((BaseAdapter)adapter).notifyDataSetChanged();
+            return;
+        }
     }
 
     @Override
@@ -282,21 +300,25 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
                 getList().setEmptyView(emptyView);
                 ((FrameLayout) emptyView).addView(emptyView());
             }
-            mAdapter = (BaseAdapter) createAdapter(items);
-            mListContainer.setAdapter(wrapperAdapter(mAdapter));
+            constractAdapter();
             setOnViewClickInList();
             init(view, bundle);
             q.recycle(view);
         } catch (final Exception e) {
-            e.printStackTrace();
+            ExceptionManager.error(e,context,this);
             getActivity().finish();
         }
     }
 
+    protected void constractAdapter() throws Exception {
+        mAdapter = (BaseAdapter) createAdapter(items);
+        mListContainer.setAdapter(wrapperAdapter(mAdapter));
+    }
+
+
     @Override
     public void onScrollStateChanged(final AbsListView view,
                                      final int scrollState) {
-        // TODO 自动生成的方法存根
 
     }
 
@@ -327,7 +349,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         ((CocoAdapter<T>) mAdapter).updateList(items);
     }
 
-    private AdapterViewFragment<T, A> show(final View view) {
+    protected AdapterViewFragment<T, A> show(final View view) {
         ViewUtils.setGone(view, false);
         return this;
     }

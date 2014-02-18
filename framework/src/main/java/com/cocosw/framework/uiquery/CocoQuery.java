@@ -3,12 +3,18 @@ package com.cocosw.framework.uiquery;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.atermenji.android.iconicdroid.IconicFontDrawable;
+import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.query.AbstractViewQuery;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -208,5 +214,225 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
             }
             return self();
         }
+
+        /**
+         * Sets a iconic image
+         * @param icon
+         * @return
+         */
+        public ExtViewQuery image(Icon icon) {
+            IconicFontDrawable draw = new IconicFontDrawable(context, icon);
+            draw.setIconColor(context.getResources().getColor(android.R.attr.textColor));
+            return background(draw);
+        }
+
+        /**
+         * Set a iconic image
+         * @param icon
+         * @return
+         */
+        public ExtViewQuery image(Icon icon, int sizedp) {
+            IconicFontDrawable draw = new IconicFontDrawable(context, icon);
+            draw.setIconColor(context.getResources().getColor(android.R.attr.textColor));
+            draw.setIntrinsicHeight(dip2pixel(sizedp));
+            draw.setIntrinsicWidth(dip2pixel(sizedp));
+            return image(draw);
+        }
+
+        /**
+         * Set color for iconic image
+         * @param color
+         * @return
+         */
+        public ExtViewQuery iconColor(int color) {
+            if (view instanceof ImageView) {
+                Drawable d = ((ImageView) view).getDrawable();
+                if (d!=null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable)d).setIconColor(color);
+                }
+                d =  (view).getBackground();
+                if (d!=null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable)d).setIconColor(color);
+                }
+            }
+            return self();
+        }
+
+        /**
+         * Set color for iconic image
+         * @param colorId
+         * @return
+         */
+        public ExtViewQuery iconColorId(int colorId) {
+            return iconColor(context.getResources().getColor(colorId));
+        }
+
+
+        /**
+         * Sets a iconic image to left of textview/buttonview
+         * @param icon
+         * @return
+         */
+        public ExtViewQuery leftDrawable(Icon icon) {
+            if (view instanceof TextView) {
+                return leftDrawable(icon,-1,-1);
+            }
+            return self();
+        }
+
+        /**
+         * Sets a iconic image to left of textview/buttonview
+         * @param color
+         * @return
+         */
+        public ExtViewQuery leftDrawableColor(int color) {
+            if (view instanceof TextView) {
+                Drawable d = ((TextView) view).getCompoundDrawables()[0];
+                if (d!=null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable)d).setIconColor(color);
+                }
+            }
+            return self();
+        }
+
+        /**
+         * Sets a iconic image to left of textview/buttonview
+         * @param colorId
+         * @return
+         */
+        public ExtViewQuery leftDrawableColorId(int colorId) {
+            return leftDrawableColor(context.getResources().getColor(colorId));
+        }
+
+
+        /**
+         * Sets a iconic image to left of textview/buttonview
+         * @param color
+         * @return
+         */
+        public ExtViewQuery rightDrawableColor(int color) {
+            if (view instanceof TextView) {
+                Drawable d = ((TextView) view).getCompoundDrawables()[2];
+                if (d!=null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable)d).setIconColor(color);
+                }
+            }
+            return self();
+        }
+
+        /**
+         * Sets a iconic image to left of textview/buttonview
+         * @param colorId
+         * @return
+         */
+        public ExtViewQuery rightDrawableColorId(int colorId) {
+            return leftDrawableColor(context.getResources().getColor(colorId));
+        }
+
+        /**
+         * Sets a iconic image to left of textview/buttonview with padding
+         * @param icon
+         * @return
+         */
+        public ExtViewQuery leftDrawable(Icon icon,int sizedp, int padding) {
+            if (view instanceof TextView) {
+                IconicFontDrawable draw = new IconicFontDrawable(context, icon);
+                draw.setIconColor((((TextView) view).getCurrentTextColor()));
+                if (padding<0)
+                     padding = dip2pixel(8);
+                else
+                     padding = dip2pixel(padding);
+                draw.setIconPadding(padding);
+                if (sizedp>0) {
+                    draw.setIntrinsicHeight(dip2pixel(sizedp));
+                    draw.setIntrinsicWidth(dip2pixel(sizedp));
+                } else {
+                    draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
+                    draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
+                }
+                Drawable[] ds = ((TextView) view).getCompoundDrawables();
+                ((TextView)view).setCompoundDrawablesWithIntrinsicBounds(draw, ds[1], ds[2], ds[3]);
+
+            }
+            return self();
+        }
+
+
+        /**
+         * Sets a iconic image to right of textview/buttonview
+         * @param icon
+         * @return
+         */
+        public ExtViewQuery rightDrawable(Icon icon) {
+            if (view instanceof TextView) {
+                return rightDrawable(icon,-1,-1);
+            }
+            return self();
+        }
+
+
+
+        /**
+         * Sets a iconic image to right of textview/buttonview with padding
+         * @param icon
+         * @return
+         */
+        public ExtViewQuery rightDrawable(Icon icon,int sizedp,int padding) {
+            if (view instanceof TextView) {
+                IconicFontDrawable draw = new IconicFontDrawable(context, icon);
+                draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
+                draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
+                draw.setIconColor((((TextView) view).getCurrentTextColor()));
+                if (padding<0)
+                    padding = dip2pixel(8);
+                else
+                    padding = dip2pixel(padding);
+                draw.setIconPadding(padding);
+                if (sizedp>0) {
+                    draw.setIntrinsicHeight(dip2pixel(sizedp));
+                    draw.setIntrinsicWidth(dip2pixel(sizedp));
+                } else {
+                    draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
+                    draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
+                }
+                Drawable[] ds = ((TextView) view).getCompoundDrawables();
+                ((TextView)view).setCompoundDrawablesWithIntrinsicBounds(ds[0], ds[1], draw, ds[3]);
+
+            }
+            return self();
+        }
+
+        /**
+         * set compoundDrawablepadding
+         * @return
+         */
+        public ExtViewQuery drawablePadding(int padding) {
+            if (view instanceof TextView) {
+                ((TextView) view).setCompoundDrawablePadding(padding);
+            }
+            return self();
+        }
+
+
+        /**
+         * Sets background
+         * @param draw
+         * @return
+         */
+        public ExtViewQuery background(Drawable draw) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                view.setBackgroundDrawable(draw);
+            } else {
+                view.setBackground(draw);
+            }
+            return self();
+        }
+
+        private int dip2pixel(float n) {
+            int value = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, n, context.getResources().getDisplayMetrics());
+            return value;
+        }
+
+
     }
 }

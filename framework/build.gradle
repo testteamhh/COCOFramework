@@ -21,7 +21,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.0'
+        classpath 'com.android.tools.build:gradle:0.8.+'
     }
 }
 
@@ -57,5 +57,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:4.0.+'
     compile 'com.jakewharton.timber:timber:2.2.+'
     compile 'com.netflix.rxjava:rxjava-android:0.16.+'
+
+    compile 'com.iconic:iconic:0.1@aar'
 }
 

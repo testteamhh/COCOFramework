@@ -5,6 +5,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -56,7 +57,7 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         if (items != null && mAdapter != null) {
             getAdapter().add(items);
         }
-        getAdapter().notifyDataChange();
+        updateAdapter();
         onLoaderDone(items);
 
         showList();
