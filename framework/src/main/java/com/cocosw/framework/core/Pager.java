@@ -13,7 +13,7 @@ public interface Pager<K extends Carousel> {
     public void first();
 
     /**
-     * 获得当前fragment的id,可以表示其所在的位置
+     * get Id of current pager
      *
      * @return
      */
@@ -22,14 +22,14 @@ public interface Pager<K extends Carousel> {
     public void setID(int id);
 
     /**
-     * 下一个Pager
+     * next pager
      *
      * @return
      */
     public Pager<?> nextPager();
 
     /**
-     * 上一个pager
+     * previous pager
      *
      * @return
      */

@@ -8,7 +8,11 @@ import android.view.View;
 import com.cocosw.accessory.views.CocoBundle;
 import com.cocosw.framework.R;
 
-
+/**
+ * You can display any of your fragment as a dialog.
+ *
+ * Provided a builder style api to create a dialog easily.
+ */
 public class CocoDialog extends BaseDialog<Void> {
 
     private Fragment mFragment;

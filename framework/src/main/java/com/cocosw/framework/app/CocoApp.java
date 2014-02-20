@@ -3,16 +3,11 @@
 package com.cocosw.framework.app;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.StrictMode;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
-import com.cocosw.accessory.utils.UIUtils;
-import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.path.android.jobqueue.BaseJob;
@@ -24,8 +19,6 @@ import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleC
 import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
 
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -71,7 +64,7 @@ public abstract class CocoApp extends Application {
         if (getCrashTree() != null) {
             Timber.plant(getCrashTree());
         }
-        if (config()!=null) {
+        if (config() != null) {
             config().run();
         }
     }

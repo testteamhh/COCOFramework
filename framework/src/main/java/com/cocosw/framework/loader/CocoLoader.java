@@ -8,7 +8,7 @@ public interface CocoLoader<T> extends LoaderCallbacks<T> {
 
     /**
      * 后台的操作或者数据读取
-     * 
+     *
      * @param arg
      * @return
      * @throws Exception
@@ -17,14 +17,14 @@ public interface CocoLoader<T> extends LoaderCallbacks<T> {
 
     /**
      * 完成数据载入后的接口
-     * 
+     *
      * @param items
      */
     void onLoaderDone(final T items);
 
     /**
      * Show exception in a {@link Toast}
-     * 
+     *
      * @param e
      */
     void showError(final Exception e);

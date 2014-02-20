@@ -129,24 +129,24 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 //    }
 
     /**
-          * 内容为空时显示的文字消息
-          *
-          * @param e
-          * @return
-          */
-         protected String refreshText(final CocoException e) {
-             if (e != null) {
-                 return e.getMessage();
-             }
-             return getString(R.string.empty_list);
-         }
+     * 内容为空时显示的文字消息
+     *
+     * @param e
+     * @return
+     */
+    protected String refreshText(final CocoException e) {
+        if (e != null) {
+            return e.getMessage();
+        }
+        return getString(R.string.empty_list);
+    }
 
     /**
-          * 按了refresh后的反应
-          */
-         protected void refreshAction() {
-             refresh();
-         }
+     * 按了refresh后的反应
+     */
+    protected void refreshAction() {
+        refresh();
+    }
 
     /**
      * 初始化界面
@@ -214,11 +214,11 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected void updateAdapter() {
         Adapter adapter = mListContainer.getAdapter();
         if (adapter instanceof HeaderFooterListAdapter) {
-            ((HeaderFooterListAdapter)adapter).getWrappedAdapter().notifyDataSetChanged();
+            ((HeaderFooterListAdapter) adapter).getWrappedAdapter().notifyDataSetChanged();
             return;
         }
         if (adapter instanceof BaseAdapter) {
-            ((BaseAdapter)adapter).notifyDataSetChanged();
+            ((BaseAdapter) adapter).notifyDataSetChanged();
             return;
         }
     }
@@ -305,7 +305,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
             init(view, bundle);
             q.recycle(view);
         } catch (final Exception e) {
-            ExceptionManager.error(e,context,this);
+            ExceptionManager.error(e, context, this);
             getActivity().finish();
         }
     }

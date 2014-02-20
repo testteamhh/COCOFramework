@@ -14,7 +14,6 @@ import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
-import com.cocosw.framework.exception.ErrorCode;
 import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
@@ -25,6 +24,11 @@ import com.squareup.otto.Bus;
 
 import butterknife.ButterKnife;
 
+/**
+ * BaseFragment integrate loader/bus/butterkniff/CocoQuery/exception handler upon fragment.
+ *
+ * @param <T>
+ */
 public abstract class BaseFragment<T> extends SherlockFragment implements
         DialogResultListener, CocoLoader<T> {
 
@@ -45,8 +49,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
      */
     protected void checkNetwork() throws CocoException {
         if (!NetworkConnectivity.getInstance().isConnected()) {
-            throw new CocoException(ErrorCode.NETWORK_ERROR,
-                    getString(R.string.network_error));
+            throw new CocoException(getString(R.string.network_error));
         }
     }
 

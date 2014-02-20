@@ -5,7 +5,6 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.BaseAdapter;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -20,6 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Paged ListFragment
+ *
+ * With a endless listview within, progress view and empty view is also supported.
+ * All your code in listFragment can be easily used to this class. *
+ *
  * <p/>
  * Project: cocoframework
  * User: Liao Kai(soarcn@gmail.com)
@@ -57,16 +60,17 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         if (items != null && mAdapter != null) {
             getAdapter().add(items);
         }
+        showList();
+
         updateAdapter();
         onLoaderDone(items);
-
-        showList();
 
         showLoading();
         if (items == null || items.size() < pagedSize(time)) {
             ended.set(true);
             hideLoading();
         }
+
         time++;
     }
 
@@ -154,7 +158,7 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         refresh = menu.add(0, 999, 0, R.string.refresh).setIcon(
-                R.drawable.ic_action_ic_action_refresh);
+                R.drawable.ic_action_refresh);
         refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     }
 

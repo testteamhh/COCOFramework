@@ -25,6 +25,11 @@ import com.squareup.otto.Bus;
 
 import butterknife.ButterKnife;
 
+/**
+ * Besides DialogFragment, BaseDialog integrate CocoQuery/ButterKniff/Loader, a better callback with activity.
+ *
+ * @param <T>
+ */
 public abstract class BaseDialog<T> extends DialogFragment implements
         CocoLoader<T> {
 

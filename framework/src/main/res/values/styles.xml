@@ -78,7 +78,7 @@
 
     <style name="ListView">
         <item name="android:dividerHeight">2px</item>
-        <item name="android:divider">@drawable/bootstrap_divider</item>
+        <item name="android:divider">@drawable/divider</item>
         <item name="android:cacheColorHint">@android:color/transparent</item>
     </style>
 

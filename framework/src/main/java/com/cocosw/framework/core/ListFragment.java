@@ -20,7 +20,7 @@ import com.cocosw.framework.view.adapter.CocoAdapter;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class ListFragment<T> extends AdapterViewFragment<T,ListView> implements
+public abstract class ListFragment<T> extends AdapterViewFragment<T, ListView> implements
         OnItemClickListener, OnScrollListener {
 
     private View footerView;
@@ -88,7 +88,6 @@ public abstract class ListFragment<T> extends AdapterViewFragment<T,ListView> im
         headerView = null;
         footerView = null;
     }
-
 
 
     @Override

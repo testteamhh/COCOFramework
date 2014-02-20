@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -217,6 +216,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image
+         *
          * @param icon
          * @return
          */
@@ -228,6 +228,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Set a iconic image
+         *
          * @param icon
          * @return
          */
@@ -241,18 +242,19 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Set color for iconic image
+         *
          * @param color
          * @return
          */
         public ExtViewQuery iconColor(int color) {
             if (view instanceof ImageView) {
                 Drawable d = ((ImageView) view).getDrawable();
-                if (d!=null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable)d).setIconColor(color);
+                if (d != null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable) d).setIconColor(color);
                 }
-                d =  (view).getBackground();
-                if (d!=null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable)d).setIconColor(color);
+                d = (view).getBackground();
+                if (d != null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable) d).setIconColor(color);
                 }
             }
             return self();
@@ -260,6 +262,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Set color for iconic image
+         *
          * @param colorId
          * @return
          */
@@ -270,26 +273,28 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image to left of textview/buttonview
+         *
          * @param icon
          * @return
          */
         public ExtViewQuery leftDrawable(Icon icon) {
             if (view instanceof TextView) {
-                return leftDrawable(icon,-1,-1);
+                return leftDrawable(icon, -1, -1);
             }
             return self();
         }
 
         /**
          * Sets a iconic image to left of textview/buttonview
+         *
          * @param color
          * @return
          */
         public ExtViewQuery leftDrawableColor(int color) {
             if (view instanceof TextView) {
                 Drawable d = ((TextView) view).getCompoundDrawables()[0];
-                if (d!=null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable)d).setIconColor(color);
+                if (d != null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable) d).setIconColor(color);
                 }
             }
             return self();
@@ -297,6 +302,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image to left of textview/buttonview
+         *
          * @param colorId
          * @return
          */
@@ -307,14 +313,15 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image to left of textview/buttonview
+         *
          * @param color
          * @return
          */
         public ExtViewQuery rightDrawableColor(int color) {
             if (view instanceof TextView) {
                 Drawable d = ((TextView) view).getCompoundDrawables()[2];
-                if (d!=null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable)d).setIconColor(color);
+                if (d != null && d instanceof IconicFontDrawable) {
+                    ((IconicFontDrawable) d).setIconColor(color);
                 }
             }
             return self();
@@ -322,6 +329,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image to left of textview/buttonview
+         *
          * @param colorId
          * @return
          */
@@ -331,19 +339,20 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image to left of textview/buttonview with padding
+         *
          * @param icon
          * @return
          */
-        public ExtViewQuery leftDrawable(Icon icon,int sizedp, int padding) {
+        public ExtViewQuery leftDrawable(Icon icon, int sizedp, int padding) {
             if (view instanceof TextView) {
                 IconicFontDrawable draw = new IconicFontDrawable(context, icon);
                 draw.setIconColor((((TextView) view).getCurrentTextColor()));
-                if (padding<0)
-                     padding = dip2pixel(8);
+                if (padding < 0)
+                    padding = dip2pixel(8);
                 else
-                     padding = dip2pixel(padding);
+                    padding = dip2pixel(padding);
                 draw.setIconPadding(padding);
-                if (sizedp>0) {
+                if (sizedp > 0) {
                     draw.setIntrinsicHeight(dip2pixel(sizedp));
                     draw.setIntrinsicWidth(dip2pixel(sizedp));
                 } else {
@@ -351,7 +360,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                     draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
-                ((TextView)view).setCompoundDrawablesWithIntrinsicBounds(draw, ds[1], ds[2], ds[3]);
+                ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(draw, ds[1], ds[2], ds[3]);
 
             }
             return self();
@@ -360,35 +369,36 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets a iconic image to right of textview/buttonview
+         *
          * @param icon
          * @return
          */
         public ExtViewQuery rightDrawable(Icon icon) {
             if (view instanceof TextView) {
-                return rightDrawable(icon,-1,-1);
+                return rightDrawable(icon, -1, -1);
             }
             return self();
         }
 
 
-
         /**
          * Sets a iconic image to right of textview/buttonview with padding
+         *
          * @param icon
          * @return
          */
-        public ExtViewQuery rightDrawable(Icon icon,int sizedp,int padding) {
+        public ExtViewQuery rightDrawable(Icon icon, int sizedp, int padding) {
             if (view instanceof TextView) {
                 IconicFontDrawable draw = new IconicFontDrawable(context, icon);
                 draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
                 draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
                 draw.setIconColor((((TextView) view).getCurrentTextColor()));
-                if (padding<0)
+                if (padding < 0)
                     padding = dip2pixel(8);
                 else
                     padding = dip2pixel(padding);
                 draw.setIconPadding(padding);
-                if (sizedp>0) {
+                if (sizedp > 0) {
                     draw.setIntrinsicHeight(dip2pixel(sizedp));
                     draw.setIntrinsicWidth(dip2pixel(sizedp));
                 } else {
@@ -396,7 +406,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                     draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
-                ((TextView)view).setCompoundDrawablesWithIntrinsicBounds(ds[0], ds[1], draw, ds[3]);
+                ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(ds[0], ds[1], draw, ds[3]);
 
             }
             return self();
@@ -404,6 +414,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * set compoundDrawablepadding
+         *
          * @return
          */
         public ExtViewQuery drawablePadding(int padding) {
@@ -416,6 +427,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         /**
          * Sets background
+         *
          * @param draw
          * @return
          */

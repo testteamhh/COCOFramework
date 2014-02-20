@@ -152,7 +152,7 @@ public abstract class PagedListPagerFragment<T, K extends Carousel> extends
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         refresh = menu.add(0, 999, 0, R.string.refresh).setIcon(
-                R.drawable.ic_action_ic_action_refresh);
+                R.drawable.ic_action_refresh);
         refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     }
 

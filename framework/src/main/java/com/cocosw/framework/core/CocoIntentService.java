@@ -8,7 +8,6 @@ import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoApp;
 import com.cocosw.framework.exception.CocoException;
-import com.cocosw.framework.exception.ErrorCode;
 import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.uiquery.CocoQuery;
 
@@ -32,13 +31,13 @@ public abstract class CocoIntentService extends IntentService {
     }
 
     /**
-     * 用于检查网络情况
+     * Check network connection
      *
      * @throws CocoException
      */
     protected void checkNetwork() throws CocoException {
         if (!NetworkConnectivity.getInstance().isConnected()) {
-            throw new CocoException(ErrorCode.NETWORK_ERROR,
+            throw new CocoException(
                     getString(R.string.network_error));
         }
     }

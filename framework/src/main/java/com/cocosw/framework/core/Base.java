@@ -32,7 +32,6 @@ import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
-import com.cocosw.framework.exception.ErrorCode;
 import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
@@ -308,8 +307,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
      */
     protected void checkNetwork() throws CocoException {
         if (!NetworkConnectivity.getInstance().isConnected()) {
-            throw new CocoException(ErrorCode.NETWORK_ERROR,
-                    getString(R.string.network_error));
+            throw new CocoException(getString(R.string.network_error));
         }
     }
 
@@ -354,7 +352,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
         }
     }
 
-    /***
+    /**
      * UI will be shown when confirm activity finishing, call in finishWithConfirm()
      */
     protected void showExitConfirm() {

@@ -11,7 +11,10 @@ import com.cocosw.framework.R;
 
 
 /**
- * 适用于没有UI的Fragment，可以抽象一些复杂的task
+ * TaskFragment can be used for create complex logic without(self-owned) UI.
+ *
+ * for example, you can create a taskfragment with calling phototake/photocrop intent.
+ * and this task can be used in future.
  *
  * @author soar
  */

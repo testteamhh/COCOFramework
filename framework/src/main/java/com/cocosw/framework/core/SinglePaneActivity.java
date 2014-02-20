@@ -12,7 +12,8 @@ import com.cocosw.framework.R;
 
 
 /**
- * 这是一个可以把fragment作为容器的activity
+ * What you need to do is only creating a fragment, this activity will show it just like a individual activity.
+ * That means you don't have to create so many activities and register them to manifest, remember, fragment can be easily used to other place. such as dialog, or a part of you activity ui.
  *
  * @author kaliao
  */
