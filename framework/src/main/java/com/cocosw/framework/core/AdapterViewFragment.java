@@ -292,8 +292,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     @Override
     protected void setupUI(final View view, final Bundle bundle) {
         try {
-            mListContainer = (A) q.id(R.id.list).itemClicked(this)
-                    .scrolled(this).getView();
+            mListContainer = q.id(R.id.list).itemClicked(this).scrolled(this).getView();
             progressBar = q.id(R.id.listprogressBar).getView();
             emptyView = q.id(R.id.empty).getView();
             if (emptyView != null) {

@@ -5,20 +5,20 @@
     android:layout_height="fill_parent" >
 
     <ListView
-        android:id="@+id/list"
+        android:id="@id/list"
         style="@style/ListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
     <FrameLayout
-        android:id="@+id/empty"
+        android:id="@id/empty"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:visibility="gone" />
 
     <ProgressBar
-        android:id="@+id/listprogressBar"
+        android:id="@id/listprogressBar"
         style="@style/ListSpinner"
         android:layout_gravity="center"
         android:visibility="gone" />

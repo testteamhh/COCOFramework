@@ -47,6 +47,11 @@ public abstract class ListFragment<T> extends AdapterViewFragment<T, ListView> i
         return footerView;
     }
 
+    @Override
+    public int layoutId() {
+        return R.layout.inc_progresslist;
+    }
+
     /**
      * Get list adapter
      *

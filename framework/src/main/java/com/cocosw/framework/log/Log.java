@@ -18,12 +18,6 @@ import timber.log.Timber;
  */
 public class Log {
 
-    static {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
-    }
-
     /**
      * 打印log
      *

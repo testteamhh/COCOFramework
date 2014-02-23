@@ -101,8 +101,10 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         if (getLoaderManager().hasRunningLoaders()) {
             return;
         }
-        if (getList().getLastVisiblePosition() + 1 >= wrapAdapter.getCount()) {
-            loadmore();
+        if (getList()!=null && wrapAdapter!=null) {
+            if (getList().getLastVisiblePosition() + 1 >= wrapAdapter.getCount()) {
+                loadmore();
+            }
         }
     }
 

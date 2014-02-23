@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
+import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.path.android.jobqueue.BaseJob;
@@ -61,6 +62,9 @@ public abstract class CocoApp extends Application {
         TAG = getString(getApplicationInfo().labelRes);
         CocoQuery.setQueryClass(CocoQuery.ExtViewQuery.class);
         buildObjectGraphAndInject();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
         if (getCrashTree() != null) {
             Timber.plant(getCrashTree());
         }
