@@ -1,12 +1,14 @@
 package com.cocosw.framework.app;
 
 import android.accounts.AccountManager;
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
@@ -74,4 +76,13 @@ public class AndroidModule {
         return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
+    @Provides
+    Vibrator provideVibrator(final Context context) {
+        return (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+    }
+
+    @Provides
+    ActivityManager provideActivityManager(final Context context) {
+        return (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    }
 }
