@@ -4,4 +4,5 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/holo_gap"
     android:layout_marginRight="@dimen/holo_gap"
+    style="@style/ListSpinner"
     android:indeterminate="true" />
