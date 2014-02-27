@@ -65,6 +65,15 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     }
 
     /**
+     * run on Ui thread
+     *
+     * @param runnable
+     */
+    protected void runOnUiThread(Runnable runnable) {
+        getActivity().runOnUiThread(runnable);
+    }
+
+    /**
      * Get exception from loader if it provides one by being a
      * {@link ThrowableLoader}
      *
