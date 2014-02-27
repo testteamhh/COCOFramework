@@ -19,10 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Paged ListFragment
- *
+ * <p/>
  * With a endless listview within, progress view and empty view is also supported.
- * All your code in listFragment can be easily used to this class. *
- *
+ * All your code in listFragment can be easily used in this class.
+ * <p/>
  * <p/>
  * Project: cocoframework
  * User: Liao Kai(soarcn@gmail.com)
@@ -57,11 +57,10 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
             showList();
             return;
         }
-        if (items != null && mAdapter != null) {
+        if (items != null && mAdapter != null && !items.isEmpty()) {
             getAdapter().add(items);
         }
         showList();
-
         updateAdapter();
         onLoaderDone(items);
 
@@ -73,6 +72,22 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
 
         time++;
     }
+
+    @Override
+    public List<T> pendingData(Bundle args) throws Exception {
+        return pendingPagedData(getIndex(args), time, pagedSize(time), args);
+    }
+
+    /**
+     * Data will be load in each pages
+     *
+     * @param index current index, used for start point, can be changed in getLastIndex()
+     * @param time  batch number, or the page number.
+     * @param size  how many items need to be load, can be changed in pagedSize()
+     * @param args  @return
+     * @throws Exception
+     */
+    public abstract List<T> pendingPagedData(long index, int time, int size, Bundle args) throws Exception;
 
     @Override
     protected void showRefresh(final CocoException e) {
@@ -101,7 +116,7 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         if (getLoaderManager().hasRunningLoaders()) {
             return;
         }
-        if (getList()!=null && wrapAdapter!=null) {
+        if (getList() != null && wrapAdapter != null) {
             if (getList().getLastVisiblePosition() + 1 >= wrapAdapter.getCount()) {
                 loadmore();
             }
@@ -135,8 +150,7 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
 
     protected void showLoading() {
         if (loadview == null && getHeaderAdapter() != null) {
-            loadview = LayoutInflater.from(context).inflate(R.layout.footer,
-                    null);
+            loadview = getLoadingView();
             getHeaderAdapter().addFooter(loadview);
         }
     }
@@ -188,5 +202,14 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
      */
     protected long getIndex(Bundle bundel) {
         return CocoBundle.builder(bundel).getIndex();
+    }
+
+    /**
+     * the loading view in footer area
+     *
+     * @return
+     */
+    protected View getLoadingView() {
+        return LayoutInflater.from(context).inflate(R.layout.footer, null);
     }
 }
