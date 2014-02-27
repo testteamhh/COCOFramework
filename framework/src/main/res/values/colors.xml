@@ -49,18 +49,6 @@
     <color name="navpage">#ffd1d1d1</color>
     <color name="shake_info_text">#ffa1a1a1</color>
     <color name="lightgreen">#ff87aa14</color>
-    <color name="pureblue">#ff33B5E5</color>
-    <color name="darkblue">#ff0099CC</color>
-    <color name="sepureblue">#ee33B5E5</color>
-    <color name="sedarkblue">#ee0099CC</color>
-    <color name="purered">#ffFF4444</color>
-    <color name="darkred">#ffCC0000</color>
-    <color name="puregreen">#ff99CC00</color>
-    <color name="darkgreen">#ff669900</color>
-    <color name="purepurple">#ffAA66CC</color>
-    <color name="darkpurple">#ff9933CC</color>
-    <color name="pureorange">#ffFFBB33</color>
-    <color name="darkorange">#ffFF8800</color>
     <color name="sback">#ff3E3E3E</color>
     <color name="body_text_1">#ff000000</color>
     <color name="body_text_2">#99000000</color>
@@ -87,7 +75,7 @@
     <color name="merchant_card_divider_1">#15000000</color>
     <color name="merchant_card_divider_2">#15ffffff</color>
     <color name="merchant_card_divider_3">#08ffffff</color>
-   
+
     <color name="green_button_background_enabled_start">#99cc01</color>
     <color name="green_button_background_enabled_end">#99cc01</color>
 
@@ -95,8 +83,22 @@
     <color name="blue_button_background_pressed_start">#00b5b8</color>
     <color name="blue_button_background_pressed_end">#00b5b8</color>
     <color name="divider_line">#ffd4cec7</color>
-	<color name="pressed_example">#CCAA1717</color>
+    <color name="pressed_example">#CCAA1717</color>
 
+
+    <!-- Holo -->
+    <color name="pureblue">#ff33B5E5</color>
+    <color name="darkblue">#ff0099CC</color>
+    <color name="sepureblue">#ee33B5E5</color>
+    <color name="sedarkblue">#ee0099CC</color>
+    <color name="purered">#ffFF4444</color>
+    <color name="darkred">#ffCC0000</color>
+    <color name="puregreen">#ff99CC00</color>
+    <color name="darkgreen">#ff669900</color>
+    <color name="purepurple">#ffAA66CC</color>
+    <color name="darkpurple">#ff9933CC</color>
+    <color name="pureorange">#ffFFBB33</color>
+    <color name="darkorange">#ffFF8800</color>
 
 
     <!-- System -->
