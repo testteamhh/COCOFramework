@@ -1,8 +1,10 @@
 package com.cocosw.framework.core;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -262,7 +266,8 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
                     public void onUndo(final Parcelable token) {
                         refresh();
                     }
-                }, UndoBarController.RETRYSTYLE);
+                }, UndoBarController.RETRYSTYLE
+        );
     }
 
     private Base<?> getBase() {
@@ -281,6 +286,17 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     public void onDestroy() {
         super.onDestroy();
         bus.unregister(this);
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 
     protected void hideLoading() {

@@ -191,7 +191,7 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
      */
     @Override
     public void append(final List<T> values) {
-        this.dataList.addAll(values);
+        this.dataList.addAll(0, values);
     }
 
     /**
@@ -201,7 +201,7 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
      */
     @Override
     public void append(final T values) {
-        this.dataList.add(values);
+        this.dataList.add(0, values);
     }
 
     @Override

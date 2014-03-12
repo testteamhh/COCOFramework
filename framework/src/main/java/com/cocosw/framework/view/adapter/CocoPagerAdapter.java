@@ -171,7 +171,7 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
      */
     @Override
     public void append(final List<T> values) {
-        this.dataList.addAll(values);
+        this.dataList.addAll(0, values);
     }
 
     /**
@@ -181,7 +181,7 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
      */
     @Override
     public void append(final T values) {
-        this.dataList.add(values);
+        this.dataList.add(0, values);
     }
 
     /**

@@ -98,7 +98,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
      */
     @Override
     public void append(final List<T> values) {
-        this.dataList.addAll(values);
+        this.dataList.addAll(0, values);
     }
 
     /**
@@ -108,7 +108,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
      */
     @Override
     public void append(final T values) {
-        this.dataList.add(values);
+        this.dataList.add(0, values);
     }
 
     @Override
