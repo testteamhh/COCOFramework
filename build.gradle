@@ -31,10 +31,10 @@ allprojects {
 
     repositories {
         mavenLocal()
+        maven { url "https://raw.github.com/soarcn/mvn/master" }
         mavenCentral()
         maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "file:///D:/develop/mvn" }
-        maven { url "https://raw.github.com/soarcn/mvn/master" }
     }
 
     tasks.withType(JavaCompile) {
