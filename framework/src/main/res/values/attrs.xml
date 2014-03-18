@@ -8,4 +8,7 @@
         <attr name="android:foregroundInsidePadding" />
         <attr name="android:foregroundGravity" />
     </declare-styleable>
+    <declare-styleable name="DrawInsetsFrameLayout">
+        <attr name="insetBackground" format="reference|color" />
+    </declare-styleable>
 </resources>

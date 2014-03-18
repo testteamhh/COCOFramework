@@ -32,4 +32,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TranslucentTheme" parent="@style/ThemeActivity">
+        <item name="actionBarStyle">@style/TranslucentActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item>
+    </style>
+
+    <style name="TranslucentActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>
