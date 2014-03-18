@@ -46,10 +46,10 @@ dependencies {
     compile 'com.android.support:support-v4:19.0.+'
     compile 'com.cocosw.accessory:utils:0.+'
     compile 'com.cocosw.accessory:views:0.+'
+    compile 'com.cocosw:lifecycle:0.1'
     compile 'com.github.kevinsawicki:http-request:5.5'
     compile('com.github.kevinsawicki:wishlist:0.10')
     compile 'com.readystatesoftware.ghostlog:ghostlog-integration:+@aar'
-    compile('org.jraf:activitylifecyclecallbackscompat:1.0')
     compile 'com.squareup.okhttp:okhttp:1.5.+'
     compile 'com.jakewharton:butterknife:4.0.+'
     compile 'com.jakewharton.timber:timber:2.1.+'

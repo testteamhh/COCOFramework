@@ -12,6 +12,7 @@ import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
+import com.cocosw.lifecycle.FragmentLifecycleCallbacks;
 import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.path.android.jobqueue.BaseJob;
 import com.path.android.jobqueue.config.Configuration;
@@ -79,6 +80,15 @@ public abstract class CocoApp extends Application {
      */
     public void registerActivityLifecycle(ActivityLifecycleCallbacksCompat callback) {
         LifecycleDispatcher.registerActivityLifecycleCallbacks(this, callback);
+    }
+
+    /**
+     * register a new call back for Fragment Lifecycle
+     *
+     * @param callback
+     */
+    public void registerFragmentLifecycle(FragmentLifecycleCallbacks callback) {
+        LifecycleDispatcher.registerFragmentLifecycleCallbacks(this, callback);
     }
 
     public static Application getApp() {

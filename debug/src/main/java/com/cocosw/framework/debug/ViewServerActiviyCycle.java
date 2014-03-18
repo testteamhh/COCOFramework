@@ -3,7 +3,7 @@ package com.cocosw.framework.debug;
 import android.app.Activity;
 import android.os.Bundle;
 
-import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat;
+import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
 
 /**
  * support ViewServer

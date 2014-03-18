@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
 
-import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat;
 
 /**
 * Created by Administrator on 14-2-18.
