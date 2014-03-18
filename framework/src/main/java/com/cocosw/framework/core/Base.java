@@ -36,12 +36,10 @@ import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
+import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
-
-import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
-import org.jraf.android.util.activitylifecyclecallbackscompat.MainLifecycleDispatcher;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -72,8 +70,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bus.register(this);
-        if (ApplicationHelper.PRE_ICS)
-            MainLifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
+        LifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
         q = q == null ? new CocoQuery(this) : q;
         setContentView(layoutId());
         ButterKnife.inject(this);
@@ -226,7 +223,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     protected void onDestroy() {
         super.onDestroy();
         bus.register(this);
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityDestroyed(this);
+        LifecycleDispatcher.get().onActivityDestroyed(this);
         hideLoading();
         // hack for null point exception
         try {
@@ -243,7 +240,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     protected void onStart() {
         super.onStart();
         invalidateOptionsMenu();
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityStarted(this);
+        LifecycleDispatcher.get().onActivityStarted(this);
     }
 
     @Override
@@ -258,13 +255,13 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityResumed(this);
+        LifecycleDispatcher.get().onActivityResumed(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityPaused(this);
+        LifecycleDispatcher.get().onActivityPaused(this);
     }
 
     protected void refresh() {
@@ -281,14 +278,13 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        if (ApplicationHelper.PRE_ICS) MainLifecycleDispatcher.get().onActivityStopped(this);
+        LifecycleDispatcher.get().onActivityStopped(this);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (ApplicationHelper.PRE_ICS)
-            MainLifecycleDispatcher.get().onActivitySaveInstanceState(this, outState);
+        LifecycleDispatcher.get().onActivitySaveInstanceState(this, outState);
     }
 
 

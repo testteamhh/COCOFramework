@@ -14,12 +14,12 @@ import android.widget.TextView;
 
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
+import com.cocosw.accessory.views.StyledText;
 import com.cocosw.query.AbstractViewQuery;
+import com.cocosw.undobar.UndoBarController;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery> {
 
@@ -43,42 +43,21 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
     public CocoQuery info(final int info) {
         if (act != null) {
-            Crouton.makeText(act, info, Style.INFO).show();
+            UndoBarController.show(act, new StyledText().append(getContext().getResources().getDrawable(android.R.drawable.ic_dialog_info)).append(getContext().getString(info)));
         }
         return this;
     }
 
     public CocoQuery alert(final int info) {
         if (act != null) {
-            Crouton.makeText(act, info, Style.ALERT).show();
-        }
-        return this;
-    }
-
-    public CocoQuery crouton(final int info, final Style style) {
-        if (act != null) {
-            Crouton.makeText(act, info, style).show();
+            UndoBarController.show(act, new StyledText().append(getContext().getResources().getDrawable(android.R.drawable.ic_dialog_alert)).append(getContext().getString(info)));
         }
         return this;
     }
 
     public CocoQuery alert(final CharSequence info) {
         if (act != null & info != null) {
-            Crouton.makeText(act, info, Style.ALERT).show();
-        }
-        return this;
-    }
-
-    public CocoQuery confirm(final int info) {
-        if (act != null) {
-            Crouton.makeText(act, info, Style.CONFIRM).show();
-        }
-        return this;
-    }
-
-    public CocoQuery confirm(final CharSequence info) {
-        if (act != null & info != null) {
-            Crouton.makeText(act, info, Style.CONFIRM).show();
+            UndoBarController.show(act, new StyledText().append(getContext().getResources().getDrawable(android.R.drawable.ic_dialog_info)).append(info));
         }
         return this;
     }

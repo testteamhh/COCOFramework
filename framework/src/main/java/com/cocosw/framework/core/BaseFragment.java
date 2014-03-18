@@ -1,5 +1,6 @@
 package com.cocosw.framework.core;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
+import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
@@ -121,6 +123,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        LifecycleDispatcher.get().onFragmentActivityCreated(this, savedInstanceState);
         if (getLoaderOn() == BaseFragment.ONCREATE) {
             onStartLoading();
             getLoaderManager().initLoader(0, getArguments(), this);
@@ -130,6 +133,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LifecycleDispatcher.get().onFragmentCreated(this, savedInstanceState);
         //    Injector.inject(this);
         bus.register(this);
         context = getActivity();
@@ -163,7 +167,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public View onCreateView(final LayoutInflater inflater,
                              final ViewGroup container, final Bundle savedInstanceState) {
-
+        LifecycleDispatcher.get().onFragmentCreateView(this, inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), null);
         ButterKnife.inject(this, v);
         q.recycle(v);
@@ -178,11 +182,53 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.inject(this, v);
         ButterKnife.reset(this);
         v = null;
         q = null;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        LifecycleDispatcher.get().onFragmentViewCreated(this, view, savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        LifecycleDispatcher.get().onFragmentSaveInstanceState(this, outState);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LifecycleDispatcher.get().onFragmentStarted(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LifecycleDispatcher.get().onFragmentPaused(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LifecycleDispatcher.get().onFragmentResumed(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LifecycleDispatcher.get().onFragmentDetach(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        LifecycleDispatcher.get().onFragmentAttach(this, activity);
+    }
+
 
     @Override
     public void onDialogResult(final int requestCode, final int resultCode,
@@ -285,6 +331,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onDestroy() {
         super.onDestroy();
+        LifecycleDispatcher.get().onFragmentDestroyed(this);
         bus.unregister(this);
     }
 

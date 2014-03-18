@@ -11,13 +11,12 @@ import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
+import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
+import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.path.android.jobqueue.BaseJob;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.di.DependencyInjector;
 import com.path.android.jobqueue.log.CustomLogger;
-
-import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat;
-import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -79,7 +78,7 @@ public abstract class CocoApp extends Application {
      * @param callback
      */
     public void registerActivityLifecycle(ActivityLifecycleCallbacksCompat callback) {
-        ApplicationHelper.registerActivityLifecycleCallbacks(this, callback);
+        LifecycleDispatcher.registerActivityLifecycleCallbacks(this, callback);
     }
 
     public static Application getApp() {
