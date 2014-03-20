@@ -117,13 +117,13 @@ public class SinglePaneActivity<V> extends Base<V> implements
 
     }
 
-    public static void start(final Class<Fragment> fragment,
+    public static void start(final Class<? extends Fragment> fragment,
                              final Activity act, final Intent extras) {
         act.startActivity(new Intent(act, SinglePaneActivity.class).setAction(
                 fragment.getName()).putExtras(extras));
     }
 
-    public static void start(final Class<Fragment> fragment, final Activity act) {
+    public static void start(final Class<? extends Fragment> fragment, final Activity act) {
         act.startActivity(new Intent(act, SinglePaneActivity.class)
                 .setAction(fragment.getName()));
     }
