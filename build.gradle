@@ -30,10 +30,8 @@ allprojects {
     version = POM_VERSION
 
     repositories {
-        mavenLocal()
-        maven { url "https://raw.github.com/soarcn/mvn/master" }
         mavenCentral()
-        maven { url "file:///D:/develop/mvn" }
+		mavenLocal()
         maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
 

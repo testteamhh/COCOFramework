@@ -185,6 +185,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
         ButterKnife.reset(this);
         v = null;
         q = null;
+        loader = null;
     }
 
     @Override
