@@ -18,6 +18,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
+import java.util.Map;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.FROYO;
@@ -41,6 +42,7 @@ public class Network {
 
     protected static Gson GSON = new GsonBuilder().setDateFormat(
             "yyyy-MM-dd").create();
+    private static Map<String, String> headers;
 
     /**
      * use for app initialization
@@ -73,6 +75,15 @@ public class Network {
     }
 
     /**
+     * Set global headers for all http request
+     *
+     * @param headers
+     */
+    protected static void setHeader(final Map<String, String> headers) {
+        Network.headers = headers;
+    }
+
+    /**
      * Execute request
      *
      * @return request
@@ -87,6 +98,9 @@ public class Network {
         request.contentType(HttpRequest.CONTENT_TYPE_JSON);
         //TODO preset header setter
         // request.header("imei",IMEI);
+        if (!headers.isEmpty()) {
+            request.headers(headers);
+        }
         request.header("Connection", "close");
         request.acceptJson();
         request.acceptCharset(HttpRequest.CHARSET_UTF8);

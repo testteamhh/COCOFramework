@@ -51,10 +51,10 @@ dependencies {
         optional = true
     }
     compile 'com.squareup.okhttp:okhttp:1.5.+'
-    compile 'com.squareup.picasso:picasso:2.2.+'
-    compile 'com.jakewharton:butterknife:4.0.+'
-    compile 'com.jakewharton.timber:timber:2.2.+'
-    compile 'com.netflix.rxjava:rxjava-android:0.17.+'
+    compile 'com.squareup.picasso:picasso:+'
+    compile 'com.jakewharton:butterknife:5.0.+'
+    compile 'com.jakewharton.timber:timber:+'
+    compile 'com.netflix.rxjava:rxjava-android:+'
 
     compile 'com.iconic:iconic:0.1@aar'
 }

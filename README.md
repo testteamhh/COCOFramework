@@ -7,18 +7,15 @@ Short code, rapid development, less bug, more fun
 
 How to start
 =============
-
-Firstly, create a maven based android project with this dependency in your POM
-
 ```xml
-<dependency>
-  <groupId>com.cocosw.framework</groupId>
-  <artifactId>framework</artifactId>
-  <version>1.4</version>
-  <type>apklib</type>
-</dependency>
+    compile('com.cocosw:framework:+@aar') {
+        changing=true
+        transitive = true
+    }
+    debugCompile('com.cocosw.framework:debug:+@aar') {
+        transitive = true
+    }
 ```
-
 
 Dependency
 ============
@@ -28,9 +25,8 @@ Dependency
 - actionbarsherlock
 - timber
 - cocoquery
-- crouton
 - undobar
-- activitylifecyclecallbackscompat
+- lifecycle
 - gson
 - wishlist
 - dagger
