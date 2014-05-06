@@ -50,5 +50,7 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.2.+'
     compile 'com.squareup.dagger:dagger-compiler:1.2.+'
     compile 'com.jakewharton.fliptables:fliptables:+'
+    compile 'im.dino:dbinspector:+@aar'
+    compile 'com.mattprecious.telescope:telescope:1.0.0'
 }
 
