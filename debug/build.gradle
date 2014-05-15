@@ -38,6 +38,7 @@ dependencies {
     compile 'com.cocosw.accessory:utils:0.+'
     compile 'com.cocosw.accessory:views:0.+'
     compile 'com.cocosw:lifecycle:0.+'
+    compile 'com.cocosw:query:+'
     compile 'com.github.kevinsawicki:http-request:5.5'
     compile('com.github.kevinsawicki:wishlist:0.10')
     compile 'com.readystatesoftware.ghostlog:ghostlog-integration:+@aar'
@@ -46,11 +47,11 @@ dependencies {
     compile 'com.jakewharton.timber:timber:2.1.+'
     compile 'com.jakewharton.madge:madge:1.1.+'
     compile 'com.jakewharton.scalpel:scalpel:1.1.+'
-    compile 'wei.mark:standout:1.0@aar'
+    compile 'wei.mark:standout:1.+@aar'
     compile 'com.squareup.dagger:dagger:1.2.+'
     compile 'com.squareup.dagger:dagger-compiler:1.2.+'
     compile 'com.jakewharton.fliptables:fliptables:+'
     compile 'im.dino:dbinspector:+@aar'
-    compile 'com.mattprecious.telescope:telescope:1.0.0'
+    //  compile 'com.mattprecious.telescope:telescope:1.+@aar'
 }
 

@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cocosw.framework.debug">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:allowBackup="true"
         android:label="Debug">
@@ -8,8 +10,13 @@
         <activity
             android:name="im.dino.dbinspector.activities.DbInspectorActivity"
             android:label="DbInspector"
-            android:icon="@drawable/ic_launcher_dbinspector"></activity>
+            android:theme="@android:style/Theme.Holo.Light" />
 
+        <activity
+            android:name=".DebugCenter"
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <service android:name=".DebugWindow" />
     </application>
 
 </manifest>
