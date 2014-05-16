@@ -1,8 +1,6 @@
 package com.cocosw.framework.debug;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,11 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import im.dino.dbinspector.activities.DbInspectorActivity;
@@ -73,16 +69,6 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
     }
 
 
-//    @Override
-//    public int getHiddenIcon() {
-//        return android.R.drawable.ic_menu_info_details;
-//    }
-//
-//    @Override
-//    public String getHiddenNotificationTitle(int id) {
-//        return getAppName() + " Hidden";
-//    }
-
     @Override
     public String getHiddenNotificationMessage(int id) {
         return "Click to restore #" + id;
@@ -124,70 +110,14 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
         switch (position) {
             case 0:
                 startActivity(new Intent(this, DbInspectorActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                hide(getUniqueId());
+                //hide(getUniqueId());
                 break;
             case 1:
                 StandOutWindow
                         .show(this, CatLogWindow.class, position);
-        }
-
-    }
-
-    @Override
-    public List<DropDownListItem> getDropDownItems(int id) {
-        List<DropDownListItem> items = new ArrayList<DropDownListItem>();
-        items.add(new DropDownListItem(android.R.drawable.ic_menu_help,
-                "About", new Runnable() {
-
-            @Override
-            public void run() {
-                Toast.makeText(
-                        DebugWindow.this,
-                        getAppName()
-                                + " is a demonstration of StandOut.",
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
-        }
-        ));
-        items.add(new DropDownListItem(android.R.drawable.ic_menu_preferences,
-                "Settings", new Runnable() {
-
-            @Override
-            public void run() {
-                Toast.makeText(DebugWindow.this,
-                        "There are no settings.", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-        ));
-        return items;
-    }
-
-    @Override
-    public void onReceiveData(int id, int requestCode, Bundle data,
-                              Class<? extends StandOutWindow> fromCls, int fromId) {
-        // receive data from WidgetsWindow's button press
-        // to show off the data sending framework
-        switch (requestCode) {
-//            case DATA_CHANGED_TEXT:
-//                Window window = getWindow(id);
-//                if (window == null) {
-//                    String errorText = String.format(Locale.US,
-//                            "%s received data but Window id: %d is not open.",
-//                            getAppName(), id);
-//                    Toast.makeText(this, errorText, Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                String changedText = data.getString("changedText");
-//                TextView status = (TextView) window.findViewById(R.id.id);
-//                status.setTextSize(20);
-//                status.setText("Received data from WidgetsWindow: "
-//                        + changedText);
-//                break;
-            default:
-                Log.d("MultiWindow", "Unexpected data received.");
                 break;
         }
+        //   hide(this,DebugWindow.class,StandOutWindow.DEFAULT_ID);
     }
+
 }
