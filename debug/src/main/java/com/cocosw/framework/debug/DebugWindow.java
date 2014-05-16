@@ -10,7 +10,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +46,12 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.coco_debug_ui_debug_window, frame, true);
         assert view != null;
-//        ListView listview = (ListView) view.findViewById(R.id.listView);
-//        mAdapter = new ArrayAdapter<String>(this,android.R.id.text1);
-//        mAdapter.addAll(Lists.newArrayList("aaa","bbb","ccc"));
-//        listview.setAdapter(mAdapter);
-//        listview.setOnItemClickListener(this);
-        view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DebugWindow.this, DbInspectorActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
+        ListView listview = (ListView) view.findViewById(R.id.listView);
+        List<String> list = Lists.newArrayList("DB Inspector", "CatLog");
+        mAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(mAdapter);
+        listview.setOnItemClickListener(this);
     }
 
     // the window will be centered
@@ -74,31 +72,16 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
                 | StandOutFlags.FLAG_WINDOW_EDGE_LIMITS_ENABLE;
     }
 
+
 //    @Override
-//    public String getPersistentNotificationTitle(int id) {
-//        return getAppName() + " Running";
+//    public int getHiddenIcon() {
+//        return android.R.drawable.ic_menu_info_details;
 //    }
 //
 //    @Override
-//    public String getPersistentNotificationMessage(int id) {
-//        return "Click to add a new " + getAppName();
+//    public String getHiddenNotificationTitle(int id) {
+//        return getAppName() + " Hidden";
 //    }
-//
-//    // return an Intent that creates a new MultiWindow
-//    @Override
-//    public Intent getPersistentNotificationIntent(int id) {
-//        return StandOutWindow.getShowIntent(this, getClass(), getUniqueId());
-//    }
-
-    @Override
-    public int getHiddenIcon() {
-        return android.R.drawable.ic_menu_info_details;
-    }
-
-    @Override
-    public String getHiddenNotificationTitle(int id) {
-        return getAppName() + " Hidden";
-    }
 
     @Override
     public String getHiddenNotificationMessage(int id) {
@@ -138,8 +121,16 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 0)
-            startActivity(new Intent(this, DbInspectorActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, DbInspectorActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                hide(getUniqueId());
+                break;
+            case 1:
+                StandOutWindow
+                        .show(this, CatLogWindow.class, position);
+        }
+
     }
 
     @Override

@@ -16,6 +16,15 @@
 
 package com.cocosw.framework.debug;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewDebug;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -34,15 +43,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.os.Build;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewDebug;
-
 /**
  * <p>This class can be used to enable the use of HierarchyViewer inside an
  * application. HierarchyViewer is an Android SDK tool that can be used
@@ -52,13 +52,13 @@ import android.view.ViewDebug;
  * make HierarchyViewer work on any device. You must be very careful
  * however to only enable HierarchyViewer when debugging your
  * application.</p>
- * 
+ * <p/>
  * <p>To use this view server, your application must require the INTERNET
  * permission.</p>
- * 
+ * <p/>
  * <p>The recommended way to use this API is to register activities when
  * they are created, and to unregister them when they get destroyed:</p>
- * 
+ * <p/>
  * <pre>
  * public class MyActivity extends Activity {
  *     public void onCreate(Bundle savedInstanceState) {
@@ -66,23 +66,23 @@ import android.view.ViewDebug;
  *         // Set content view, etc.
  *         ViewServer.get(this).addWindow(this);
  *     }
- *       
+ *
  *     public void onDestroy() {
  *         super.onDestroy();
  *         ViewServer.get(this).removeWindow(this);
  *     }
- *   
+ *
  *     public void onResume() {
  *         super.onResume();
  *         ViewServer.get(this).setFocusedWindow(this);
  *     }
  * }
  * </pre>
- * 
+ * <p/>
  * <p>
  * In a similar fashion, you can use this API with an InputMethodService:
  * </p>
- * 
+ * <p/>
  * <pre>
  * public class MyInputMethodService extends InputMethodService {
  *     public void onCreate() {
@@ -106,7 +106,7 @@ import android.view.ViewDebug;
  * }
  * </pre>
  */
-public class ViewServer implements Runnable {
+class ViewServer implements Runnable {
     /**
      * The default port used to start view servers.
      */
@@ -137,9 +137,9 @@ public class ViewServer implements Runnable {
 
     private Thread mThread;
     private ExecutorService mThreadPool;
-    
+
     private final List<WindowListener> mListeners =
-        new CopyOnWriteArrayList<ViewServer.WindowListener>();
+            new CopyOnWriteArrayList<ViewServer.WindowListener>();
 
     private final HashMap<View, String> mWindows = new HashMap<View, String>();
     private final ReentrantReadWriteLock mWindowsLock = new ReentrantReadWriteLock();
@@ -153,12 +153,12 @@ public class ViewServer implements Runnable {
      * Returns a unique instance of the ViewServer. This method should only be
      * called from the main thread of your application. The server will have
      * the same lifetime as your process.
-     * 
+     * <p/>
      * If your application does not have the <code>android:debuggable</code>
      * flag set in its manifest, the server returned by this method will
      * be a dummy object that does not do anything. This allows you to use
      * the same code in debug and release versions of your application.
-     * 
+     *
      * @param context A Context used to check whether the application is
      *                debuggable, this can be the application context
      */
@@ -169,7 +169,7 @@ public class ViewServer implements Runnable {
             if (sServer == null) {
                 sServer = new ViewServer(ViewServer.VIEW_SERVER_DEFAULT_PORT);
             }
-    
+
             if (!sServer.isRunning()) {
                 try {
                     sServer.start();
@@ -187,13 +187,12 @@ public class ViewServer implements Runnable {
     private ViewServer() {
         mPort = -1;
     }
-    
+
     /**
      * Creates a new ViewServer associated with the specified window manager on the
      * specified local port. The server is not started by default.
      *
      * @param port The port for the server to listen to.
-     *
      * @see #start()
      */
     private ViewServer(int port) {
@@ -205,7 +204,6 @@ public class ViewServer implements Runnable {
      *
      * @return True if the server was successfully created, or false if it already exists.
      * @throws IOException If the server cannot be created.
-     *
      * @see #stop()
      * @see #isRunning()
      */
@@ -225,8 +223,7 @@ public class ViewServer implements Runnable {
      * Stops the server.
      *
      * @return True if the server was stopped, false if an error occurred or if the
-     *         server wasn't started.
-     *
+     * server wasn't started.
      * @see #start()
      * @see #isRunning()
      */
@@ -274,19 +271,17 @@ public class ViewServer implements Runnable {
      * Indicates whether the server is currently running.
      *
      * @return True if the server is running, false otherwise.
-     *
      * @see #start()
      * @see #stop()
      */
     public boolean isRunning() {
         return mThread != null && mThread.isAlive();
     }
-    
+
     /**
      * Invoke this method to register a new view hierarchy.
-     * 
+     *
      * @param activity The activity whose view hierarchy/window to register
-     * 
      * @see #addWindow(View, String)
      * @see #removeWindow(Activity)
      */
@@ -303,9 +298,8 @@ public class ViewServer implements Runnable {
 
     /**
      * Invoke this method to unregister a view hierarchy.
-     * 
+     *
      * @param activity The activity whose view hierarchy/window to unregister
-     * 
      * @see #addWindow(Activity)
      * @see #removeWindow(View)
      */
@@ -315,10 +309,9 @@ public class ViewServer implements Runnable {
 
     /**
      * Invoke this method to register a new view hierarchy.
-     * 
+     *
      * @param view A view that belongs to the view hierarchy/window to register
      * @name name The name of the view hierarchy/window to register
-     * 
      * @see #removeWindow(View)
      */
     public void addWindow(View view, String name) {
@@ -333,9 +326,8 @@ public class ViewServer implements Runnable {
 
     /**
      * Invoke this method to unregister a view hierarchy.
-     * 
+     *
      * @param view A view that belongs to the view hierarchy/window to unregister
-     * 
      * @see #addWindow(View, String)
      */
     public void removeWindow(View view) {
@@ -350,17 +342,17 @@ public class ViewServer implements Runnable {
 
     /**
      * Invoke this method to change the currently focused window.
-     * 
+     *
      * @param activity The activity whose view hierarchy/window hasfocus,
      *                 or null to remove focus
      */
     public void setFocusedWindow(Activity activity) {
         setFocusedWindow(activity.getWindow().getDecorView());
     }
-    
+
     /**
      * Invoke this method to change the currently focused window.
-     * 
+     *
      * @param view A view that belongs to the view hierarchy/window that has focus,
      *             or null to remove focus
      */
@@ -426,7 +418,7 @@ public class ViewServer implements Runnable {
         }
         return result;
     }
-    
+
     private void fireWindowsChangedEvent() {
         for (WindowListener listener : mListeners) {
             listener.windowsChanged();
@@ -438,7 +430,7 @@ public class ViewServer implements Runnable {
             listener.focusChanged();
         }
     }
-    
+
     private void addWindowListener(WindowListener listener) {
         if (!mListeners.contains(listener)) {
             mListeners.add(listener);
@@ -451,9 +443,10 @@ public class ViewServer implements Runnable {
 
     private interface WindowListener {
         void windowsChanged();
+
         void focusChanged();
     }
-    
+
     private static class UncloseableOutputStream extends OutputStream {
         private final OutputStream mStream;
 
@@ -593,7 +586,7 @@ public class ViewServer implements Runnable {
                 if (!result) {
                     Log.w(LOG_TAG, "An error occurred with the command: " + command);
                 }
-            } catch(IOException e) {
+            } catch (IOException e) {
                 Log.w(LOG_TAG, "Connection error: ", e);
             } finally {
                 if (in != null) {
@@ -638,7 +631,7 @@ public class ViewServer implements Runnable {
                 if (window == null) {
                     return false;
                 }
-                
+
                 // call stuff
                 final Method dispatch = ViewDebug.class.getDeclaredMethod("dispatchCommand",
                         View.class, String.class, String.class, OutputStream.class);
@@ -668,7 +661,7 @@ public class ViewServer implements Runnable {
 
             return success;
         }
-        
+
         private View findWindow(int hashCode) {
             if (hashCode == -1) {
                 View window = null;
@@ -681,7 +674,7 @@ public class ViewServer implements Runnable {
                 return window;
             }
 
-            
+
             mWindowsLock.readLock().lock();
             try {
                 for (Entry<View, String> entry : mWindows.entrySet()) {
@@ -695,7 +688,7 @@ public class ViewServer implements Runnable {
 
             return null;
         }
-        
+
         private boolean listWindows(Socket client) {
             boolean result = true;
             BufferedWriter out = null;
@@ -731,7 +724,7 @@ public class ViewServer implements Runnable {
 
             return result;
         }
-        
+
         private boolean getFocusedWindow(Socket client) {
             boolean result = true;
             String focusName = null;
@@ -742,7 +735,7 @@ public class ViewServer implements Runnable {
                 out = new BufferedWriter(new OutputStreamWriter(clientStream), 8 * 1024);
 
                 View focusedWindow = null;
-                
+
                 mFocusLock.readLock().lock();
                 try {
                     focusedWindow = mFocusedWindow;

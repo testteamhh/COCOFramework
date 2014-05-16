@@ -9,9 +9,5 @@
         android:layout_height="match_parent"
         android:id="@+id/listView" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="help!"
-        android:id="@+id/button" />
+
 </FrameLayout>

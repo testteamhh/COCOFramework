@@ -17,6 +17,7 @@
             android:theme="@android:style/Theme.NoDisplay" />
 
         <service android:name=".DebugWindow" />
+        <service android:name=".CatLogWindow" />
     </application>
 
 </manifest>

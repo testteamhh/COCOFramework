@@ -19,7 +19,7 @@ public class DebugCenter extends Activity {
         super.onCreate(savedInstanceState);
         StandOutWindow.closeAll(this, DebugWindow.class);
         StandOutWindow
-                .show(this, DebugWindow.class, StandOutWindow.DEFAULT_ID);
+                .hide(this, DebugWindow.class, StandOutWindow.DEFAULT_ID);
         finish();
     }
 
