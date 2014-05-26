@@ -9,7 +9,7 @@ import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
-import com.squareup.okhttp.HttpResponseCache;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
@@ -168,7 +168,7 @@ public class Network {
             }
             this.client = client;
             try {
-                this.client.setResponseCache(new HttpResponseCache(createDefaultCacheDir(context), calculateDiskCacheSize(createDefaultCacheDir(context))));
+                this.client.setCache(new Cache(createDefaultCacheDir(context), calculateDiskCacheSize(createDefaultCacheDir(context))));
             } catch (IOException ignored) {
             }
         }
