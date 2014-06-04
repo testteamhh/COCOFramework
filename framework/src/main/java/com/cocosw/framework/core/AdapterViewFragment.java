@@ -183,10 +183,14 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     @Override
     public void onItemClick(final AdapterView<?> parent, final View view,
                             final int position, final long id) {
-        final T item = getItem(position);
-        //  q.v(item);
-        if (item != null) {
-            onItemClick(item, position, id, view);
+        try {
+            final T item = getItem(position);
+            if (item != null) {
+                onItemClick(item, position, id, view);
+            }
+        }catch (Exception e) {
+            // for possible Cast exception, this will at least ensure the UI would not crash.
+            Log.e(e);
         }
     }
 

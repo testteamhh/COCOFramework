@@ -30,13 +30,20 @@ allprojects {
     version = POM_VERSION
 
     repositories {
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
         maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
+    }
+
+    configurations {
+        provided
+        preprocess
+
+        all*.exclude group: 'com.google.android', module: 'support-v4'
     }
 }
 
