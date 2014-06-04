@@ -16,6 +16,11 @@
             android:name=".DebugCenter"
             android:theme="@android:style/Theme.NoDisplay" />
 
+        <activity
+            android:name="com.readystatesoftware.notificationlog.LogActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
         <service android:name=".DebugWindow" />
         <service android:name=".CatLogWindow" />
     </application>

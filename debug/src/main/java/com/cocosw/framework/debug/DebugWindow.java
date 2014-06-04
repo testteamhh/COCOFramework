@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.google.common.collect.Lists;
+import com.readystatesoftware.notificationlog.Log;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
         View view = inflater.inflate(R.layout.coco_debug_ui_debug_window, frame, true);
         assert view != null;
         ListView listview = (ListView) view.findViewById(R.id.listView);
-        List<String> list = Lists.newArrayList("DB Inspector", "CatLog");
+        List<String> list = Lists.newArrayList("DB Inspector", "CatLog", "应用内调试信息输出");
         mAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(mAdapter);
@@ -116,6 +117,8 @@ public class DebugWindow extends StandOutWindow implements AdapterView.OnItemCli
                 StandOutWindow
                         .show(this, CatLogWindow.class, position);
                 break;
+            case 2:
+                Log.initialize(this);
         }
         //   hide(this,DebugWindow.class,StandOutWindow.DEFAULT_ID);
     }
