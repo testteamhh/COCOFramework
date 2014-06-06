@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.OkUrlFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -157,7 +158,7 @@ public class Network {
         }
 
         public HttpURLConnection create(URL url) throws IOException {
-            return client.open(url);
+            return new OkUrlFactory(client).open(url);
         }
 
         public HttpURLConnection create(URL url, Proxy proxy) throws IOException {
