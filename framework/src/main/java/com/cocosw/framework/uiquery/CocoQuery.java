@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.accessory.views.StyledText;
-import com.cocosw.framework.app.Injector;
+import com.cocosw.framework.app.CocoApp;
 import com.cocosw.query.AbstractViewQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.squareup.picasso.Callback;
@@ -66,10 +66,11 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
     public static class ExtViewQuery extends AbstractViewQuery<ExtViewQuery> {
 
-        Picasso picasso = Injector.resolve(Picasso.class);
+        Picasso picasso;
 
         public ExtViewQuery(View root) {
             super(root);
+            picasso = CocoApp.getApp().getPicasso();
         }
 
         /**

@@ -16,8 +16,12 @@ import com.path.android.jobqueue.BaseJob;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.di.DependencyInjector;
 import com.path.android.jobqueue.log.CustomLogger;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -30,6 +34,12 @@ public abstract class CocoApp extends Application {
     protected static CocoApp instance;
 
     private static String TAG = "Coco";
+
+    @Inject
+    OkHttpClient client;
+
+    @Inject
+    Picasso picasso;
 
     /**
      * Create main application
@@ -52,6 +62,10 @@ public abstract class CocoApp extends Application {
         attachBaseContext(context);
     }
 
+    public Picasso getPicasso() {
+        return picasso;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,7 +79,14 @@ public abstract class CocoApp extends Application {
         if (config() != null) {
             config().run();
         }
-        Network.init(this);
+        if (getAppModule() != null) {
+            Injector.init(getAppModule(), this);
+        }
+        Network.init(this, client);
+    }
+
+    protected Object getAppModule() {
+        return null;
     }
 
     /**
@@ -103,7 +124,7 @@ public abstract class CocoApp extends Application {
     }
 
 
-    protected Config config() {
+    protected Runnable config() {
         return null;
     }
 

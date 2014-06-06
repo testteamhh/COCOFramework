@@ -2,7 +2,6 @@ package com.cocosw.framework.network;
 
 import android.content.Context;
 
-import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.log.Log;
 import com.github.kevinsawicki.http.HttpRequest;
@@ -46,8 +45,8 @@ public class Network {
     /**
      * use for app initialization
      */
-    public static void init(Context context) {
-        HttpRequest.setConnectionFactory(new OkConnectionFactory(Injector.resolve(OkHttpClient.class), context));
+    public static void init(Context context, OkHttpClient client) {
+        HttpRequest.setConnectionFactory(new OkConnectionFactory(client, context));
         if (SDK_INT <= FROYO)
             HttpRequest.keepAlive(false);
     }
