@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.accessory.views.StyledText;
+import com.cocosw.framework.app.Injector;
 import com.cocosw.query.AbstractViewQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.squareup.picasso.Callback;
@@ -65,6 +66,8 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
     public static class ExtViewQuery extends AbstractViewQuery<ExtViewQuery> {
 
+        Picasso picasso = Injector.resolve(Picasso.class);
+
         public ExtViewQuery(View root) {
             super(root);
         }
@@ -90,7 +93,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          */
         public ExtViewQuery image(String url) {
             if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                Picasso.with(context).load(url).into((ImageView) view);
+                picasso.load(url).into((ImageView) view);
             }
             return self();
         }
@@ -98,7 +101,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         @Override
         public ExtViewQuery image(int imgId) {
             if (view instanceof ImageView) {
-                Picasso.with(context).load(imgId).into((ImageView) view);
+                picasso.load(imgId).into((ImageView) view);
             }
             return self();
         }
@@ -115,7 +118,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
             if (cache) {
                 image(url);
             } else {
-                Picasso.with(context).load(url).skipMemoryCache().into((ImageView) view);
+                picasso.load(url).skipMemoryCache().into((ImageView) view);
             }
             return this;
         }
@@ -129,7 +132,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          */
         public ExtViewQuery image(String url, int holder) {
             if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                Picasso.with(context).load(url).placeholder(holder).into((ImageView) view);
+                picasso.load(url).placeholder(holder).into((ImageView) view);
             }
             return self();
         }
@@ -143,7 +146,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          */
         public ExtViewQuery image(String url, Drawable holder) {
             if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                Picasso.with(context).load(url).placeholder(holder).into((ImageView) view);
+                picasso.load(url).placeholder(holder).into((ImageView) view);
             }
             return self();
         }
@@ -158,7 +161,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          */
         public ExtViewQuery image(String url, Drawable holder, int fallbackId) {
             if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                Picasso.with(context).load(url).error(fallbackId).placeholder(holder).into((ImageView) view);
+                picasso.load(url).error(fallbackId).placeholder(holder).into((ImageView) view);
             }
             return self();
         }
@@ -173,7 +176,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          */
         public ExtViewQuery image(String url, Drawable holder, Drawable fallbackId) {
             if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                Picasso.with(context).load(url).error(fallbackId).placeholder(holder).into((ImageView) view);
+                picasso.load(url).error(fallbackId).placeholder(holder).into((ImageView) view);
             }
             return self();
         }
@@ -188,7 +191,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          */
         public ExtViewQuery image(String url, Callback callback) {
             if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                Picasso.with(context).load(url).into((ImageView) view, callback);
+                picasso.load(url).into((ImageView) view, callback);
             }
             return self();
         }
@@ -197,11 +200,12 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * Sets a iconic image
          *
          * @param icon
+         * @param color
          * @return
          */
-        public ExtViewQuery image(Icon icon) {
+        public ExtViewQuery image(Icon icon, int color) {
             IconicFontDrawable draw = new IconicFontDrawable(context, icon);
-            draw.setIconColor(context.getResources().getColor(android.R.attr.textColor));
+            draw.setIconColor(context.getResources().getColor(color));
             return background(draw);
         }
 
@@ -209,11 +213,12 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * Set a iconic image
          *
          * @param icon
+         * @param color
          * @return
          */
-        public ExtViewQuery image(Icon icon, int sizedp) {
+        public ExtViewQuery image(Icon icon, int sizedp, int color) {
             IconicFontDrawable draw = new IconicFontDrawable(context, icon);
-            draw.setIconColor(context.getResources().getColor(android.R.attr.textColor));
+            draw.setIconColor(context.getResources().getColor(color));
             draw.setIntrinsicHeight(dip2pixel(sizedp));
             draw.setIntrinsicWidth(dip2pixel(sizedp));
             return image(draw);
