@@ -2,14 +2,12 @@
 
 package com.cocosw.framework.app;
 
-import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
-import com.cocosw.framework.BuildConfig;
 import com.cocosw.framework.log.Log;
+import com.cocosw.framework.network.Network;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
 import com.cocosw.lifecycle.FragmentLifecycleCallbacks;
@@ -36,7 +34,6 @@ public abstract class CocoApp extends Application {
     /**
      * Create main application
      */
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public CocoApp() {
         instance = this;
     }
@@ -62,15 +59,13 @@ public abstract class CocoApp extends Application {
         TAG = getString(getApplicationInfo().labelRes);
         CocoQuery.setQueryClass(CocoQuery.ExtViewQuery.class);
         buildObjectGraphAndInject();
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
         if (getCrashTree() != null) {
             Timber.plant(getCrashTree());
         }
         if (config() != null) {
             config().run();
         }
+        Network.init(this);
     }
 
     /**
@@ -91,7 +86,7 @@ public abstract class CocoApp extends Application {
         LifecycleDispatcher.registerFragmentLifecycleCallbacks(this, callback);
     }
 
-    public static Application getApp() {
+    public static CocoApp getApp() {
         if (instance == null) {
             throw new IllegalAccessError("Please create your own Application class inherit from CocoApp, and add it to manifest");
         }

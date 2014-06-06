@@ -96,8 +96,6 @@ public class Network {
         HttpRequest request = HttpRequest.get(url);
         request.connectTimeout(TIMEOUT).readTimeout(TIMEOUT);
         request.contentType(HttpRequest.CONTENT_TYPE_JSON);
-        //TODO preset header setter
-        // request.header("imei",IMEI);
         if (!headers.isEmpty()) {
             request.headers(headers);
         }
@@ -108,7 +106,6 @@ public class Network {
         if (rawjson != null)
             request.send(rawjson);
         if (!request.ok()) {
-            Log.d(request.message());
             throw new CocoException("当前网络出了一些问题，请稍后重试");
         }
         return request;
