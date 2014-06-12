@@ -69,7 +69,11 @@ public abstract class CocoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        NetworkConnectivity.getInstance(this);
+        try {
+            NetworkConnectivity.getInstance(this);
+        } catch (SecurityException ignore) {
+
+        }
         TAG = getString(getApplicationInfo().labelRes);
         CocoQuery.setQueryClass(CocoQuery.ExtViewQuery.class);
         buildObjectGraphAndInject();
@@ -82,6 +86,7 @@ public abstract class CocoApp extends Application {
         if (getAppModule() != null) {
             Injector.init(getAppModule(), this);
         }
+        if (client!=null)
         Network.init(this, client);
     }
 

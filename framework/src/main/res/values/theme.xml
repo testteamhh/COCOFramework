@@ -13,15 +13,8 @@
         <item name="android:background">@drawable/actionbar_background</item>
     </style>
 
-    <style name="ThemeActivity" parent="@style/Theme.Sherlock">
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:windowBackground">@color/pager_background</item>
-        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar</item>
-        <!--<item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>-->
-        <item name="android:windowContentOverlay">@drawable/colorstrip_shadow</item>
-        <item name="windowContentOverlay">@drawable/colorstrip_shadow</item>
+    <style name="ThemeActivity" parent="@style/Theme.Sherlock.Light">
         <item name="spinnerItemStyle">@style/SpinnerItem</item>
-
     </style>
 
     <style name="WelcomeTheme" parent="ThemeActivity">
