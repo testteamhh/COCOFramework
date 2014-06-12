@@ -69,7 +69,6 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bus.register(this);
         LifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
         q = q == null ? new CocoQuery(this) : q;
         setContentView(layoutId());
@@ -222,7 +221,6 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bus.register(this);
         LifecycleDispatcher.get().onActivityDestroyed(this);
         hideLoading();
         // hack for null point exception
@@ -255,12 +253,14 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     public void onResume() {
         super.onResume();
+        bus.register(this);
         LifecycleDispatcher.get().onActivityResumed(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        bus.unregister(this);
         LifecycleDispatcher.get().onActivityPaused(this);
     }
 

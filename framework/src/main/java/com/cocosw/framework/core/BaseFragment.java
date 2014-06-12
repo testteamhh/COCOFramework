@@ -134,8 +134,6 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LifecycleDispatcher.get().onFragmentCreated(this, savedInstanceState);
-        //    Injector.inject(this);
-        bus.register(this);
         context = getActivity();
         setHasOptionsMenu(true);
         q = new CocoQuery(getActivity());
@@ -209,12 +207,14 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onPause() {
         super.onPause();
+        bus.unregister(this);
         LifecycleDispatcher.get().onFragmentPaused(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        bus.register(this);
         LifecycleDispatcher.get().onFragmentResumed(this);
     }
 
@@ -333,7 +333,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     public void onDestroy() {
         super.onDestroy();
         LifecycleDispatcher.get().onFragmentDestroyed(this);
-        bus.unregister(this);
+
     }
 
     @Override
