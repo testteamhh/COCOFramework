@@ -126,7 +126,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
         LifecycleDispatcher.get().onFragmentActivityCreated(this, savedInstanceState);
         if (getLoaderOn() == BaseFragment.ONCREATE) {
             onStartLoading();
-            getLoaderManager().initLoader(0, getArguments(), this);
+            getLoaderManager().initLoader(this.hashCode(), getArguments(), this);
         }
     }
 

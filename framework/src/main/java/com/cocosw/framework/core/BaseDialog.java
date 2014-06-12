@@ -293,7 +293,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(this.hashCode(), getArguments(), this);
     }
 
     protected Base<?> getBase() {

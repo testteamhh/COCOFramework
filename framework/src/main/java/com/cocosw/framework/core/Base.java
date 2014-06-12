@@ -84,24 +84,12 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
             return;
         }
         onStartLoading();
-        getSupportLoaderManager().initLoader(0, getIntent().getExtras(), this);
+        getSupportLoaderManager().initLoader(this.hashCode(), getIntent().getExtras(), this);
     }
 
     protected void inject() {
         Injector.inject(this);
     }
-
-//    @Override
-//    public void setContentView(int layoutResId) {
-//        if (BuildConfig.DEBUG) {
-//            LayoutInflater layoutInflater = LayoutInflater.from(this);
-//            ScalpelFrameLayout contentView = (ScalpelFrameLayout) layoutInflater.inflate(R.layout.ui_scalpel, null);
-//            contentView.addView(layoutInflater.inflate(layoutResId, null));
-//            super.setContentView(contentView);
-//        } else {
-//            super.setContentView(layoutResId);
-//        }
-//    }
 
     @Override
     public Loader<T> onCreateLoader(final int arg0, final Bundle arg) {

@@ -35,7 +35,7 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
         if (getLoaderOn() == ListPagerFragment.ONSELECTED) {
             if (getLoader() == null) {
                 onStartLoading();
-                getLoaderManager().initLoader(0, getArguments(), this);
+                getLoaderManager().initLoader(this.hashCode(), getArguments(), this);
             }
         }
         if (mAdapter != null) {
