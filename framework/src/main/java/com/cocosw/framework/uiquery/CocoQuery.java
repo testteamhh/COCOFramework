@@ -3,6 +3,7 @@ package com.cocosw.framework.uiquery;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -123,6 +124,30 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
             }
             return this;
         }
+
+        /**
+         * Load image to current ImageView
+         *
+         * @param uri
+         * @return
+         */
+        public ExtViewQuery image(Uri uri) {
+            picasso.load(uri).into((ImageView) view);
+            return this;
+        }
+
+        /**
+         * Load image to current ImageView with holder image
+         *
+         * @param uri
+         * @param holder
+         * @return
+         */
+        public ExtViewQuery image(Uri uri, int holder) {
+            picasso.load(uri).placeholder(holder).into((ImageView) view);
+            return self();
+        }
+
 
         /**
          * Load network image to current ImageView with holder image
