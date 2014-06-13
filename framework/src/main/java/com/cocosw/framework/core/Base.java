@@ -225,6 +225,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        bus.register(this);
         invalidateOptionsMenu();
         LifecycleDispatcher.get().onActivityStarted(this);
     }
@@ -241,14 +242,12 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        bus.register(this);
         LifecycleDispatcher.get().onActivityResumed(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        bus.unregister(this);
         LifecycleDispatcher.get().onActivityPaused(this);
     }
 
@@ -266,6 +265,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     @Override
     protected void onStop() {
         super.onStop();
+        bus.unregister(this);
         LifecycleDispatcher.get().onActivityStopped(this);
     }
 

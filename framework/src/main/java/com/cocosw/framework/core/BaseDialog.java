@@ -70,7 +70,6 @@ public abstract class BaseDialog<T> extends DialogFragment implements
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bus.register(this);
         context = getActivity();
         setStyle(DialogFragment.STYLE_NO_FRAME, getStyle());
         if (getArguments() != null) {
@@ -225,8 +224,19 @@ public abstract class BaseDialog<T> extends DialogFragment implements
 
     @Override
     public void onDestroy() {
-        bus.unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        bus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        bus.unregister(this);
     }
 
     protected final <E extends View> E view(int resourceId) {

@@ -201,20 +201,19 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onStop() {
         super.onStop();
+        bus.unregister(this);
         LifecycleDispatcher.get().onFragmentStarted(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        bus.unregister(this);
         LifecycleDispatcher.get().onFragmentPaused(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        bus.register(this);
         LifecycleDispatcher.get().onFragmentResumed(this);
     }
 
@@ -222,6 +221,12 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     public void onDetach() {
         super.onDetach();
         LifecycleDispatcher.get().onFragmentDetach(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        bus.register(this);
     }
 
     @Override
