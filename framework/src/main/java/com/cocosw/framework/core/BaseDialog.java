@@ -19,7 +19,6 @@ import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
-import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.squareup.otto.Bus;
 
@@ -102,6 +101,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
                              final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), container, false);
+        bus.register(this);
         ButterKnife.inject(this, v);
         q = new CocoQuery(getActivity(), v);
         try {
@@ -219,6 +219,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        bus.unregister(this);
         ButterKnife.reset(this);
     }
 
@@ -227,17 +228,6 @@ public abstract class BaseDialog<T> extends DialogFragment implements
         super.onDestroy();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        bus.register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        bus.unregister(this);
-    }
 
     protected final <E extends View> E view(int resourceId) {
         return (E) v.findViewById(resourceId);
@@ -250,8 +240,6 @@ public abstract class BaseDialog<T> extends DialogFragment implements
      */
     @Override
     public void showError(final Exception e) {
-        Log.d(e);
-        q.toast(e.getMessage());
     }
 
     @Override

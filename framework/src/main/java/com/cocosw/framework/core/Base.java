@@ -48,7 +48,7 @@ import butterknife.ButterKnife;
 
 
 /**
- * 所有Activity的抽象父类，提供一些共同的操作
+ * Activity
  *
  * @author solosky <solosky772@qq.com>
  */
@@ -105,7 +105,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     }
 
     /**
-     * 后台的操作或者数据读取
+     * Loading data in background
      *
      * @param arg
      * @return
@@ -128,7 +128,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     }
 
     /**
-     * 完成数据载入后的接口
+     * This interface will be triggered after background been loaded
      *
      * @param items
      */
@@ -147,7 +147,6 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
         try {
             ExceptionManager.handle(e, this);
         } catch (final CocoException e1) {
-            q.toast(e1.getMessage());
             showRefresh(e1);
         }
     }
@@ -194,7 +193,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     private ProgressDialog dialog;
 
     /**
-     * 重启本activity
+     * Restart current activity
      */
     protected void restart() {
         Intent intent = getIntent();
@@ -285,7 +284,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     }
 
     /**
-     * 用于检查网络情况
+     * Check network connection
      *
      * @throws CocoException
      */
@@ -296,7 +295,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     }
 
     /**
-     * 显示一个loading的dialog, 非UI线程安全
+     * Show loading dialog, not safe for UI thread
      */
     protected void showLoading(final String str) {
         if (dialog == null) {
@@ -310,7 +309,7 @@ public abstract class Base<T> extends SherlockFragmentActivity implements
     }
 
     /**
-     * 关闭loading的dialog
+     * Close loading dialog
      */
     protected void hideLoading() {
         if (dialog != null && dialog.isShowing()) {

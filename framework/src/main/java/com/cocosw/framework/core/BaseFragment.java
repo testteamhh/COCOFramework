@@ -49,7 +49,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     protected Bus bus = CocoBus.getInstance();
 
     /**
-     * 用于检查网络情况
+     * Check network connection
      *
      * @throws CocoException
      */
@@ -60,7 +60,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     }
 
     /**
-     * 如果是embeded到activity或dialog中，关闭当前窗口的方法
+     * Close current UI container(activity/dialog)
      */
     public void finish() {
         if (parentDialog != null) {
@@ -99,7 +99,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     }
 
     /**
-     * 设置loader初始化的时机，默认为OnCreate
+     * When the loader been initialized
      */
     protected int getLoaderOn() {
         return BaseFragment.NEVER;
@@ -180,6 +180,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        bus.unregister(this);
         ButterKnife.reset(this);
         v = null;
         q = null;
@@ -190,6 +191,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LifecycleDispatcher.get().onFragmentViewCreated(this, view, savedInstanceState);
+        bus.register(this);
     }
 
     @Override
@@ -201,7 +203,6 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onStop() {
         super.onStop();
-        bus.unregister(this);
         LifecycleDispatcher.get().onFragmentStarted(this);
     }
 
@@ -223,11 +224,6 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
         LifecycleDispatcher.get().onFragmentDetach(this);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        bus.register(this);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -247,8 +243,6 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     }
 
     /**
-     * 完成数据载入后的接口
-     *
      * @param items
      */
     @Override
@@ -278,7 +272,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     }
 
     /**
-     * 刷新数据，重新执行loader中的操作
+     * Reload current loader
      */
     public void refresh() {
         refresh(getArguments());
