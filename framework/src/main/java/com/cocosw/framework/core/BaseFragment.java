@@ -203,7 +203,7 @@ public abstract class BaseFragment<T> extends SherlockFragment implements
     @Override
     public void onStop() {
         super.onStop();
-        LifecycleDispatcher.get().onFragmentStarted(this);
+        LifecycleDispatcher.get().onFragmentStopped(this);
     }
 
     @Override
