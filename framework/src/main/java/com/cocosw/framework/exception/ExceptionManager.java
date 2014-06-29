@@ -12,21 +12,19 @@ import com.cocosw.framework.log.Log;
  */
 public class ExceptionManager {
 
-    private static final int TOAST_DISPLAY_TIME = 4000;
-
     /**
      * preset handler will display exception msg as toast bar
      */
     public static final ExceptionHandler toastHandler = new ExceptionHandler() {
         @Override
         public boolean exception(Exception e, Context ctx, Object source) throws CocoException {
-            Toast.makeText(ctx, e.getMessage(), ExceptionManager.TOAST_DISPLAY_TIME).show();
+            Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_LONG).show();
             return false;
         }
 
         @Override
         public void error(Exception e, Context ctx, Object source) {
-            Toast.makeText(ctx, e.getMessage(), ExceptionManager.TOAST_DISPLAY_TIME).show();
+            Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
 
