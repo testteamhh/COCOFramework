@@ -3,8 +3,8 @@ package com.cocosw.framework.preference;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.cocosw.framework.core.SinglePaneActivity;
 import com.cocosw.framework.uiquery.CocoQuery;
 
@@ -27,9 +27,9 @@ public abstract class BasePreferenceFragment extends PreferenceFragment {
     protected abstract int perferenceXML();
 
     protected void setupTitle(int icon, int title, boolean up) {
-        ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(up);
-        ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setLogo(getResources().getDrawable(icon));
-        ((SherlockFragmentActivity) getActivity()).getSupportActionBar().setTitle(title);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(up);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setLogo(getResources().getDrawable(icon));
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
     }
 
     public static void launch(Activity context, Class<BasePreferenceFragment> pref) {

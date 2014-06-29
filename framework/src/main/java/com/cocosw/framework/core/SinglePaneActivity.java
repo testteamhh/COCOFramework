@@ -6,8 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.cocosw.framework.R;
 
 

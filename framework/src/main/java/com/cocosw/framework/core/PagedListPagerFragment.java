@@ -3,12 +3,12 @@ package com.cocosw.framework.core;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.cocosw.accessory.views.CocoBundle;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
@@ -108,7 +108,8 @@ public abstract class PagedListPagerFragment<T, K extends Carousel> extends
                 .restartLoader(
                         0,
                         CocoBundle.builder(bundel).setIndex(getLastIndex())
-                                .getBundle(), this);
+                                .getBundle(), this
+                );
     }
 
     @Override

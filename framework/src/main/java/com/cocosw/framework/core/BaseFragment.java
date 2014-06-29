@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
@@ -35,7 +34,7 @@ import butterknife.ButterKnife;
  *
  * @param <T>
  */
-public abstract class BaseFragment<T> extends SherlockFragment implements
+public abstract class BaseFragment<T> extends Fragment implements
         DialogResultListener, CocoLoader<T> {
 
     protected static final int NEVER = -1;

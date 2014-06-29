@@ -2,9 +2,10 @@ package com.cocosw.framework.core;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.cocosw.accessory.views.complex.CocoPager;
 import com.cocosw.framework.R;
 
@@ -51,9 +52,9 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
     protected void setupUI(final View view, final Bundle bundle) {
         super.setupUI(view, bundle);
         if (actionBarAutoHide() == false
-                && getSherlockActivity().getSupportActionBar() != null
-                && !getSherlockActivity().getSupportActionBar().isShowing()) {
-            getSherlockActivity().getSupportActionBar().show();
+                && actionBar() != null
+                && !actionBar().isShowing()) {
+            actionBar().show();
         }
     }
 
@@ -72,7 +73,7 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
     }
 
     private ActionBar actionBar() {
-        return getSherlockActivity().getSupportActionBar();
+        return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
     /**

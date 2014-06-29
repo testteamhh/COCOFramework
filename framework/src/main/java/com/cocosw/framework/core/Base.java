@@ -22,11 +22,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
@@ -52,7 +52,7 @@ import butterknife.ButterKnife;
  *
  * @author solosky <solosky772@qq.com>
  */
-public abstract class Base<T> extends SherlockFragmentActivity implements
+public abstract class Base<T> extends ActionBarActivity implements
         DialogResultListener, CocoLoader<T> {
 
     protected CocoQuery q;

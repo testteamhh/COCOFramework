@@ -29,8 +29,8 @@ apply from: '../config/maven_push.gradle'
 
 
 dependencies {
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:19.+'
     compile 'com.cocosw.accessory:utils:+'
     compile 'com.cocosw.accessory:views:+'
     compile 'com.cocosw.accessory:connectivity:+'
@@ -54,7 +54,7 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:5.0.+'
     compile 'com.jakewharton.timber:timber:+'
-  //  compile 'com.netflix.rxjava:rxjava-android:+'
+    //  compile 'com.netflix.rxjava:rxjava-android:+'
     compile 'com.jakewharton.fliptables:fliptables:+'
     compile 'com.iconic:iconic:0.1@aar'
 }

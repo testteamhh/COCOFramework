@@ -2,27 +2,24 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Bootstrap.Dark" parent="@style/Theme.Sherlock">
+    <style name="Theme.Bootstrap.Dark" parent="@style/Theme.AppCompat">
         <item name="android:windowBackground">@color/pager_background</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/Widget.Styled.ActionBar
+        </item>
     </style>
 
-    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.ActionBar.Solid">
+    <style name="Widget.Styled.ActionBar" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@drawable/actionbar_background</item>
         <item name="android:background">@drawable/actionbar_background</item>
     </style>
 
-    <style name="ThemeActivity" parent="@style/Theme.Sherlock.Light">
-        <item name="spinnerItemStyle">@style/SpinnerItem</item>
+    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light">
+        <!--<item name="spinnerItemStyle">@style/SpinnerItem</item>-->
     </style>
 
     <style name="WelcomeTheme" parent="ThemeActivity">
         <item name="android:windowActionBar" tools:ignore="NewApi">false</item>
-        <!--<item name="android:background">@drawable/welcome</item>-->
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="TranslucentTheme" parent="@style/ThemeActivity">
