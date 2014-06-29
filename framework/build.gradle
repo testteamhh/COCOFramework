@@ -42,7 +42,9 @@ dependencies {
     compile 'com.joanzapata.android:base-adapter-helper:1.+'
     compile 'com.github.kevinsawicki:http-request:5.+'
 //    compile 'de.keyboardsurfer.android.widget:crouton:1.8.+'
-    compile 'com.github.kevinsawicki:wishlist:0.10'
+    compile('com.github.kevinsawicki:wishlist:0.10') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
     compile 'com.google.code.gson:gson:+'
     compile 'com.path:android-priority-jobqueue:1.+'
     compile 'com.squareup.dagger:dagger:+'
