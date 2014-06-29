@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.cocosw.accessory.views.HeaderFooterListAdapter;
+import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
 import com.cocosw.framework.R;
 import com.cocosw.framework.R.id;
 import com.cocosw.framework.exception.CocoException;

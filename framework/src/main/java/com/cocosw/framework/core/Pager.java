@@ -1,6 +1,7 @@
 package com.cocosw.framework.core;
 
-import com.cocosw.accessory.views.CocoPager;
+
+import com.cocosw.accessory.views.complex.CocoPager;
 
 public interface Pager<K extends Carousel> {
 

@@ -39,7 +39,7 @@ dependencies {
     compile 'com.cocosw:lifecycle:+'
     compile 'com.cocosw:undobar:+@aar'
     compile 'com.squareup:otto:+'
-    compile 'com.joanzapata.android:base-adapter-helper:1.1.+'
+    compile 'com.joanzapata.android:base-adapter-helper:1.+'
     compile 'com.github.kevinsawicki:http-request:5.+'
 //    compile 'de.keyboardsurfer.android.widget:crouton:1.8.+'
     compile 'com.github.kevinsawicki:wishlist:0.10'
@@ -47,16 +47,13 @@ dependencies {
     compile 'com.path:android-priority-jobqueue:1.+'
     compile 'com.squareup.dagger:dagger:+'
     compile 'com.squareup.dagger:dagger-compiler:+'
-    compile('net.simonvt.menudrawer:menudrawer:3.0.6@aar') {
-        optional = true
-    }
-    compile 'com.squareup.okhttp:okhttp:1.+'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:1.+'
+    compile 'com.squareup.okhttp:okhttp:2.+'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.+'
     compile 'com.squareup.picasso:picasso:+'
 
     compile 'com.jakewharton:butterknife:5.0.+'
     compile 'com.jakewharton.timber:timber:+'
-    compile 'com.netflix.rxjava:rxjava-android:+'
+  //  compile 'com.netflix.rxjava:rxjava-android:+'
     compile 'com.jakewharton.fliptables:fliptables:+'
     compile 'com.iconic:iconic:0.1@aar'
 }

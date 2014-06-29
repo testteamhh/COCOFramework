@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
-import com.cocosw.accessory.views.StyledText;
+import com.cocosw.accessory.views.textview.StyledText;
 import com.cocosw.framework.app.CocoApp;
 import com.cocosw.query.AbstractViewQuery;
 import com.cocosw.undobar.UndoBarController;

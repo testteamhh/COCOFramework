@@ -2,7 +2,8 @@ package com.cocosw.framework.core;
 
 import android.support.v4.app.Fragment;
 
-import com.cocosw.accessory.views.CocoPager;
+import com.cocosw.accessory.views.complex.CocoPager;
+
 
 public interface Carousel {
 
