@@ -1,4 +1,4 @@
-package com.cocosw.framework.view;
+package com.cocosw.framework.view.adapter;
 
 import android.content.Context;
 import android.support.v4.app.FixedFragmentStatePagerAdapter;
