@@ -395,4 +395,9 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         return BaseFragment.ONCREATE;
     }
 
+
+    public static interface ItemViewClickLisener {
+
+        void onItemViewClick(int position, View v);
+    }
 }

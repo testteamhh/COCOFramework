@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.cocosw.accessory.views.CocoPager;
+import com.cocosw.accessory.views.complex.CocoPager;
 import com.cocosw.framework.R;
 
 
