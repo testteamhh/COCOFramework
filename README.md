@@ -9,7 +9,6 @@ How to start
 =============
 ```xml
     compile('com.cocosw:framework:+@aar') {
-        changing=true
         transitive = true
     }
     debugCompile('com.cocosw.framework:debug:+@aar') {
@@ -22,7 +21,6 @@ Dependency
 - COCO accessory
 - okhttp
 - http-request
-- actionbarsherlock
 - timber
 - cocoquery
 - undobar
@@ -33,9 +31,3 @@ Dependency
 - butterknife
 - Picasso
 - hugo
-- menudrawer
-
-TODO
-=============
-- Gradle building
-- ABS as optional dependency
