@@ -99,7 +99,8 @@
     <color name="darkpurple">#ff9933CC</color>
     <color name="pureorange">#ffFFBB33</color>
     <color name="darkorange">#ffFF8800</color>
-
+    <color name="holo_dark_background">#ff000000</color>
+    <color name="holo_light_background">#fff3f3f3</color>
 
     <!-- System -->
     <color name="infoBlueColor">#2f70e1</color>

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +58,10 @@ public abstract class BaseFragment<T> extends Fragment implements
         if (!NetworkConnectivity.getInstance().isConnected()) {
             throw new CocoException(getString(R.string.network_error));
         }
+    }
+
+    public ActionBar getActionBar() {
+        return ((ActionBarActivity)getActivity()).getSupportActionBar();
     }
 
     /**

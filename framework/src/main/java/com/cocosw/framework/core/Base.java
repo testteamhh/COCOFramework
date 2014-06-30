@@ -225,7 +225,7 @@ public abstract class Base<T> extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
         bus.register(this);
-        invalidateOptionsMenu();
+        supportInvalidateOptionsMenu();
         LifecycleDispatcher.get().onActivityStarted(this);
     }
 

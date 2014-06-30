@@ -48,15 +48,6 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
         }
     }
 
-    @Override
-    protected void setupUI(final View view, final Bundle bundle) {
-        super.setupUI(view, bundle);
-        if (actionBarAutoHide() == false
-                && actionBar() != null
-                && !actionBar().isShowing()) {
-            actionBar().show();
-        }
-    }
 
     protected void navigate(final Class<? extends Fragment> clz) {
         getSource().nav(clz);
@@ -130,28 +121,14 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
         source = (K) s;
     }
 
-    protected boolean actionBarAutoHide() {
-        return false;
-    }
-
     @Override
     protected void scrollUp(final int firstItem) {
-        if (actionBar() == null || !actionBarAutoHide()) {
-            return;
-        }
-        if (actionBar().isShowing() && firstItem >= 1) {
-            actionBar().hide();
-        }
+
     }
 
     @Override
     protected void scrollDown(final int firstItem) {
-        if (actionBar() == null || !actionBarAutoHide()) {
-            return;
-        }
-        if (!actionBar().isShowing()) {
-            actionBar().show();
-        }
+
     }
 
     @Override

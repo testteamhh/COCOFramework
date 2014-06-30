@@ -67,6 +67,7 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         showLoading();
         if (items == null || items.size() < pagedSize(time)) {
             ended.set(true);
+            onAllDataLoaded();
             hideLoading();
         }
 
@@ -149,6 +150,12 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         super.refresh();
     }
 
+    /**
+     * This will be called when all data has been loaded
+     */
+    protected void onAllDataLoaded() {
+    }
+
     protected void showLoading() {
         if (loadview == null && getHeaderAdapter() != null) {
             loadview = getLoadingView();
@@ -172,21 +179,21 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
         return 10;
     }
 
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        refresh = menu.add(0, 999, 0, R.string.refresh).setIcon(
-                R.drawable.ic_action_refresh);
-        refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        if (item.getItemId() == 999) {
-            refresh();
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+//        refresh = menu.add(0, 999, 0, R.string.refresh).setIcon(
+//                R.drawable.ic_action_refresh);
+//        refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(final MenuItem item) {
+//        if (item.getItemId() == 999) {
+//            refresh();
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     protected void onStartLoading() {
