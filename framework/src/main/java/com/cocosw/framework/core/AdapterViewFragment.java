@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 
+import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
@@ -17,7 +18,6 @@ import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
-import com.github.kevinsawicki.wishlist.ViewUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -187,7 +187,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
             if (item != null) {
                 onItemClick(item, position, id, view);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             // for possible Cast exception, this will at least ensure the UI would not crash.
             Log.e(e);
         }

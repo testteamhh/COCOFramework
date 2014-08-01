@@ -29,21 +29,17 @@ apply from: '../config/maven_push.gradle'
 
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:support-v4:19.+'
-    compile 'com.cocosw.accessory:utils:+'
-    compile 'com.cocosw.accessory:views:+'
-    compile 'com.cocosw.accessory:connectivity:+'
-    compile 'com.cocosw:query:+'
-    compile 'com.cocosw:lifecycle:+'
+    compile 'com.android.support:appcompat-v7:20.+'
+    compile 'com.android.support:support-v4:20.+'
+    compile 'com.cocosw.accessory:utils:+@aar'
+    compile 'com.cocosw.accessory:views:+@aar'
+    compile 'com.cocosw.accessory:connectivity:+@aar'
+    compile 'com.cocosw:query:+@aar'
+    compile 'com.cocosw:lifecycle:+@aar'
     compile 'com.cocosw:undobar:+@aar'
     compile 'com.squareup:otto:+'
     compile 'com.joanzapata.android:base-adapter-helper:1.+'
     compile 'com.github.kevinsawicki:http-request:5.+'
-//    compile 'de.keyboardsurfer.android.widget:crouton:1.8.+'
-    compile('com.github.kevinsawicki:wishlist:0.10') {
-        exclude group: 'com.google.android', module: 'support-v4'
-    }
     compile 'com.google.code.gson:gson:+'
     compile 'com.path:android-priority-jobqueue:1.+'
     compile 'com.squareup.dagger:dagger:+'

@@ -2,7 +2,6 @@ package com.cocosw.framework.loader;
 
 import android.content.Context;
 
-import com.github.kevinsawicki.wishlist.AsyncLoader;
 
 /**
  * Loader that support throwing an exception when loading in the background

@@ -6,8 +6,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.framework.uiquery.CocoQuery;
-import com.github.kevinsawicki.wishlist.ViewUtils;
 
 public class ViewHolder {
 

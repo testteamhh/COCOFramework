@@ -3,8 +3,8 @@ package com.cocosw.framework.view.adapter;
 import android.content.Context;
 import android.view.View;
 
+import com.cocosw.accessory.views.adapter.MultiTypeAdapter;
 import com.cocosw.framework.uiquery.CocoQuery;
-import com.github.kevinsawicki.wishlist.MultiTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

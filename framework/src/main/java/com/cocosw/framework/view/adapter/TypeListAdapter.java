@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.cocosw.accessory.views.adapter.SingleTypeAdapter;
 import com.cocosw.framework.uiquery.CocoQuery;
-import com.github.kevinsawicki.wishlist.SingleTypeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
