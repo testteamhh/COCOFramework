@@ -173,7 +173,10 @@ public abstract class BaseFragment<T> extends Fragment implements
         LifecycleDispatcher.get().onFragmentCreateView(this, inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), null);
         ButterKnife.inject(this, v);
-        q.recycle(v);
+        if (q==null)
+            q = new CocoQuery(v);
+        else
+            q.recycle(v);
         try {
             setupUI(v, savedInstanceState);
         } catch (final Exception e) {

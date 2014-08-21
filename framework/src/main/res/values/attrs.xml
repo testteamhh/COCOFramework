@@ -11,4 +11,16 @@
     <declare-styleable name="DrawInsetsFrameLayout">
         <attr name="insetBackground" format="reference|color" />
     </declare-styleable>
+    <declare-styleable name="CollectionView">
+        <attr name="internalPadding" format="dimension" />
+        <attr name="contentTopClearance" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="FloatLabel">
+        <attr name="android:hint"/>
+        <attr name="android:layout"/>
+        <attr name="android:text"/>
+        <attr name="android:textColorHint"/>
+        <attr name="floatLabelColor" format="color"/>
+        <attr name="android:inputType"/>
+    </declare-styleable>
 </resources>

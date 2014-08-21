@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listcontainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.cocosw.framework.view.CollectionView
+        android:id="@id/list"
+        style="@style/ListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <FrameLayout
+        android:id="@id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@id/listprogressBar"
+        style="@style/ListSpinner"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</FrameLayout>

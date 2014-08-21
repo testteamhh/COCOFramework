@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.ExceptionManager;
+import com.cocosw.framework.uiquery.CocoQuery;
 
 import butterknife.ButterKnife;
 
@@ -85,7 +86,10 @@ public abstract class ProgressFragment<T> extends BaseFragment<T> {
         setContentView(layoutId());
         v = getContentView();
         ButterKnife.inject(this, v);
-        q.recycle(v);
+        if (q==null)
+            q= new CocoQuery(v);
+        else
+            q.recycle(v);
         try {
             setupUI(v, savedInstanceState);
         } catch (final Exception e) {

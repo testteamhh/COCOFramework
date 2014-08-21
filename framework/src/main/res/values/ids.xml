@@ -3,4 +3,6 @@
     <item name="list" type="id" />
     <item name="empty" type="id" />
     <item name="listprogressBar" type="id" />
+    <item name="float_label" type="id" />
+    <item name="edit_text" type="id" />
 </resources>
