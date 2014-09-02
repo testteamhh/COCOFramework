@@ -53,36 +53,4 @@ public class ViewHolder {
         return (E) contentView.findViewById(resourceId);
     }
 
-//    public void delayImage(final ImageView view, final String url) {
-//		delayImage(view, url, getPlaceHolder());
-//	}
-//
-//	public void delayImage(final ImageView view, final String url,
-//			final int holderRes, final OnClickListener onViewClickInListListener) {
-//		if (TextUtils.isEmpty(url)) {
-//			view.setVisibility(View.GONE);
-//		} else {
-//			if (parent != null
-//					&& q.shouldDelay(position, contentView, parent, url)) {
-//				q.recycle(view).image(holderRes).visible();
-//			} else {
-//				q.recycle(view).image(url, true, true, 0, 0,
-//						q.getCachedImage(holderRes), 0);
-//			}
-//			if (onViewClickInListListener != null) {
-//				view.setOnClickListener(onViewClickInListListener);
-//			}
-//			q.recycle(contentView);
-//		}
-//	}
-//
-//	public void delayImage(final ImageView view, final String url,
-//			final int holderRes) {
-//		delayImage(view, url, holderRes, null);
-//	}
-
-//	protected int getPlaceHolder() {
-//		return R.drawable.content_picture;
-//	}
-
 }

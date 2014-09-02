@@ -14,10 +14,8 @@ import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
 import com.cocosw.framework.R;
 import com.cocosw.framework.R.id;
 import com.cocosw.framework.exception.CocoException;
-import com.cocosw.framework.log.Log;
 import com.cocosw.framework.view.adapter.CocoAdapter;
 
-import java.util.Collections;
 import java.util.List;
 
 public abstract class ListFragment<T> extends AdapterViewFragment<T, ListView> implements
@@ -25,7 +23,6 @@ public abstract class ListFragment<T> extends AdapterViewFragment<T, ListView> i
 
     private View footerView;
     private View headerView;
-    protected List<T> items = Collections.emptyList();
     protected HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
 
     /**
@@ -97,26 +94,6 @@ public abstract class ListFragment<T> extends AdapterViewFragment<T, ListView> i
 
     @Override
     public abstract List<T> pendingData(Bundle args) throws Exception;
-
-    /**
-     * 刷新当前页面内容
-     */
-    @Override
-    public void refresh() {
-        Log.d("页面有更新,刷新中");
-        if (!isUsable()) {
-            return;
-        }
-        if (getLoaderManager().hasRunningLoaders()) {
-            loader.cancelLoad();
-        }
-
-        hide(emptyView);
-        items.clear();
-        ((CocoAdapter<?>) mAdapter).refresh();
-        setListShown(false);
-        super.refresh();
-    }
 
     /**
      * 设置Footerview

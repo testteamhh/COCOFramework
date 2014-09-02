@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.webkit.WebView;
 
-import com.jakewharton.fliptables.FlipTableConverters;
-
 import timber.log.Timber;
 
 /**
@@ -38,9 +36,9 @@ public class Log {
         }
     }
 
-    public static void d(final Iterable iterable) {
-        d(FlipTableConverters.fromIterable(iterable, iterable.getClass()));
-    }
+//    public static void d(final Iterable iterable) {
+//        d(FlipTableConverters.fromIterable(iterable, iterable.getClass()));
+//    }
 
     public static void i(String str, Object... arg) {
         Timber.i(str, arg);

@@ -72,6 +72,7 @@ public class SinglePaneActivity<V> extends Base<V> implements
         return false;
     }
 
+
     private Fragment mFragment;
 
     /**
@@ -128,4 +129,25 @@ public class SinglePaneActivity<V> extends Base<V> implements
                 .setAction(fragment.getName()));
     }
 
+    public static void startForResult(final Class<? extends Fragment> fragment, final Activity act, int requestCode) {
+        act.startActivityForResult(new Intent(act, SinglePaneActivity.class)
+                .setAction(fragment.getName()), requestCode);
+    }
+
+    public static void startForResult(final Class<? extends Fragment> fragment,
+                                      final Activity act, final Intent extras, int requestCode) {
+        act.startActivityForResult(new Intent(act, SinglePaneActivity.class).setAction(
+                fragment.getName()).putExtras(extras), requestCode);
+    }
+
+    public static void startForResult(final Class<? extends Fragment> fragment, final Fragment targetFragment, int requestCode) {
+        targetFragment.startActivityForResult(new Intent(targetFragment.getActivity(), SinglePaneActivity.class)
+                .setAction(fragment.getName()), requestCode);
+    }
+
+    public static void startForResult(final Class<? extends Fragment> fragment,
+                                      final Fragment targetFragment, final Intent extras, int requestCode) {
+        targetFragment.startActivityForResult(new Intent(targetFragment.getActivity(), SinglePaneActivity.class).setAction(
+                fragment.getName()).putExtras(extras), requestCode);
+    }
 }
