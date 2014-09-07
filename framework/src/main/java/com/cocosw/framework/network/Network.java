@@ -94,24 +94,27 @@ public class Network {
         HttpRequest request = HttpRequest.get(url);
         request.connectTimeout(TIMEOUT).readTimeout(TIMEOUT);
         request.contentType(HttpRequest.CONTENT_TYPE_JSON);
-        if (!headers.isEmpty()) {
+        if (headers!=null && !headers.isEmpty()) {
             request.headers(headers);
         }
         request.header("Connection", "close");
         request.acceptJson();
         request.acceptCharset(HttpRequest.CHARSET_UTF8);
         request.useCaches(true);
-        if (rawjson != null)
-            request.send(rawjson);
-        if (!request.ok()) {
-            throw new CocoException("当前网络出了一些问题，请稍后重试");
+        try {
+            if (rawjson != null)
+                request.send(rawjson);
+            if (!request.ok()) {
+                throw new CocoException("当前网络出了一些问题，请稍后重试");
+            }
+        } catch (HttpRequest.HttpRequestException e) {
+            throw new CocoException("当前网络出了一些问题，请稍后重试",e);
         }
         return request;
     }
 
     protected static <T extends Object> T fromRequest(HttpRequest request, Class<T> target) {
         Reader reader = request.bufferedReader();
-        Log.i(request.body());
         try {
             return GSON.fromJson(reader, target);
         } catch (JsonParseException e) {

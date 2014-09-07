@@ -1,5 +1,6 @@
 package com.cocosw.framework.core;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     View emptyView;
     protected List<T> items = Collections.emptyList();
     protected boolean listShown;
+    Rect mInsets;
 
     /**
      * The actual adapter without any wrapper
@@ -52,6 +54,15 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 
     protected void setOnScrollListener(final AbsListView.OnScrollListener listener) {
         q.id(R.id.list).scrolled(listener);
+    }
+
+    @Override
+    public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+        mListContainer.setClipToPadding(false);
+        mListContainer.setPadding(
+                0,insets.getPixelInsetTop(hasActionBarBlock())
+                ,insets.getPixelInsetRight(),insets.getPixelInsetBottom()
+                );
     }
 
     /**

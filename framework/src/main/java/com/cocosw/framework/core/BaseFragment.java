@@ -3,6 +3,7 @@ package com.cocosw.framework.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
  * @param <T>
  */
 public abstract class BaseFragment<T> extends Fragment implements
-        DialogResultListener, CocoLoader<T> {
+        DialogResultListener, CocoLoader<T> ,Base.OnActivityInsetsCallback{
 
     protected static final int NEVER = -1;
     protected static final int ONCREATE = 0;
@@ -48,6 +49,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     protected CocoQuery q;
     protected View v;
     protected Bus bus = CocoBus.getInstance();
+
 
     /**
      * Check network connection
@@ -217,12 +219,20 @@ public abstract class BaseFragment<T> extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
+        if (getActivity() instanceof Base) {
+            Base activity = ((Base) getActivity());
+            activity.removeInsetChangedCallback(this);
+            activity.resetInsets();
+        }
         LifecycleDispatcher.get().onFragmentPaused(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (getActivity() instanceof Base) {
+            ((Base) getActivity()).addInsetChangedCallback(this);
+        }
         LifecycleDispatcher.get().onFragmentResumed(this);
     }
 
@@ -357,4 +367,19 @@ public abstract class BaseFragment<T> extends Fragment implements
     protected void hideLoading() {
         getBase().hideLoading();
     }
+
+    @Override
+    public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+        v.setPadding(
+                0,insets.getPixelInsetTop(hasActionBarBlock())
+                ,insets.getPixelInsetRight(),insets.getPixelInsetBottom()
+        );
+    }
+
+    protected boolean hasActionBarBlock() {
+        if (getActionBar()==null || !getActionBar().isShowing())
+            return false;
+        return true;
+    }
+
 }

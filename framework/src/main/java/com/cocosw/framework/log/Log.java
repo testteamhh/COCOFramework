@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.webkit.WebView;
 
+import com.cocosw.framework.R;
+
 import timber.log.Timber;
 
 /**
@@ -126,26 +128,24 @@ public class Log {
      * @param str
      */
     public static void dialog(Context context, String content, String... str) {
-        //TODO html/non-html
         create(context, content, str).show();
     }
 
-    private static Dialog create(Context mContext, String mLicensesText, String... str) {
+    private static Dialog create(Context mContext, String mLicensesText, CharSequence... str) {
         //Get resources
         final WebView webView = new WebView(mContext);
         webView.loadDataWithBaseURL(null, mLicensesText, "text/html", "utf-8", null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
 
                 .setView(webView)
-                .setPositiveButton("Close", new Dialog.OnClickListener() {
+                .setPositiveButton(R.string.ok, new Dialog.OnClickListener() {
                     public void onClick(final DialogInterface dialogInterface, final int i) {
                         dialogInterface.dismiss();
                     }
                 });
         if (str != null && str.length > 0)
             builder.setTitle(str[0]);
-        final AlertDialog dialog = builder.create();
-        return dialog;
+        return builder.create();
     }
 
 }

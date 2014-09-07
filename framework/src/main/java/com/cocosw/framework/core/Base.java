@@ -19,15 +19,20 @@ package com.cocosw.framework.core;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
+import com.cocosw.accessory.utils.UIUtils;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.app.Injector;
@@ -42,6 +47,7 @@ import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
 
 import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -53,11 +59,15 @@ import butterknife.ButterKnife;
  * @author solosky <solosky772@qq.com>
  */
 public abstract class Base<T> extends ActionBarActivity implements
-        DialogResultListener, CocoLoader<T> {
+        DialogResultListener, CocoLoader<T>{
 
     protected CocoQuery q;
     private ThrowableLoader<T> loader;
     protected Bus bus = CocoBus.getInstance();
+    private HashSet<OnActivityInsetsCallback> mInsetCallbacks;
+    private SystemBarTintManager.SystemBarConfig mInsets;
+    private SystemBarTintManager tintManager;
+
 
     @Override
     public void onDialogResult(final int requestCode, final int resultCode,
@@ -76,6 +86,36 @@ public abstract class Base<T> extends ActionBarActivity implements
         LifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
         q = q == null ? new CocoQuery(this) : q;
         setContentView(layoutId());
+        tintManager = new SystemBarTintManager(this);
+
+            // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+            // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        if (UIUtils.hasKitKat()) {
+            TypedValue typedValue = new TypedValue();
+            try {
+                getTheme().resolveAttribute(getPackageManager().getActivityInfo(getComponentName(),PackageManager.GET_META_DATA).theme, typedValue, true);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            int[] attribute = new int[] {R.attr.colorPrimary,R.attr.colorPrimaryDark,R.attr.navigationBarColor,R.attr.statusBarColor};
+            TypedArray array = this.obtainStyledAttributes(typedValue.resourceId, attribute);
+
+            int colorPrimary = array.getResourceId(0, R.color.black);
+            int colorPrimaryDark = array.getResourceId(1, -1);
+            int navigationBarColor = array.getResourceId(2, -1);
+            int statusBarColor = array.getResourceId(3, -1);
+
+            colorPrimaryDark = colorPrimaryDark<0?colorPrimary:colorPrimaryDark;
+            navigationBarColor = navigationBarColor<0? colorPrimaryDark:navigationBarColor;
+            statusBarColor = statusBarColor<0?colorPrimaryDark:statusBarColor;
+
+            tintManager.setStatusBarTintResource(statusBarColor);
+            tintManager.setNavigationBarTintResource(navigationBarColor);
+        }
+
         ButterKnife.inject(this);
         try {
             init(savedInstanceState);
@@ -245,6 +285,7 @@ public abstract class Base<T> extends ActionBarActivity implements
     @Override
     public void onResume() {
         super.onResume();
+        onInsetsChanged(tintManager.getConfig());
         LifecycleDispatcher.get().onActivityResumed(this);
     }
 
@@ -345,4 +386,44 @@ public abstract class Base<T> extends ActionBarActivity implements
     protected void showExitConfirm() {
         new UndoBarController.UndoBar(this).message(R.string.confirm_opt_exit).duration(3000).show();
     }
+
+    public void addInsetChangedCallback(OnActivityInsetsCallback callback) {
+        if (mInsetCallbacks == null) {
+            mInsetCallbacks = new HashSet<>();
+        }
+        mInsetCallbacks.add(callback);
+
+        if (mInsets != null) {
+            callback.onInsetsChanged(mInsets);
+        }
+    }
+
+    public void removeInsetChangedCallback(OnActivityInsetsCallback callback) {
+        if (mInsetCallbacks != null) {
+            mInsetCallbacks.remove(callback);
+        }
+    }
+
+    public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+        mInsets = insets;
+
+        if (mInsetCallbacks != null && !mInsetCallbacks.isEmpty()) {
+            for (OnActivityInsetsCallback callback : mInsetCallbacks) {
+                callback.onInsetsChanged(insets);
+            }
+        }
+    }
+
+    public void setInsetTopAlpha(float alpha) {
+        tintManager.setStatusBarAlpha(alpha);
+    }
+
+    public void resetInsets() {
+        setInsetTopAlpha(255);
+    }
+
+    public static interface OnActivityInsetsCallback {
+        public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets);
+    }
+
 }

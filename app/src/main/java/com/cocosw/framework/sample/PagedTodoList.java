@@ -60,7 +60,7 @@ public class PagedTodoList extends PagedListFragment<Todo> implements SwipeRefre
 
     @Override
     protected void onItemClick(Todo todo, int pos, long id, View view) {
-        TodoDetail.launch(getActivity(),todo);
+     //   TodoDetail.launch(getActivity(),todo);
     }
 
     @Override
