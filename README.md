@@ -7,14 +7,50 @@ Short code, rapid development, less bug, more fun
 
 How to start
 =============
+
+- Create a normal android project with gradle building
+- Change build.gradle by refering (demo)[https://github.com/soarcn/COCOFramework/blob/master/app/build.gradle]
+
+
+Style your application
+============
+
+Coco framework enable you to define your overall application visual style same as API v20.
+
+![Theme](http://developer.android.com/preview/material/images/ThemeColors.png)
+
+How to define your app style
+---------
+
+- Create your theme, you can extend your theme from one of preset themes.
+- Customize theme color in your theme for example
 ```xml
-    compile('com.cocosw:framework:+@aar') {
-        transitive = true
-    }
-    debugCompile('com.cocosw.framework:debug:+@aar') {
-        transitive = true
+    <style name="TODOTheme" parent="@style/Theme.App.Translucent">
+        <item name="colorPrimary">@color/themecolor</item>
+        <item name="navigationBarColor">@color/transparent</item>
+        <item name="actionBarStyle">@style/LightActionBar</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+    </style>
+```
+- To compatible with API 20, create a separate style under values-v20 folder
+- You can introduce (Holoaccent)[https://github.com/negusoft/holoaccent] to further customize your ui style
+
+
+Translucent
+----------
+
+Coco framework have build-in support for translucent UI, which build on modified (SystemBarTint)[https://github.com/jgilfelt/SystemBarTint]
+
+- You can change the color of status and navigation bars in your style.
+- Framwork will set view padding for adapt the screen bound in most of case
+- If you want to control the layout padding by your self, you can override onInsetsChanged method in activity/fragment class. For example
+```java
+    @Override
+    public void onInsetsChanged(final SystemBarTintManager.SystemBarConfig insets) {
+        mBottomContent.setPadding(0,0,0,insets.getPixelInsetBottom());
     }
 ```
+
 
 Dependency
 ============
