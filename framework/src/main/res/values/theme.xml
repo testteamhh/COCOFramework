@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="ActionBar" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">?attr/colorPrimary</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
-    <style name="LightActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="LightActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
         <item name="background">?attr/colorPrimary</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
-    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light">
-    </style>
+    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light"></style>
 
     <style name="Theme.App" parent="ThemeActivity">
         <item name="colorPrimary">@color/black</item>
