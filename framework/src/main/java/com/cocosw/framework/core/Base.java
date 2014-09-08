@@ -21,7 +21,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.Loader;
@@ -59,7 +58,7 @@ import butterknife.ButterKnife;
  * @author solosky <solosky772@qq.com>
  */
 public abstract class Base<T> extends ActionBarActivity implements
-        DialogResultListener, CocoLoader<T>{
+        DialogResultListener, CocoLoader<T> {
 
     protected CocoQuery q;
     private ThrowableLoader<T> loader;
@@ -88,19 +87,19 @@ public abstract class Base<T> extends ActionBarActivity implements
         setContentView(layoutId());
         tintManager = new SystemBarTintManager(this);
 
-            // enable status bar tint
+        // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);
-            // enable navigation bar tint
+        // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         if (UIUtils.hasKitKat()) {
             TypedValue typedValue = new TypedValue();
             try {
-                getTheme().resolveAttribute(getPackageManager().getActivityInfo(getComponentName(),PackageManager.GET_META_DATA).theme, typedValue, true);
+                getTheme().resolveAttribute(getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA).theme, typedValue, true);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
 
-            int[] attribute = new int[] {R.attr.colorPrimary,R.attr.colorPrimaryDark,R.attr.navigationBarColor,R.attr.statusBarColor};
+            int[] attribute = new int[]{R.attr.colorPrimary, R.attr.colorPrimaryDark, R.attr.navigationBarColor, R.attr.statusBarColor};
             TypedArray array = this.obtainStyledAttributes(typedValue.resourceId, attribute);
 
             int colorPrimary = array.getResourceId(0, R.color.black);
@@ -108,9 +107,9 @@ public abstract class Base<T> extends ActionBarActivity implements
             int navigationBarColor = array.getResourceId(2, -1);
             int statusBarColor = array.getResourceId(3, -1);
 
-            colorPrimaryDark = colorPrimaryDark<0?colorPrimary:colorPrimaryDark;
-            navigationBarColor = navigationBarColor<0? colorPrimaryDark:navigationBarColor;
-            statusBarColor = statusBarColor<0?colorPrimaryDark:statusBarColor;
+            colorPrimaryDark = colorPrimaryDark < 0 ? colorPrimary : colorPrimaryDark;
+            navigationBarColor = navigationBarColor < 0 ? colorPrimaryDark : navigationBarColor;
+            statusBarColor = statusBarColor < 0 ? colorPrimaryDark : statusBarColor;
 
             tintManager.setStatusBarTintResource(statusBarColor);
             tintManager.setNavigationBarTintResource(navigationBarColor);
@@ -129,6 +128,10 @@ public abstract class Base<T> extends ActionBarActivity implements
         }
         onStartLoading();
         getSupportLoaderManager().initLoader(this.hashCode(), getIntent().getExtras(), this);
+    }
+
+    protected SystemBarTintManager getTintManager() {
+        return tintManager;
     }
 
     protected void inject() {

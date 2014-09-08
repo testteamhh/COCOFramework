@@ -76,6 +76,13 @@ public abstract class BaseFragment<T> extends Fragment implements
         }
     }
 
+    protected SystemBarTintManager getTintManager() {
+        if (getActivity() instanceof Base) {
+            return ((Base) getActivity()).getTintManager();
+        }
+        return null;
+    }
+
     /**
      * run on Ui thread
      *

@@ -50,20 +50,3 @@ Coco framework have build-in support for translucent UI, which build on modified
         mBottomContent.setPadding(0,0,0,insets.getPixelInsetBottom());
     }
 ```
-
-
-Dependency
-============
-- COCO accessory
-- okhttp
-- http-request
-- timber
-- cocoquery
-- undobar
-- lifecycle
-- gson
-- wishlist
-- dagger
-- butterknife
-- Picasso
-- hugo
