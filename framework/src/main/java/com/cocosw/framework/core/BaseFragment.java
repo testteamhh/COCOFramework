@@ -3,7 +3,6 @@ package com.cocosw.framework.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
  * @param <T>
  */
 public abstract class BaseFragment<T> extends Fragment implements
-        DialogResultListener, CocoLoader<T> ,Base.OnActivityInsetsCallback{
+        DialogResultListener, CocoLoader<T>, Base.OnActivityInsetsCallback {
 
     protected static final int NEVER = -1;
     protected static final int ONCREATE = 0;
@@ -63,7 +62,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     public ActionBar getActionBar() {
-        return ((ActionBarActivity)getActivity()).getSupportActionBar();
+        return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
     /**
@@ -175,7 +174,7 @@ public abstract class BaseFragment<T> extends Fragment implements
         LifecycleDispatcher.get().onFragmentCreateView(this, inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), null);
         ButterKnife.inject(this, v);
-        if (q==null)
+        if (q == null)
             q = new CocoQuery(v);
         else
             q.recycle(v);
@@ -370,14 +369,15 @@ public abstract class BaseFragment<T> extends Fragment implements
 
     @Override
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
-        v.setPadding(
-                0,insets.getPixelInsetTop(hasActionBarBlock())
-                ,insets.getPixelInsetRight(),insets.getPixelInsetBottom()
-        );
+        if (v != null)
+            v.setPadding(
+                    0, insets.getPixelInsetTop(hasActionBarBlock())
+                    , insets.getPixelInsetRight(), insets.getPixelInsetBottom()
+            );
     }
 
     protected boolean hasActionBarBlock() {
-        if (getActionBar()==null || !getActionBar().isShowing())
+        if (getActionBar() == null || !getActionBar().isShowing())
             return false;
         return true;
     }

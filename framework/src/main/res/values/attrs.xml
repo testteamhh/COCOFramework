@@ -13,9 +13,6 @@
         <attr name="android:foregroundInsidePadding" />
         <attr name="android:foregroundGravity" />
     </declare-styleable>
-    <declare-styleable name="DrawInsetsFrameLayout">
-        <attr name="insetBackground" format="reference|color" />
-    </declare-styleable>
     <declare-styleable name="CollectionView">
         <attr name="internalPadding" format="dimension" />
         <attr name="contentTopClearance" format="dimension" />
@@ -33,9 +30,9 @@
         <attr name="stuckShadowDrawable" format="reference" />
     </declare-styleable>
     <declare-styleable name="AppTheme">
-        <attr name="colorPrimary"  format="color|reference"/>
-        <attr name="colorPrimaryDark"  format="color|reference"/>
-        <attr name="navigationBarColor"  format="color|reference"/>
-        <attr name="statusBarColor"  format="color|reference"/>
+        <attr name="colorPrimary" format="color|reference" />
+        <attr name="colorPrimaryDark" format="color|reference" />
+        <attr name="navigationBarColor" format="color|reference" />
+        <attr name="statusBarColor" format="color|reference" />
     </declare-styleable>
 </resources>
