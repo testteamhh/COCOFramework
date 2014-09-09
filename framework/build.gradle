@@ -50,7 +50,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.0.+'
     compile 'com.jakewharton.timber:timber:+'
     //  compile 'com.netflix.rxjava:rxjava-android:+'
-    compile 'com.jakewharton.fliptables:fliptables:+'
+    // compile 'com.jakewharton.fliptables:fliptables:+'
     compile 'com.iconic:iconic:0.1@aar'
     compile 'com.nineoldandroids:library:+'
 }

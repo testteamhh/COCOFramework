@@ -2,7 +2,7 @@
 
 <resources>
 
-    <style name="ActionBar" parent="@style/Widget.AppCompat.ActionBar">
+    <style name="ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">?attr/colorPrimary</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
@@ -12,7 +12,7 @@
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
-    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light"></style>
+    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light.DarkActionBar"></style>
 
     <style name="Theme.App" parent="ThemeActivity">
         <item name="colorPrimary">@color/black</item>
@@ -25,8 +25,8 @@
     </style>
 
     <style name="Theme.App.Translucent" parent="Theme.App">
-        <item name="actionBarStyle">@style/LightActionBar</item>
-        <item name="android:actionBarStyle">@style/LightActionBar</item>
+        <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
