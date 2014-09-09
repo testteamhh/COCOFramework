@@ -76,7 +76,7 @@ public abstract class Base<T> extends ActionBarActivity implements
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
         } catch (Exception e) {

@@ -7,8 +7,6 @@ import com.cocosw.framework.log.Log;
 
 /**
  * ExcetionManager is a exception router in UI layer.
- *
- *
  */
 public class ExceptionManager {
 
@@ -34,7 +32,10 @@ public class ExceptionManager {
     public static class LogExceptionHandler implements ExceptionHandler {
         @Override
         public boolean exception(Exception e, Context ctx, Object source) throws CocoException {
-            Log.e(e);
+            if (e instanceof CocoException)
+                e.printStackTrace();
+            else
+                Log.e(e);
             return false;
         }
 
@@ -43,8 +44,6 @@ public class ExceptionManager {
             Log.e(e);
         }
     }
-
-    ;
 
     private static ExceptionHandler handler = new LogExceptionHandler();
 
