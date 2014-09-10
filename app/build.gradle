@@ -41,5 +41,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':framework')
+    compile 'uk.co.chrisjenx:calligraphy:+'
+    compile 'com.balysv.materialmenu:material-menu-abc:1.2.0'
+  //  compile 'com.melnykov:floatingactionbutton:1.0.3'
     debugCompile project(':debug')
 }

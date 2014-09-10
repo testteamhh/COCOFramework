@@ -1,6 +1,7 @@
 package com.cocosw.framework.sample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
@@ -41,7 +42,7 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
 
     @Override
     protected void onItemClick(Bean.Shot item, int pos, long id, View view) {
-        TodoDetail.launch(getActivity(), item);
+        new Presenter(this).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO,item)).openForResult(1);
     }
 
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {
@@ -65,6 +66,7 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         final SubMenu subMenu1 = menu.addSubMenu(R.string.more);
+        menu.add(Menu.NONE, 3, Menu.NONE, R.string.about);
         subMenu1.add(Menu.NONE, 2, Menu.NONE, R.string.about);
 
         final MenuItem subMenu1Item = subMenu1.getItem();

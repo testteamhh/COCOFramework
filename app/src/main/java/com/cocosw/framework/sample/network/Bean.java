@@ -1,5 +1,7 @@
 package com.cocosw.framework.sample.network;
 
+import com.google.common.base.Objects;
+
 import java.io.Serializable;
 
 /**
@@ -18,6 +20,22 @@ public class Bean {
         public int likes_count;
         public int views_count;
         public Player player;
+
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .add("id", id)
+                    .add("title", title)
+                    .add("description", description)
+                    .add("image_url", image_url)
+                    .add("image_teaser_url", image_teaser_url)
+                    .add("image_400_url", image_400_url)
+                    .add("likes_count", likes_count)
+                    .add("views_count", views_count)
+                    .add("player", player)
+                    .toString();
+        }
     }
 
 

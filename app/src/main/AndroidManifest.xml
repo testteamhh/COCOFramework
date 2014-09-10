@@ -14,7 +14,7 @@
         android:theme="@style/TODOTheme"
         android:name=".TodoApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".Main"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
