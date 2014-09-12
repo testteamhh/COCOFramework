@@ -26,9 +26,27 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class PagedListPagerFragment<T, K extends Carousel> extends
         ListPagerFragment<T, K> {
 
-    protected final AtomicBoolean ended = new AtomicBoolean(false);
+    protected AtomicBoolean ended = new AtomicBoolean(false);
     protected int time = 0;
     private View loadview = null;
+
+
+    private static final String TIME = "_pagedlist_time";
+    private static final String ENDED = "_pagedlist_ended";
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(TIME, time);
+        outState.putSerializable(ENDED, ended);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        time = savedInstanceState.getInt(TIME);
+        ended = (AtomicBoolean) savedInstanceState.getSerializable(ENDED);
+    }
 
     @Override
     protected void setupUI(final View view, final Bundle bundle) {

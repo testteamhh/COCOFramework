@@ -3,8 +3,6 @@ package com.cocosw.framework.core;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -31,7 +29,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public abstract class PagedListFragment<T> extends ListFragment<T> {
 
-    protected final AtomicBoolean ended = new AtomicBoolean(false);
+    private static final String TIME = "_pagedlist_time";
+    private static final String ENDED = "_pagedlist_ended";
+    protected AtomicBoolean ended = new AtomicBoolean(false);
     protected int time = 0;
     private View loadview = null;
 
@@ -43,6 +43,21 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
     @Override
     public CocoAdapter<T> getAdapter() {
         return (CocoAdapter<T>) mAdapter;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(TIME, time);
+        outState.putSerializable(ENDED, ended);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        time = savedInstanceState.getInt(TIME);
+        ended = (AtomicBoolean) savedInstanceState.getSerializable(ENDED);
     }
 
     @Override

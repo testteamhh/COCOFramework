@@ -1,4 +1,4 @@
-package com.cocosw.framework.preference;
+package com.cocosw.framework.core;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
-import com.cocosw.framework.core.Base;
-import com.cocosw.framework.core.SinglePaneActivity;
-import com.cocosw.framework.core.SystemBarTintManager;
+import com.cocosw.framework.preference.PreferenceFragment;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.LifecycleDispatcher;
 

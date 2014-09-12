@@ -1,5 +1,6 @@
 package com.cocosw.framework.core;
 
+import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
@@ -60,9 +61,23 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
         mListContainer.setClipToPadding(false);
         mListContainer.setPadding(
-                0,insets.getPixelInsetTop(hasActionBarBlock())
-                ,insets.getPixelInsetRight(),insets.getPixelInsetBottom()
-                );
+                0, insets.getPixelInsetTop(hasActionBarBlock())
+                , insets.getPixelInsetRight(), insets.getPixelInsetBottom()
+        );
+    }
+
+    private final static String DATA = "_adatperview_data";
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        save(DATA, items);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        items = load(DATA);
     }
 
     /**

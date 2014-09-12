@@ -1,10 +1,8 @@
 package com.cocosw.framework.core;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 
 import com.cocosw.accessory.views.complex.CocoPager;
 import com.cocosw.framework.R;
@@ -30,6 +28,7 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
 
     protected static final int ONSELECTED = 1;
     protected boolean updated;
+
 
     @Override
     public void onPagerSelected() {
@@ -72,7 +71,6 @@ public abstract class ListPagerFragment<T, K extends Carousel> extends
      */
     @Override
     public void first() {
-        // TODO Auto-generated method stub
 
     }
 

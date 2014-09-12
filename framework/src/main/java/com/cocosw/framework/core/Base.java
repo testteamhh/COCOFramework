@@ -17,12 +17,15 @@
 
 package com.cocosw.framework.core;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
@@ -46,6 +49,7 @@ import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -66,7 +70,9 @@ public abstract class Base<T> extends ActionBarActivity implements
     private HashSet<OnActivityInsetsCallback> mInsetCallbacks;
     private SystemBarTintManager.SystemBarConfig mInsets;
     private SystemBarTintManager tintManager;
+    private RetainedFragment retainedFragment;
 
+    private static final String TAG_RETAINED_STATE_FRAGMENT = "_retainedStateFragment";
 
     @Override
     public void onDialogResult(final int requestCode, final int resultCode,
@@ -80,7 +86,7 @@ public abstract class Base<T> extends ActionBarActivity implements
         try {
             super.onCreate(savedInstanceState);
         } catch (Exception e) {
-
+            //workround for V7 appcompact
         }
         LifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
         q = q == null ? new CocoQuery(this) : q;
@@ -116,6 +122,18 @@ public abstract class Base<T> extends ActionBarActivity implements
         }
 
         ButterKnife.inject(this);
+        // use Retained Fragment to handle runtime changes
+        if (hasRetainData()) {
+            FragmentManager fm = getSupportFragmentManager();
+            retainedFragment = (RetainedFragment) fm.findFragmentByTag(TAG_RETAINED_STATE_FRAGMENT);
+
+            // create the fragment and data the first time
+            if (retainedFragment == null) {
+                // add the fragment
+                retainedFragment = new RetainedFragment();
+                fm.beginTransaction().add(retainedFragment, TAG_RETAINED_STATE_FRAGMENT).commit();
+            }
+        }
         try {
             init(savedInstanceState);
         } catch (final RuntimeException e) {
@@ -129,6 +147,38 @@ public abstract class Base<T> extends ActionBarActivity implements
         onStartLoading();
         getSupportLoaderManager().initLoader(this.hashCode(), getIntent().getExtras(), this);
     }
+
+    static class RetainedFragment extends Fragment {
+
+        HashMap<String, Object> data = new HashMap<>();
+
+        // this method is only called once for this fragment
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            // retain this fragment
+            setRetainInstance(true);
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((Base) activity).retainedFragment = this;
+        }
+
+        private void put(String key, Object obj) {
+            data.put(key, obj);
+        }
+
+        private void put(Object obj) {
+            put(obj.getClass().getName(), obj);
+        }
+
+        private <T> T get(String key) {
+            return (T) data.get(key);
+        }
+    }
+
 
     protected SystemBarTintManager getTintManager() {
         return tintManager;
@@ -390,7 +440,7 @@ public abstract class Base<T> extends ActionBarActivity implements
         new UndoBarController.UndoBar(this).message(R.string.confirm_opt_exit).duration(3000).show();
     }
 
-    public void addInsetChangedCallback(OnActivityInsetsCallback callback) {
+    protected void addInsetChangedCallback(OnActivityInsetsCallback callback) {
         if (mInsetCallbacks == null) {
             mInsetCallbacks = new HashSet<>();
         }
@@ -401,13 +451,13 @@ public abstract class Base<T> extends ActionBarActivity implements
         }
     }
 
-    public void removeInsetChangedCallback(OnActivityInsetsCallback callback) {
+    protected void removeInsetChangedCallback(OnActivityInsetsCallback callback) {
         if (mInsetCallbacks != null) {
             mInsetCallbacks.remove(callback);
         }
     }
 
-    public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+    protected void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
         mInsets = insets;
 
         if (mInsetCallbacks != null && !mInsetCallbacks.isEmpty()) {
@@ -421,12 +471,36 @@ public abstract class Base<T> extends ActionBarActivity implements
         tintManager.setStatusBarAlpha(alpha);
     }
 
-    public void resetInsets() {
+    protected void resetInsets() {
         setInsetTopAlpha(255);
     }
 
-    public static interface OnActivityInsetsCallback {
+    protected static interface OnActivityInsetsCallback {
         public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets);
+    }
+
+    protected boolean hasRetainData() {
+        return true;
+    }
+
+    protected void save(String key, Object obj) {
+        if (retainedFragment != null)
+            retainedFragment.put(key, obj);
+    }
+
+    protected void save(Object obj) {
+        if (retainedFragment != null)
+            retainedFragment.put(obj.getClass().getName(), obj);
+    }
+
+    protected <T> T load(String key) {
+        if (retainedFragment != null)
+            return (T) retainedFragment.get(key);
+        return null;
+    }
+
+    protected Object load(Object obj) {
+        return obj = load(obj.getClass().getName());
     }
 
 }

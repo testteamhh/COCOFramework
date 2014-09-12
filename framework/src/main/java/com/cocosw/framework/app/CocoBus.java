@@ -4,7 +4,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
 /**
- * TODO Desc
  * <p/>
  * Project: cocoframework
  * User: Liao Kai(soarcn@gmail.com)

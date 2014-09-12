@@ -152,6 +152,29 @@ public abstract class BaseFragment<T> extends Fragment implements
         q = new CocoQuery(getActivity());
     }
 
+
+    protected void save(String key, Object obj) {
+        if (getActivity() instanceof Base)
+            ((Base) getActivity()).save(key, obj);
+    }
+
+    protected void save(Object obj) {
+        if (getActivity() instanceof Base)
+            ((Base) getActivity()).save(this.getClass().getName() + obj.getClass().getName(), obj);
+    }
+
+    protected <T> T load(String key) {
+        if (getActivity() instanceof Base)
+            return (T) ((Base) getActivity()).load(key);
+        return null;
+    }
+
+    protected Object load(Object obj) {
+        if (getActivity() instanceof Base)
+            return ((Base) getActivity()).load(this.getClass().getName() + obj.getClass().getName());
+        return null;
+    }
+
     @Override
     public Loader<T> onCreateLoader(final int id, final Bundle args) {
         onStartLoading();

@@ -42,7 +42,6 @@ public abstract class PagerFragment<T, K extends Carousel> extends
      */
     @Override
     public void first() {
-        // TODO Auto-generated method stub
 
     }
 
