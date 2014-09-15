@@ -34,7 +34,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
     @Override
     protected void init(Bundle saveBundle) throws Exception {
         mPanel.setPanelSlideListener(this);
-        mPanel.setSliderFadeColor(getResources().getColor(R.color.semitransparent));
+        mPanel.setCoveredFadeColor(getResources().getColor(R.color.body_text_2));
 
         if (saveBundle == null) {
             master = onCreateMasterPane();
@@ -165,6 +165,6 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
     public void onBackPressed() {
         if (mPanel.isOpen())
             super.onBackPressed();
-        else mPanel.closePane();
+        else mPanel.openPane();
     }
 }

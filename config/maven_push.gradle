@@ -112,7 +112,7 @@ afterEvaluate { project ->
         from android.sourceSets.main.java.srcDirs
     }
 
-    task apklib(type: Zip) {
+    task apklib(type: Zip){
         appendix = extension = 'apklib'
 
         from 'AndroidManifest.xml'

@@ -137,10 +137,14 @@ public abstract class BaseFragment<T> extends Fragment implements
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         LifecycleDispatcher.get().onFragmentActivityCreated(this, savedInstanceState);
-        if (getLoaderOn() == BaseFragment.ONCREATE) {
+        if (getLoaderOn() == BaseFragment.ONCREATE && reloadNeeded(savedInstanceState)) {
             onStartLoading();
             getLoaderManager().initLoader(this.hashCode(), getArguments(), this);
         }
+    }
+
+    protected boolean reloadNeeded(final Bundle savedInstanceState) {
+        return true;
     }
 
     @Override
@@ -160,7 +164,7 @@ public abstract class BaseFragment<T> extends Fragment implements
 
     protected void save(Object obj) {
         if (getActivity() instanceof Base)
-            ((Base) getActivity()).save(this.getClass().getName() + obj.getClass().getName(), obj);
+            ((Base) getActivity()).save(this.getClass().getName()+obj.getClass().getName(),obj);
     }
 
     protected <T> T load(String key) {
@@ -171,7 +175,7 @@ public abstract class BaseFragment<T> extends Fragment implements
 
     protected Object load(Object obj) {
         if (getActivity() instanceof Base)
-            return ((Base) getActivity()).load(this.getClass().getName() + obj.getClass().getName());
+            return ((Base) getActivity()).load(this.getClass().getName()+obj.getClass().getName());
         return null;
     }
 

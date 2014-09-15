@@ -56,8 +56,12 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        time = savedInstanceState.getInt(TIME);
-        ended = (AtomicBoolean) savedInstanceState.getSerializable(ENDED);
+        if (savedInstanceState!=null) {
+            time = savedInstanceState.getInt(TIME);
+            ended = (AtomicBoolean) savedInstanceState.getSerializable(ENDED);
+            if (ended==null)
+                ended = new AtomicBoolean(false);
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
+import android.support.v7.graphics.PaletteItem;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -36,8 +37,6 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
     TextView mDetail;
     @InjectView(R.id.description)
     TextView mDescription;
-    @InjectView(R.id.other)
-    TextView mOther;
     @InjectView(R.id.scrollview)
     StickyScrollView mScrollview;
     private ABHelper abHelper;
@@ -70,7 +69,6 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
 
             }
         });
-        q.v(mOther).text(todo.toString());
         q.v(mDescription).html(todo.description);
         mScrollview.setOnScrollChangedListener(this);
         abHelper = new ABHelper(new ColorDrawable(getResources().getColor(R.color.transparent)),mHeader,0) {
@@ -92,14 +90,17 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
     }
 
     private void applyPalette(Palette palette) {
-        v.setBackgroundDrawable(new ColorDrawable(palette.getDarkMutedColor().getRgb()));
+        PaletteItem item = palette.getDarkMutedColor();
+        if (item!=null)
+        v.setBackgroundDrawable(new ColorDrawable(item.getRgb()));
 
-        mDetail.setTextColor(palette.getVibrantColor().getRgb());
+        item = palette.getVibrantColor();
+        if (item!=null)
+        mDetail.setTextColor(item.getRgb());
 
-        mDescription.setTextColor(palette.getLightVibrantColor().getRgb());
-
-        mOther.setBackgroundColor(palette.getLightMutedColor().getRgb());
-
+        item = palette.getLightVibrantColor();
+        if (item!=null)
+        mDescription.setTextColor(item.getRgb());
 
     }
 

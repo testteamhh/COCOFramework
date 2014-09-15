@@ -2,14 +2,18 @@ package com.cocosw.framework.sample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.extras.abc.MaterialMenuIconCompat;
 import com.cocosw.framework.core.PagedListFragment;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
@@ -25,19 +29,22 @@ import java.util.List;
  */
 public class TodoList extends PagedListFragment<Bean.Shot> {
 
+    private MaterialMenuIconCompat materialMenu;
+
     @Override
     public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
-        return DataSource.getShots(index < 0 ? 0 : index).shots;
+        return DataSource.getShots(index < 0 ? 0 : time).shots;
     }
 
     @Override
     protected CocoAdapter<Bean.Shot> createEndlessAdapter(List<Bean.Shot> items) throws Exception {
-        return new ShotAdapter(context);
+        return new ShotAdapter(context,items);
     }
 
     @Override
     protected void init(View view, Bundle bundle) throws Exception {
-
+        materialMenu = new MaterialMenuIconCompat((ActionBarActivity) getActivity(), Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
+        materialMenu.setState(MaterialMenuDrawable.IconState.BURGER);
     }
 
     @Override
@@ -47,8 +54,8 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
 
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {
 
-        public ShotAdapter(Context context) {
-            super(context, R.layout.li_shot);
+        public ShotAdapter(Context context,List<Bean.Shot>items) {
+            super(context, R.layout.li_shot,items);
         }
 
         @Override
@@ -75,12 +82,30 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
     @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        materialMenu.syncState(savedInstanceState);
+    }
+
+
+    public void onSaveInstanceState(Bundle outState) {
+        materialMenu.onSaveInstanceState(outState);
+    }
+
+
+
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case 2:
                 q.alert(R.string.about, R.string.about);
+                break;
+            case android.R.id.home:
+                materialMenu.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
+                break;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 }

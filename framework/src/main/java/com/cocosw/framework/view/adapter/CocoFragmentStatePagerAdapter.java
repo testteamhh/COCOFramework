@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
 
-import com.cocosw.framework.core.Carousel;
-import com.cocosw.framework.core.Pager;
+
+import com.cocosw.framework.core.BaseFragment;
 
 import java.util.WeakHashMap;
 
@@ -19,15 +19,12 @@ import java.util.WeakHashMap;
 public class CocoFragmentStatePagerAdapter extends
         FixedFragmentStatePagerAdapter {
 
-    // 利用弱引用池进行fragment实例的管理
-
-    private Pager<?> selected;
     // private final WeakPool<Fragment> pool = new WeakPool<Fragment>();
     private final WeakHashMap<Integer, Fragment> pool = new WeakHashMap<Integer, Fragment>();
 
     protected Class<? extends Fragment>[] clz;
     private final Context context;
-    private Carousel source;
+    private Fragment selected;
 
     @SuppressWarnings("unchecked")
     public CocoFragmentStatePagerAdapter(final Context context,
@@ -55,9 +52,6 @@ public class CocoFragmentStatePagerAdapter extends
         Fragment f = pool.get(i);
         if (f == null) {
             f = Fragment.instantiate(context, clz[i].getName());
-            if (f instanceof Pager) {
-                ((Pager) f).setSource(source);
-            }
             pool.put(i, f);
         }
         return f;
@@ -72,30 +66,19 @@ public class CocoFragmentStatePagerAdapter extends
         return -1;
     }
 
-    public Pager getSelected() {
-        return selected;
-    }
-
-    public Pager getPager(final int index) {
-        return (Pager) getItem(index);
-    }
-
     @Override
     public void setPrimaryItem(final ViewGroup container, final int position,
                                final Object object) {
         super.setPrimaryItem(container, position, object);
 
-        if (object instanceof Pager) {
-            selected = (Pager<?>) object;
-            selected.setPager(source.getViewPager());
-        } else {
-            selected = null;
-        }
+        selected = (Fragment) object;
     }
 
     @Override
     public CharSequence getPageTitle(final int position) {
-        return context.getText(((Pager<?>) getItem(position)).title());
+        if (getItem(position) instanceof BaseFragment)
+            return ((BaseFragment) getItem(position)).getTitle();
+        return "";
     }
 
     public void update(final Class<? extends Fragment>[] clz) {
@@ -121,9 +104,4 @@ public class CocoFragmentStatePagerAdapter extends
             return out;
         }
     }
-
-    public void setSource(final Carousel obj) {
-        source = obj;
-    }
-
 }

@@ -150,7 +150,7 @@ public abstract class Base<T> extends ActionBarActivity implements
 
     static class RetainedFragment extends Fragment {
 
-        HashMap<String, Object> data = new HashMap<>();
+        HashMap<String,Object> data = new HashMap<>();
 
         // this method is only called once for this fragment
         @Override
@@ -167,17 +167,18 @@ public abstract class Base<T> extends ActionBarActivity implements
         }
 
         private void put(String key, Object obj) {
-            data.put(key, obj);
+            data.put(key,obj);
         }
 
         private void put(Object obj) {
-            put(obj.getClass().getName(), obj);
+            put(obj.getClass().getName(),obj);
         }
 
         private <T> T get(String key) {
             return (T) data.get(key);
         }
     }
+
 
 
     protected SystemBarTintManager getTintManager() {
@@ -484,17 +485,17 @@ public abstract class Base<T> extends ActionBarActivity implements
     }
 
     protected void save(String key, Object obj) {
-        if (retainedFragment != null)
-            retainedFragment.put(key, obj);
+        if (retainedFragment!=null)
+        retainedFragment.put(key,obj);
     }
 
     protected void save(Object obj) {
-        if (retainedFragment != null)
-            retainedFragment.put(obj.getClass().getName(), obj);
+        if (retainedFragment!=null)
+        retainedFragment.put(obj.getClass().getName(),obj);
     }
 
     protected <T> T load(String key) {
-        if (retainedFragment != null)
+        if (retainedFragment!=null)
             return (T) retainedFragment.get(key);
         return null;
     }

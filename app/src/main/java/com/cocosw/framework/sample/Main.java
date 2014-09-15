@@ -2,6 +2,7 @@ package com.cocosw.framework.sample;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -14,6 +15,7 @@ public class Main extends DualPaneActivity {
 
     @Override
     protected Fragment onCreateMasterPane() {
+
         CalligraphyConfig.initDefault("fonts/Roboto-Regular.ttf");
         return Fragment.instantiate(this,TodoList.class.getName());
     }
@@ -23,5 +25,18 @@ public class Main extends DualPaneActivity {
         super.attachBaseContext(new CalligraphyContextWrapper(newBase));
     }
 
+    @Override
+    public void onPanelSlide(View panel, float slideOffset) {
+        super.onPanelSlide(panel, slideOffset);
+    }
 
+    @Override
+    public void onPanelClosed(View panel) {
+        super.onPanelClosed(panel);
+    }
+
+    @Override
+    public void onPanelOpened(View panel) {
+        super.onPanelOpened(panel);
+    }
 }
