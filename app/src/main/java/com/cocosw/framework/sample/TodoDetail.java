@@ -1,10 +1,8 @@
 package com.cocosw.framework.sample;
 
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.support.v7.graphics.PaletteItem;
@@ -39,7 +37,7 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
     TextView mDescription;
     @InjectView(R.id.scrollview)
     StickyScrollView mScrollview;
-    private ABHelper abHelper;
+    private ABHelper abhelper;
 
     @Override
     public int layoutId() {
@@ -52,6 +50,7 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
             return;
         Bean.Shot todo = (Bean.Shot) getArguments().getSerializable(TODO);
         q.id(R.id.detail).text(todo.title);
+        Picasso.with(context).load(todo.image_teaser_url).into(mHeader);
         Picasso.with(context).load(todo.image_400_url).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -70,14 +69,15 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
             }
         });
         q.v(mDescription).html(todo.description);
-        mScrollview.setOnScrollChangedListener(this);
-        abHelper = new ABHelper(new ColorDrawable(getResources().getColor(R.color.transparent)),mHeader,0) {
+
+        abhelper = new ABHelper(new ColorDrawable(R.color.transparent), mHeader, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height)) {
+
             @Override
             protected void setActionBarBackground(Drawable who) {
-                getActionBar().setBackgroundDrawable(who);
+
             }
         };
-
+        mScrollview.setOnScrollChangedListener(this);
     }
 
     private void colorize(Bitmap photo) {
@@ -91,19 +91,25 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
 
     private void applyPalette(Palette palette) {
         PaletteItem item = palette.getDarkMutedColor();
-        if (item!=null)
-        v.setBackgroundDrawable(new ColorDrawable(item.getRgb()));
+        if (item != null) {
+            mDetail.setBackgroundColor(item.getRgb());
+            v.setBackgroundDrawable(new ColorDrawable(item.getRgb()));
+        }
 
         item = palette.getVibrantColor();
         if (item!=null)
         mDetail.setTextColor(item.getRgb());
+
+        item = palette.getMutedColor();
+        if (item != null) {
+            mDetail.setBackgroundColor(item.getRgb());
+        }
 
         item = palette.getLightVibrantColor();
         if (item!=null)
         mDescription.setTextColor(item.getRgb());
 
     }
-
 
     @Override
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
@@ -112,6 +118,12 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
 
     @Override
     public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
-        mHeader.offsetBackdrop(abHelper.onScroll(who,t));
+        mHeader.offsetBackdrop(abhelper.onScroll(who, t));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Picasso.with(context).cancelRequest(mHeader);
     }
 }

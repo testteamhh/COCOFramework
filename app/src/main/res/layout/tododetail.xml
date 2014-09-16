@@ -53,41 +53,18 @@ android:layout_height="match_parent">
             android:src="@drawable/ic_star"
             />
 
-        <!--<FrameLayout-->
-            <!--android:id="@+id/information_container"-->
-
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-
-            <!--android:visibility="invisible">-->
-
-            <!--<fragment-->
-                <!--android:id="@+id/map"-->
-
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-
-                <!--android:name="com.google.android.gms.maps.MapFragment"-->
-
-                <!--map:uiRotateGestures="false"-->
-                <!--map:uiScrollGestures="false"-->
-                <!--map:uiTiltGestures="false"-->
-                <!--map:uiZoomControls="false"-->
-                <!--map:uiZoomGestures="false" />-->
-
-        <!--</FrameLayout>-->
-
-
     </FrameLayout>
 
     <TextView
         android:id="@+id/detail"
         android:tag="sticky"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
 
-        android:layout_margin="24dp"
-
+        android:paddingTop="@dimen/abc_action_bar_default_height"
+        android:paddingLeft="24dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="24dp"
         android:textSize="40sp"
         android:fontFamily="sans-serif-light" />
 
