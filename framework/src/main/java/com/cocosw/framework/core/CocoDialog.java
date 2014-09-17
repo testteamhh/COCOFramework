@@ -10,7 +10,7 @@ import com.cocosw.framework.R;
 
 /**
  * You can display any of your fragment as a dialog.
- *
+ * <p/>
  * Provided a builder style api to create a dialog easily.
  */
 public class CocoDialog extends BaseDialog<Void> {
@@ -75,7 +75,7 @@ public class CocoDialog extends BaseDialog<Void> {
         private Bundle arg;
         private int style = android.R.style.Theme_Translucent;
 
-        public static int DIALOGSTYLE = R.style.dialog;
+        public static int DIALOGSTYLE = R.style.Dialog;
         public static int TRANSPARENTSTYLR = android.R.style.Theme_Translucent;
 
         public Builder(final Class<? extends Fragment> fragment) {

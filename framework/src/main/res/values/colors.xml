@@ -2,6 +2,9 @@
 
 <resources>
 
+    <color name="selector_pressed">#1A000000</color>
+    <color name="selector_focused">#77000000</color>
+
     <color name="text">#FCFCFC</color>
     <color name="text_light">#999999</color>
     <color name="text_inverted">#FFFFFF</color>
@@ -71,10 +74,6 @@
     <color name="landing_info_text">#ffeeeeee</color>
     <color name="landing_info_text_shadow">#aa333333</color>
     <color name="medium_text">#ff686a6c</color>
-    <color name="merchant_card_divider_0">#08000000</color>
-    <color name="merchant_card_divider_1">#15000000</color>
-    <color name="merchant_card_divider_2">#15ffffff</color>
-    <color name="merchant_card_divider_3">#08ffffff</color>
 
     <color name="green_button_background_enabled_start">#99cc01</color>
     <color name="green_button_background_enabled_end">#99cc01</color>
@@ -83,7 +82,6 @@
     <color name="blue_button_background_pressed_start">#00b5b8</color>
     <color name="blue_button_background_pressed_end">#00b5b8</color>
     <color name="divider_line">#ffd4cec7</color>
-    <color name="pressed_example">#CCAA1717</color>
 
 
     <!-- Holo -->

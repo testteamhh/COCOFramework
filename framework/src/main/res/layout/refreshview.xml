@@ -5,23 +5,26 @@
     android:gravity="center"
     android:minHeight="100dp"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp">
+
     <ImageView
         android:id="@+id/empty_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/alerts_and_states_warning" />
+
     <TextView
         android:id="@+id/empty_msg"
-        style="@style/TextView.Message.Dark"
+        style="@android:style/TextAppearance.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="@string/empty_list"
         android:textSize="18sp" />
+
     <Button
         android:id="@+id/empty_button"
-        style="@style/TextAppearance.HoloCompat.Button"
+        style="@style/Button.WideButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/refresh" />
