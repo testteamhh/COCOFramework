@@ -28,9 +28,9 @@ The sample application is called Dridddle, a simple client for dribbble.com:
 - Powerful debug tools(TODO)
 - Integrate online statistics tools(TODO)
 
-![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/lands.png)
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port1.png)
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port2.png)
+![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/lands.png)
 
 Style your application
 ============
