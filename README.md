@@ -15,9 +15,9 @@ How to start
 Sample (Under development)
 ===========
 
-![UndoBar Sample](https://github.com/soarcn/COCOFramework/blob/master/art/lands.png?raw=true)
-![UndoBar Sample](https://github.com/soarcn/COCOFramework/blob/master/art/port1.png?raw=true)
-![UndoBar Sample](https://github.com/soarcn/COCOFramework/blob/master/art/port2.png?raw=true)
+![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/lands.png)
+![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port1.png)
+![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port2.png)
 
 Style your application
 ============
