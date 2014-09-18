@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.GridView;
 
 import com.cocosw.framework.core.PagedListFragment;
 import com.cocosw.framework.sample.network.Bean;
@@ -23,7 +24,7 @@ import java.util.List;
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/9.
  */
-public class TodoList extends PagedListFragment<Bean.Shot> {
+public class TodoList extends PagedListFragment<Bean.Shot, GridView> {
 
     @Override
     public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
@@ -35,6 +36,11 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
         return new ShotAdapter(context, items);
     }
 
+//    @Override
+//    protected CocoAdapter<Bean.Shot> createAdapter(List<Bean.Shot> items) throws Exception {
+//        return new ShotAdapter(context, items);
+//    }
+
     @Override
     protected void init(View view, Bundle bundle) throws Exception {
 
@@ -45,6 +51,11 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
         new Presenter(this).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO, item)).openForResult(1);
     }
 
+//    @Override
+//    public List<Bean.Shot> pendingData(Bundle args) throws Exception {
+//        return DataSource.getShots(1).shots;
+//    }
+
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {
 
         public ShotAdapter(Context context, List<Bean.Shot> items) {
@@ -53,12 +64,13 @@ public class TodoList extends PagedListFragment<Bean.Shot> {
 
         @Override
         protected int[] getChildViewIds() {
-            return new int[]{R.id.title, R.id.image};
+            return new int[]{R.id.title, R.id.image, R.id.subtitle};
         }
 
         @Override
         protected void update(int position, Bean.Shot item) {
             textView(0).setText(item.title);
+            textView(2).setText(item.player.name);
             Picasso.with(context).load(item.image_teaser_url).into(imageView(1));
         }
     }

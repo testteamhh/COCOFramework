@@ -6,11 +6,35 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"/>
+        style="@style/Layout.MATCH_PARENT"
+        android:minHeight="80dp"
+        android:scaleType="centerCrop" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:id="@+id/title"/>
+    <LinearLayout
+        android:id="@+id/info_box"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:background="@color/primarycolor">
+
+        <!-- Session title -->
+        <TextView
+            android:id="@+id/title"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subtitle"
+            style="@android:style/TextAppearance.Small.Inverse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

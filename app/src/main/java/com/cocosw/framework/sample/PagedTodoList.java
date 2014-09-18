@@ -3,6 +3,7 @@ package com.cocosw.framework.sample;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.ListView;
 
 import com.cocosw.framework.core.PagedListFragment;
 import com.cocosw.framework.view.adapter.CocoAdapter;
@@ -16,7 +17,7 @@ import java.util.List;
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/12.
  */
-public class PagedTodoList extends PagedListFragment<Todo> implements SwipeRefreshLayout.OnRefreshListener {
+public class PagedTodoList extends PagedListFragment<Todo, ListView> implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
