@@ -12,6 +12,13 @@ How to start
 - Change build.gradle by refering (demo)[https://github.com/soarcn/COCOFramework/blob/master/app/build.gradle]
 
 
+Sample (Under development)
+===========
+
+![UndoBar Sample](https://github.com/soarcn/COCOFramework/blob/master/art/lands.png?raw=true)
+![UndoBar Sample](https://github.com/soarcn/COCOFramework/blob/master/art/port1.png?raw=true)
+![UndoBar Sample](https://github.com/soarcn/COCOFramework/blob/master/art/port2.png?raw=true)
+
 Style your application
 ============
 
@@ -41,9 +48,9 @@ Translucent
 
 Coco framework have build-in support for translucent UI, which build on modified (SystemBarTint)[https://github.com/jgilfelt/SystemBarTint]
 
-- You can change the color of status and navigation bars in your style.
-- Framwork will set view padding for adapt the screen bound in most of case
-- If you want to control the layout padding by your self, you can override onInsetsChanged method in activity/fragment class. For example
+- You can change the color of status and navigation bars in your theme.
+- Framwork will set view padding for adapting the screen bound in most of case
+- If you want to control the layout padding by your self, you can override onInsetsChanged method in your activity/fragment class. For example
 ```java
     @Override
     public void onInsetsChanged(final SystemBarTintManager.SystemBarConfig insets) {
