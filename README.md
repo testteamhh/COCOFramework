@@ -15,6 +15,19 @@ How to start
 Sample (Under development)
 ===========
 
+We provide a sample application to help you better understand how the COCOFramework could boost your android development work.
+
+The sample application is called Dridddle, a simple client for dribbble.com:
+
+- Support android 2.3 +
+- Simple network communication
+- Style application accent by theme
+- Support dualpane layout and screen rotation
+- Endless data loading
+- Parallex scrolling & Actionbar fading
+- Powerful debug tools(TODO)
+- Integrate online statistics tools(TODO)
+
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/lands.png)
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port1.png)
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port2.png)
