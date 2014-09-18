@@ -1,12 +1,12 @@
 package com.cocosw.framework.core;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 import com.cocosw.accessory.views.CocoBundle;
 import com.cocosw.framework.R;
@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Date: 13-12-19
  * Time: 下午9:35
  */
-public abstract class PagedListFragment<T, A extends AdapterView> extends AdapterViewFragment<T, A> {
+public abstract class PagedListFragment<T, A extends AbsListView> extends ListAdapterViewFragment<T, A> {
 
     private static final String TIME = "_pagedlist_time";
     private static final String ENDED = "_pagedlist_ended";
@@ -48,20 +48,21 @@ public abstract class PagedListFragment<T, A extends AdapterView> extends Adapte
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(TIME, time);
-        outState.putSerializable(ENDED, ended);
+    public void onDestroy() {
+        super.onDestroy();
+        save(TIME, time);
+        save(ENDED, ended);
     }
 
     @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState!=null) {
-            time = savedInstanceState.getInt(TIME);
-            ended = (AtomicBoolean) savedInstanceState.getSerializable(ENDED);
-            if (ended==null)
-                ended = new AtomicBoolean(false);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ended = load(ENDED);
+        if (ended == null) {
+            ended = new AtomicBoolean(false);
+            time = 0;
+        } else {
+            time = load(TIME);
         }
     }
 

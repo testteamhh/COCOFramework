@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.cocosw.framework.R;
 
-public abstract class ListFragment<T> extends AdapterViewFragment<T, ListView> implements
+public abstract class ListFragment<T> extends ListAdapterViewFragment<T, ListView> implements
         OnItemClickListener, OnScrollListener {
 
 

@@ -11,7 +11,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
@@ -39,58 +38,40 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
 
-    private boolean updated;
-    View emptyView;
+    private final static String DATA = "_adatperview_data";
     protected List<T> items;
     protected boolean listShown;
+
+    View emptyView;
     Rect mInsets;
-
-    private View footerView;
-    private View headerView;
-
     /**
      * The actual adapter without any wrapper
      */
     BaseAdapter mAdapter;
-    // HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
+    int lastVisibleItem = 0;
+    private boolean updated;
 
     private A mListContainer;
     private View progressBar;
-
-    protected HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
 
     protected void setOnScrollListener(final AbsListView.OnScrollListener listener) {
         q.id(R.id.list).scrolled(listener);
     }
 
-    /**
-     * Create adapter to display items
-     *
-     * @return adapter
-     * @throws Exception
-     */
-    private HeaderFooterListAdapter<BaseAdapter> createAdapter()
-            throws Exception {
-        mAdapter = (BaseAdapter) createAdapter(items);
-        wrapAdapter = new HeaderFooterListAdapter<>(wrapperAdapter(mAdapter), context);
-        return wrapAdapter;
-    }
 
     @Override
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
         mListContainer.setClipToPadding(false);
         mListContainer.setPadding(
-                0,insets.getPixelInsetTop(hasActionBarBlock())
-                ,insets.getPixelInsetRight(),insets.getPixelInsetBottom()
-                );
+                0, insets.getPixelInsetTop(hasActionBarBlock())
+                , insets.getPixelInsetRight(), insets.getPixelInsetBottom()
+        );
     }
-
-    private final static String DATA ="_adatperview_data";
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        save(DATA,items);
+        save(DATA, items);
     }
 
     protected boolean reloadNeeded(final Bundle savedInstanceState) {
@@ -101,7 +82,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         items = load(DATA);
-        if (items==null)
+        if (items == null)
             items = new ArrayList<>();
     }
 
@@ -114,7 +95,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected BaseAdapter wrapperAdapter(BaseAdapter adapter) {
         return adapter;
     }
-
 
     /**
      * Create adapter to display items
@@ -149,32 +129,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
 
-    public View getHeaderView() {
-        return headerView;
-    }
-
-
-    public View getFooterView() {
-        return footerView;
-    }
-
-    @Override
-    protected void showRefresh(final CocoException e) {
-        setFooter(R.layout.refreshview);
-        ((TextView) getFooterView().findViewById(R.id.empty_msg))
-                .setText(refreshText(e));
-        getFooterView().findViewById(R.id.empty_image).setVisibility(View.GONE);
-        getFooterView().findViewById(R.id.empty_button).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View arg0) {
-                        refreshAction();
-                        getHeaderAdapter().clearFooters();
-                    }
-                });
-    }
-
-
     protected T getItem(final int position) {
         return (T) getList().getAdapter().getItem(position);
     }
@@ -188,29 +142,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         return this;
     }
 
-    /**
-     * 设置Footerview
-     *
-     * @param uiRes
-     */
-    protected void setFooter(final int uiRes) {
-        final View view = LayoutInflater.from(context).inflate(uiRes, null);
-        getHeaderAdapter().clearFooters();
-        getHeaderAdapter().addFooter(view);
-        footerView = view;
-    }
-
-    /**
-     * 设置Headview
-     *
-     * @param uiRes
-     */
-    protected void setHeader(final int uiRes) {
-        final View view = LayoutInflater.from(context).inflate(uiRes, null);
-        getHeaderAdapter().clearHeaders();
-        getHeaderAdapter().addHeader(view);
-        headerView = view;
-    }
 
     /**
      * 内容为空时显示的文字消息
@@ -261,8 +192,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         listShown = false;
         progressBar = null;
         emptyView = null;
-        headerView = null;
-        footerView = null;
         super.onDestroyView();
     }
 
@@ -316,6 +245,14 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     @Override
     public abstract List<T> pendingData(Bundle args) throws Exception;
 
+
+    /**
+     * Set list shown or progress bar show
+     *
+     * @param shown
+     * @return this fragment
+     */
+
     /**
      * 刷新当前页面内容
      */
@@ -336,13 +273,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         super.refresh();
     }
 
-
-    /**
-     * Set list shown or progress bar show
-     *
-     * @param shown
-     * @return this fragment
-     */
     /**
      * Set list shown or progress bar show
      *
@@ -400,7 +330,8 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
     protected void constractAdapter() throws Exception {
-        getList().setAdapter(createAdapter());
+        mAdapter = (BaseAdapter) createAdapter(items);
+        getList().setAdapter(wrapperAdapter(mAdapter));
     }
 
     @Override
@@ -408,8 +339,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
                                      final int scrollState) {
 
     }
-
-    int lastVisibleItem = 0;
 
     @Override
     public void onScroll(final AbsListView view, final int firstVisibleItem,
@@ -433,21 +362,9 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
     protected void updateList(final List<T> items) {
-        ((CocoAdapter) getHeaderAdapter().getWrappedAdapter()).updateList(items);
+        getAdapter().updateList(items);
     }
 
-    /**
-     * Get list adapter
-     *
-     * @return list adapter
-     */
-    protected HeaderFooterListAdapter<BaseAdapter> getHeaderAdapter() {
-        if (getList() != null) {
-            return wrapAdapter;
-        } else {
-            return null;
-        }
-    }
 
     protected AdapterViewFragment<T, A> show(final View view) {
         ViewUtils.setGone(view, false);
@@ -470,12 +387,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         setListShown(true);
     }
 
-    /**
-     * 标记list的背景数据已经被更新,将会在下次被选中的时候刷新页面
-     */
-    protected void listUpdated() {
-        updated = true;
-    }
 
     /**
      * 重新加载页面的数据
@@ -492,7 +403,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected int getLoaderOn() {
         return BaseFragment.ONCREATE;
     }
-
 
     public static interface ItemViewClickLisener {
 

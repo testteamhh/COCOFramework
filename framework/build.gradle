@@ -32,7 +32,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.android.support:support-v4:19.+'
     compile 'com.cocosw.accessory:utils:+'
-    compile 'com.cocosw.accessory:views:+'
+    compile 'com.cocosw.accessory:views:0.8.+'
     compile 'com.cocosw.accessory:connectivity:+'
     compile 'com.cocosw:query:+'
     compile 'com.cocosw:lifecycle:+'
