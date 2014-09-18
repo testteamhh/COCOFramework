@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 
 import com.cocosw.accessory.views.CocoBundle;
 import com.cocosw.framework.R;
@@ -27,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Date: 13-12-19
  * Time: 下午9:35
  */
-public abstract class PagedListFragment<T> extends ListFragment<T> {
+public abstract class PagedListFragment<T, A extends AdapterView> extends AdapterViewFragment<T, A> {
 
     private static final String TIME = "_pagedlist_time";
     private static final String ENDED = "_pagedlist_ended";
@@ -94,7 +95,7 @@ public abstract class PagedListFragment<T> extends ListFragment<T> {
     }
 
     @Override
-    public List<T> pendingData(Bundle args) throws Exception {
+    public final List<T> pendingData(Bundle args) throws Exception {
         return pendingPagedData(getIndex(args), time, pagedSize(time), args);
     }
 

@@ -11,6 +11,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
@@ -22,7 +23,6 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,6 +45,9 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected boolean listShown;
     Rect mInsets;
 
+    private View footerView;
+    private View headerView;
+
     /**
      * The actual adapter without any wrapper
      */
@@ -54,8 +57,23 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     private A mListContainer;
     private View progressBar;
 
+    protected HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
+
     protected void setOnScrollListener(final AbsListView.OnScrollListener listener) {
         q.id(R.id.list).scrolled(listener);
+    }
+
+    /**
+     * Create adapter to display items
+     *
+     * @return adapter
+     * @throws Exception
+     */
+    private HeaderFooterListAdapter<BaseAdapter> createAdapter()
+            throws Exception {
+        mAdapter = (BaseAdapter) createAdapter(items);
+        wrapAdapter = new HeaderFooterListAdapter<>(wrapperAdapter(mAdapter), context);
+        return wrapAdapter;
     }
 
     @Override
@@ -131,6 +149,32 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
 
+    public View getHeaderView() {
+        return headerView;
+    }
+
+
+    public View getFooterView() {
+        return footerView;
+    }
+
+    @Override
+    protected void showRefresh(final CocoException e) {
+        setFooter(R.layout.refreshview);
+        ((TextView) getFooterView().findViewById(R.id.empty_msg))
+                .setText(refreshText(e));
+        getFooterView().findViewById(R.id.empty_image).setVisibility(View.GONE);
+        getFooterView().findViewById(R.id.empty_button).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View arg0) {
+                        refreshAction();
+                        getHeaderAdapter().clearFooters();
+                    }
+                });
+    }
+
+
     protected T getItem(final int position) {
         return (T) getList().getAdapter().getItem(position);
     }
@@ -144,21 +188,29 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         return this;
     }
 
-//    @Override
-//    protected void showRefresh(final CocoException e) {
-//        setFooter(R.layout.refreshview);
-//        ((TextView) getFooterView().findViewById(R.id.empty_msg))
-//                .setText(refreshText(e));
-//        getFooterView().findViewById(R.id.empty_image).setVisibility(View.GONE);
-//        getFooterView().findViewById(R.id.empty_button).setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(final View arg0) {
-//                        refreshAction();
-//                        getHeaderAdapter().clearFooters();
-//                    }
-//                });
-//    }
+    /**
+     * 设置Footerview
+     *
+     * @param uiRes
+     */
+    protected void setFooter(final int uiRes) {
+        final View view = LayoutInflater.from(context).inflate(uiRes, null);
+        getHeaderAdapter().clearFooters();
+        getHeaderAdapter().addFooter(view);
+        footerView = view;
+    }
+
+    /**
+     * 设置Headview
+     *
+     * @param uiRes
+     */
+    protected void setHeader(final int uiRes) {
+        final View view = LayoutInflater.from(context).inflate(uiRes, null);
+        getHeaderAdapter().clearHeaders();
+        getHeaderAdapter().addHeader(view);
+        headerView = view;
+    }
 
     /**
      * 内容为空时显示的文字消息
@@ -209,6 +261,8 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         listShown = false;
         progressBar = null;
         emptyView = null;
+        headerView = null;
+        footerView = null;
         super.onDestroyView();
     }
 
@@ -346,10 +400,8 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
     protected void constractAdapter() throws Exception {
-        mAdapter = (BaseAdapter) createAdapter(items);
-        mListContainer.setAdapter(wrapperAdapter(mAdapter));
+        getList().setAdapter(createAdapter());
     }
-
 
     @Override
     public void onScrollStateChanged(final AbsListView view,
@@ -381,7 +433,20 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
     protected void updateList(final List<T> items) {
-        ((CocoAdapter<T>) mAdapter).updateList(items);
+        ((CocoAdapter) getHeaderAdapter().getWrappedAdapter()).updateList(items);
+    }
+
+    /**
+     * Get list adapter
+     *
+     * @return list adapter
+     */
+    protected HeaderFooterListAdapter<BaseAdapter> getHeaderAdapter() {
+        if (getList() != null) {
+            return wrapAdapter;
+        } else {
+            return null;
+        }
     }
 
     protected AdapterViewFragment<T, A> show(final View view) {
