@@ -14,25 +14,14 @@
  * limitations under the License.
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:+'
-    }
-}
-
-apply from: '../config/android-library.gradle'
-apply from: '../config/maven_push.gradle'
-
+apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/android-library.gradle'
+apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.gradle'
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support:support-v4:20.0.0'
     compile 'com.cocosw.accessory:utils:+'
-    compile 'com.cocosw.accessory:views:0.8.+'
+    compile 'com.cocosw.accessory:views:+'
     compile 'com.cocosw.accessory:connectivity:+'
     compile 'com.cocosw:query:+'
     compile 'com.cocosw:lifecycle:+'
@@ -49,8 +38,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.jakewharton:butterknife:5.0.+'
     compile 'com.jakewharton.timber:timber:+'
-    //  compile 'com.netflix.rxjava:rxjava-android:+'
-    // compile 'com.jakewharton.fliptables:fliptables:+'
     compile 'com.iconic:iconic:0.1@aar'
     compile 'com.nineoldandroids:library:+'
 }

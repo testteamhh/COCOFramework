@@ -25,13 +25,9 @@ buildscript {
     }
 }
 
-apply from: '../config/android-library.gradle'
-apply from: '../config/maven_push.gradle'
+apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/android-library.gradle'
+apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.gradle'
 
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
-}
 
 dependencies {
     compile 'com.android.support:support-v4:19.+'
