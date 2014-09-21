@@ -450,17 +450,17 @@ public abstract class Base<T> extends ActionBarActivity implements
     }
 
     protected void save(String key, Object obj) {
-        if (retainedFragment!=null)
-        retainedFragment.put(key,obj);
+        if (retainedFragment != null)
+            retainedFragment.put(key, obj);
     }
 
     protected void save(Object obj) {
-        if (retainedFragment!=null)
-        retainedFragment.put(obj.getClass().getName(),obj);
+        if (retainedFragment != null)
+            retainedFragment.put(obj.getClass().getName(), obj);
     }
 
     protected <T> T load(String key) {
-        if (retainedFragment!=null)
+        if (retainedFragment != null)
             return (T) retainedFragment.get(key);
         return null;
     }

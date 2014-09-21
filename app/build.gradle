@@ -1,15 +1,70 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:+'
+        classpath 'com.jakewharton.hugo:hugo-plugin:+'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+repositories {
+    maven { url 'http://download.crashlytics.com/maven' }
+}
+
+apply plugin: 'hugo'
+
+// Manifest version information!
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 1
+def versionBuild = 0 // bump for dogfood builds, public betas, etc.
+
+def notificationLog = true
+
+def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+def time = new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+
+def isTravis = "true".equals(System.getenv("TRAVIS"))
+def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
+
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "20"
+    buildToolsVersion '20.0.0'
+    dexOptions {
+        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+        preDexLibraries = preDexEnabled && !isTravis
+    }
+
+    signingConfigs {
+//        debug {
+//            storeFile file("../distribution/debug.keystore")
+//        }
+        release {
+            storeFile file('../distribution/release.jks')
+            storePassword 'knowyou'
+            keyAlias 'insight'
+            keyPassword 'insight'
+        }
+    }
 
     defaultConfig {
         applicationId "com.cocosw.framework.sample"
         minSdkVersion 9
         targetSdkVersion 20
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 100000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}-${time}"
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "Boolean", "notificationLog", "${notificationLog}"
+
     }
 
     compileOptions {
@@ -18,16 +73,32 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
+            // 2.3 workaround
             runProguard false
+            debuggable true
+            //    proguardFile '../proguard.cfg'
+        }
+        release {
+            versionNameSuffix '-release'
+            zipAlign true
+            runProguard false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
+        exclude 'LICENSE.txt'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
@@ -38,11 +109,15 @@ android {
     }
 }
 
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':framework')
+    debugCompile project(':debug')
     compile 'uk.co.chrisjenx:calligraphy:+'
     compile 'com.balysv.materialmenu:material-menu-abc:1.2.0'
-  //  compile 'com.melnykov:floatingactionbutton:1.0.3'
-    debugCompile project(':debug')
+    //  compile 'com.melnykov:floatingactionbutton:1.0.3'
+    compile 'com.crashlytics.android:crashlytics:1.+'
+
 }

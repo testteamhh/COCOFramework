@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.abc.MaterialMenuIconCompat;
+import com.cocosw.framework.core.DualPaneActivity;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -27,9 +28,8 @@ public class Main extends DualPaneActivity {
 
     @Override
     protected Fragment onCreateMasterPane() {
-
         CalligraphyConfig.initDefault("fonts/Roboto-Regular.ttf");
-        return Fragment.instantiate(this,TodoList.class.getName());
+        return Fragment.instantiate(this, PopularList.class.getName());
     }
 
     private Drawable.Callback mDrawableCallback = new Drawable.Callback() {
@@ -51,13 +51,13 @@ public class Main extends DualPaneActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        materialMenu = new MaterialMenuIconCompat(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
-        materialMenu.setState(MaterialMenuDrawable.IconState.BURGER);
         abbg = new ColorDrawable(getResources().getColor(R.color.themecolor));
         abbg.setAlpha(255);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN)
             abbg.setCallback(mDrawableCallback);
         getSupportActionBar().setBackgroundDrawable(abbg);
+        materialMenu = new MaterialMenuIconCompat(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
+        materialMenu.setState(MaterialMenuDrawable.IconState.BURGER);
     }
 
     @Override
@@ -100,8 +100,8 @@ public class Main extends DualPaneActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (!mPanel.isOpen()) {
-                mPanel.openPane();
+            if (!getPanel().isOpen()) {
+                getPanel().openPane();
                 return true;
             }
         }

@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.cocosw.framework.core.PagedListFragment;
-import com.cocosw.framework.core.SinglePaneActivity;
+import com.cocosw.framework.core.Presenter;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
 import com.cocosw.framework.view.adapter.CocoAdapter;
@@ -45,7 +45,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Override
     protected void init(View view, Bundle bundle) throws Exception {
-        mSwipe.setColorScheme(R.color.themecolor, R.color.transparent, R.color.themecolor, R.color.transparent);
+        mSwipe.setColorSchemeResources(R.color.themecolor, R.color.transparent, R.color.themecolor, R.color.transparent);
         mSwipe.setOnRefreshListener(this);
     }
 
@@ -56,7 +56,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Override
     protected void onItemClick(Bean.Shot item, int pos, long id, View view) {
-        new Presenter(this).blank().container(SinglePaneActivity.class).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO, item)).openForResult(1);
+        new Presenter(this).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO, item)).openForResult(1);
     }
 
     @Override

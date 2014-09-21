@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.support.v7.graphics.PaletteItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.cocosw.accessory.views.ABHelper;
 import com.cocosw.accessory.views.layout.ObservableScrollView;
 import com.cocosw.framework.core.BaseFragment;
+import com.cocosw.framework.core.Presenter;
 import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.view.BackdropImageView;
@@ -37,6 +39,10 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
     TextView mDescription;
     @InjectView(R.id.scrollview)
     StickyScrollView mScrollview;
+    @InjectView(R.id.info)
+    ImageButton mInfo;
+    @InjectView(R.id.star)
+    ImageButton mStar;
     private ABHelper abhelper;
 
     @Override
@@ -78,6 +84,13 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
             }
         };
         mScrollview.setOnScrollChangedListener(this);
+
+        mStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Presenter(TodoDetail.this).target(PagedTodoList.class).open();
+            }
+        });
     }
 
     private void colorize(Bitmap photo) {
@@ -97,8 +110,8 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
         }
 
         item = palette.getVibrantColor();
-        if (item!=null)
-        mDetail.setTextColor(item.getRgb());
+        if (item != null)
+            mDetail.setTextColor(item.getRgb());
 
         item = palette.getMutedColor();
         if (item != null) {
@@ -106,8 +119,8 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
         }
 
         item = palette.getLightVibrantColor();
-        if (item!=null)
-        mDescription.setTextColor(item.getRgb());
+        if (item != null)
+            mDescription.setTextColor(item.getRgb());
 
     }
 
