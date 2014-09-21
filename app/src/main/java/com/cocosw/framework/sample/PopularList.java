@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.cocosw.framework.core.PagedListFragment;
+import com.cocosw.framework.core.SinglePaneActivity;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
 import com.cocosw.framework.view.adapter.CocoAdapter;
@@ -20,15 +22,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.InjectView;
+
 /**
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/9.
  */
-public class TodoList extends PagedListFragment<Bean.Shot, GridView> {
+public class PopularList extends PagedListFragment<Bean.Shot, GridView> implements SwipeRefreshLayout.OnRefreshListener {
+
+    @InjectView(R.id.swipe)
+    SwipeRefreshLayout mSwipe;
 
     @Override
     public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
-        return DataSource.getShots(index < 0 ? 0 : time).shots;
+        return DataSource.getShots(index < 0 ? 1 : time + 1).shots;
     }
 
     @Override
@@ -36,25 +43,32 @@ public class TodoList extends PagedListFragment<Bean.Shot, GridView> {
         return new ShotAdapter(context, items);
     }
 
-//    @Override
-//    protected CocoAdapter<Bean.Shot> createAdapter(List<Bean.Shot> items) throws Exception {
-//        return new ShotAdapter(context, items);
-//    }
-
     @Override
     protected void init(View view, Bundle bundle) throws Exception {
+        mSwipe.setColorScheme(R.color.themecolor, R.color.transparent, R.color.themecolor, R.color.transparent);
+        mSwipe.setOnRefreshListener(this);
+    }
 
+    @Override
+    public int layoutId() {
+        return R.layout.ui_popular;
     }
 
     @Override
     protected void onItemClick(Bean.Shot item, int pos, long id, View view) {
-        new Presenter(this).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO, item)).openForResult(1);
+        new Presenter(this).blank().container(SinglePaneActivity.class).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO, item)).openForResult(1);
     }
 
-//    @Override
-//    public List<Bean.Shot> pendingData(Bundle args) throws Exception {
-//        return DataSource.getShots(1).shots;
-//    }
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    @Override
+    public void onLoaderDone(List<Bean.Shot> items) {
+        mSwipe.setRefreshing(false);
+
+    }
 
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {
 
