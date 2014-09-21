@@ -5,4 +5,5 @@
     <item name="listprogressBar" type="id" />
     <item name="float_label" type="id" />
     <item name="edit_text" type="id" />
+    <item name="panel" type="id" />
 </resources>

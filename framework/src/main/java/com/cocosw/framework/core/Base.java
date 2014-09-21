@@ -83,7 +83,6 @@ public abstract class Base<T> extends ActionBarActivity implements
         try {
             super.onCreate(savedInstanceState);
         } catch (Exception e) {
-            e.printStackTrace();
             //workround for V7 appcompact
         }
         LifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
