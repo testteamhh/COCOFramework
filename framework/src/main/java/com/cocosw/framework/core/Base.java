@@ -17,14 +17,12 @@
 
 package com.cocosw.framework.core;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
@@ -49,7 +47,6 @@ import com.cocosw.undobar.UndoBarController.UndoListener;
 import com.squareup.otto.Bus;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -70,7 +67,7 @@ public abstract class Base<T> extends ActionBarActivity implements
     private HashSet<OnActivityInsetsCallback> mInsetCallbacks;
     private SystemBarTintManager.SystemBarConfig mInsets;
     private SystemBarTintManager tintManager;
-    private RetainedFragment retainedFragment;
+    RetainedFragment retainedFragment;
 
     private static final String TAG_RETAINED_STATE_FRAGMENT = "_retainedStateFragment";
 
@@ -86,6 +83,7 @@ public abstract class Base<T> extends ActionBarActivity implements
         try {
             super.onCreate(savedInstanceState);
         } catch (Exception e) {
+            e.printStackTrace();
             //workround for V7 appcompact
         }
         LifecycleDispatcher.get().onActivityCreated(this, savedInstanceState);
@@ -147,38 +145,6 @@ public abstract class Base<T> extends ActionBarActivity implements
         onStartLoading();
         getSupportLoaderManager().initLoader(this.hashCode(), getIntent().getExtras(), this);
     }
-
-    static class RetainedFragment extends Fragment {
-
-        HashMap<String,Object> data = new HashMap<>();
-
-        // this method is only called once for this fragment
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            // retain this fragment
-            setRetainInstance(true);
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((Base) activity).retainedFragment = this;
-        }
-
-        private void put(String key, Object obj) {
-            data.put(key,obj);
-        }
-
-        private void put(Object obj) {
-            put(obj.getClass().getName(),obj);
-        }
-
-        private <T> T get(String key) {
-            return (T) data.get(key);
-        }
-    }
-
 
 
     protected SystemBarTintManager getTintManager() {
