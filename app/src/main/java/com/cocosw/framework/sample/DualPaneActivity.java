@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.cocosw.framework.core.Base;
 import com.cocosw.framework.core.BaseFragment;
@@ -20,6 +19,9 @@ import butterknife.InjectView;
 public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.PanelSlideListener,
         DialogResultListener {
 
+    public static final String DETAIL = "detail";
+    public static final String URI = "_uri";
+    public static final String MASTER = "master";
     @InjectView(R.id.panel)
     TwoPanelsLayout mPanel;
 
@@ -40,12 +42,12 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
             master = onCreateMasterPane();
             master.setArguments(intentToFragmentArguments(getIntent()));
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.coco_master, master, "master")
+                    .add(R.id.coco_master, master, MASTER)
                     .commit();
         } else {
             master = getSupportFragmentManager().findFragmentByTag(
-                    "master");
-            detail = getSupportFragmentManager().findFragmentByTag("detail");
+                    MASTER);
+            detail = getSupportFragmentManager().findFragmentByTag(DETAIL);
         }
 
         CharSequence customTitle = getIntent().getStringExtra(
@@ -70,7 +72,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
 
         final Uri data = intent.getData();
         if (data != null) {
-            arguments.putParcelable("_uri", data);
+            arguments.putParcelable(URI, data);
         }
 
         final Bundle extras = intent.getExtras();
@@ -90,13 +92,13 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
             return intent;
         }
 
-        final Uri data = arguments.getParcelable("_uri");
+        final Uri data = arguments.getParcelable(URI);
         if (data != null) {
             intent.setData(data);
         }
 
         intent.putExtras(arguments);
-        intent.removeExtra("_uri");
+        intent.removeExtra(URI);
         return intent;
     }
 
@@ -131,7 +133,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
         detail = Fragment.instantiate(this, target.getName());
         detail.setArguments(intentToFragmentArguments(extra));
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.coco_detail, detail, "detail")
+                .replace(R.id.coco_detail, detail, DETAIL)
                 .commit();
         mPanel.closePane();
     }
@@ -141,7 +143,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
         detail.setArguments(intentToFragmentArguments(extra));
         detail.setTargetFragment(from,requestCode);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.coco_detail, detail, "detail")
+                .replace(R.id.coco_detail, detail, DETAIL)
                 .commit();
         mPanel.closePane();
     }
