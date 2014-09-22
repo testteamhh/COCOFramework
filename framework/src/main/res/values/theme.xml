@@ -15,6 +15,7 @@
     <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light.DarkActionBar"></style>
 
     <style name="Theme.App" parent="ThemeActivity">
+        <item name="android:buttonStyle">@style/Button</item>
         <item name="colorPrimary">@color/black</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:listSelector">@drawable/standard_selector</item>

@@ -91,7 +91,7 @@
     </style>
 
 
-    <style name="Button">
+    <style name="Button" parent="android:Widget.Button">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
