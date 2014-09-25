@@ -15,7 +15,6 @@ import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.path.android.jobqueue.BaseJob;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.di.DependencyInjector;
-import com.path.android.jobqueue.log.CustomLogger;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.Picasso;
 
@@ -146,32 +145,10 @@ public abstract class CocoApp extends Application {
     // setup job manager configuration
     protected Configuration getJobManagerConfig() {
         Configuration configuration = new Configuration.Builder(this)
-                .customLogger(new CustomLogger() {
-
-                    @Override
-                    public boolean isDebugEnabled() {
-                        return true;
-                    }
-
-                    @Override
-                    public void d(String text, Object... args) {
-                        Log.d(text, args);
-                    }
-
-                    @Override
-                    public void e(Throwable t, String text, Object... args) {
-                        Log.e(t, text, args);
-                    }
-
-                    @Override
-                    public void e(String text, Object... args) {
-                        Log.e(text, args);
-                    }
-                })
                 .minConsumerCount(1)//always keep at least one consumer alive
-                .maxConsumerCount(3)//up to 3 consumers at a time
-                .loadFactor(3)//3 jobs per consumer
-                .consumerKeepAlive(120)//wait 2 minute
+                .maxConsumerCount(2)//up to 3 consumers at a time
+                .loadFactor(1)//3 jobs per consumer
+                .consumerKeepAlive(5 * 60)//wait 2 minute
                 .injector(new DependencyInjector() {
                     @Override
                     public void inject(BaseJob baseJob) {

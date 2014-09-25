@@ -3,10 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:minHeight="?android:attr/listPreferredItemHeight" >
+    android:minHeight="?android:attr/listPreferredItemHeight">
 
     <ProgressBar
-        style="?android:attr/progressBarStyle"
+        style="@style/ListSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

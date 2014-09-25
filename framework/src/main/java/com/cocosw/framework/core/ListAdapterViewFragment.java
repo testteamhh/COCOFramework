@@ -3,6 +3,7 @@ package com.cocosw.framework.core;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public abstract class ListAdapterViewFragment<T, A extends AbsListView> extends 
     }
 
     protected void constractAdapter() throws Exception {
-        getList().setAdapter(createAdapter());
+        ((AdapterView) getList()).setAdapter(createAdapter());
     }
 
     public View getHeaderView() {
