@@ -1,0 +1,99 @@
+<resources>
+
+
+    <!-- Text styles -->
+
+    <style name="Text" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/text_size_body_1_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
+
+    <style name="Text.Display4">
+        <item name="android:textSize">@dimen/text_size_display_4_material</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="fontPath">fonts/Roboto-Regular-Light.ttf</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="Text.Display3">
+        <item name="android:textSize">@dimen/text_size_display_3_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="Text.Display2">
+        <item name="android:textSize">@dimen/text_size_display_2_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="Text.Display1">
+        <item name="android:textSize">@dimen/text_size_display_1_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="Text.Headline">
+        <item name="android:textSize">@dimen/text_size_headline_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Text.Title">
+        <item name="android:textSize">@dimen/text_size_title_material</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontPath">fonts/Roboto-Regular-Medium.ttf</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+
+    <style name="Text.Subhead">
+        <item name="android:textSize">@dimen/text_size_subhead_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Text.Body2">
+        <item name="android:textSize">@dimen/text_size_body_2_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Text.Body1">
+        <item name="android:textSize">@dimen/text_size_body_1_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Text.Caption">
+        <item name="android:textSize">@dimen/text_size_caption_material</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="Text.Menu">
+        <item name="android:textSize">@dimen/text_size_menu_material</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontPath">fonts/Roboto-Regular-Medium.ttf</item>
+    </style>
+
+
+    <style name="Text.Button">
+        <item name="android:textSize">@dimen/text_size_button_material</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontPath">fonts/Roboto-Regular-Medium.ttf</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+
+</resources>

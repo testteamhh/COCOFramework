@@ -1,0 +1,7 @@
+apply from: 'D:\\develop\\gradle\\android-library.gradle'
+apply from: 'D:\\develop\\gradle\\maven_push.gradle'
+
+dependencies {
+    compile project(':framework')
+    compile 'uk.co.chrisjenx:calligraphy:+'
+}
