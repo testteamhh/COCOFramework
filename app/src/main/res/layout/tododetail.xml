@@ -1,87 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cocosw.framework.view.StickyScrollView
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-tools:context="com.example.android.io2014.DetailActivity"
+<com.cocosw.framework.view.StickyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.io2014.DetailActivity"
 
-android:id="@+id/scrollview"
-
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<LinearLayout
-    android:id="@+id/container"
+    android:id="@+id/scrollview"
 
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent">
 
-    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/container"
 
-    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
 
-        <com.cocosw.framework.view.BackdropImageView
-            android:id="@+id/header"
+        android:orientation="vertical">
+
+        <FrameLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.cocosw.framework.view.BackdropImageView
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="250dp"
+                android:scaleType="centerCrop" />
+
+            <ImageButton
+                android:id="@+id/info"
+                android:layout_width="@dimen/floating_button_size"
+                android:layout_height="@dimen/floating_button_size"
+
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:background="@drawable/info_background"
+                android:src="@drawable/ic_info" />
+
+            <ImageButton
+                android:id="@+id/star"
+                android:layout_width="@dimen/floating_button_size"
+                android:layout_height="@dimen/floating_button_size"
+
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="16dp"
+
+                android:background="@drawable/info_background"
+                android:src="@drawable/ic_star" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/detail"
+            android:tag="sticky"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:minHeight="250dp"
-            android:scaleType="centerCrop" />
+            android:background="@color/holo_light_background"
+            android:paddingTop="@dimen/abc_action_bar_default_height"
+            android:paddingLeft="24dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="24dp"
+            android:textSize="34sp"
+            android:fontFamily="sans-serif-light" />
 
-        <ImageButton
-            android:id="@+id/info"
-            android:layout_width="@dimen/floating_button_size"
-            android:layout_height="@dimen/floating_button_size"
+        <TextView
+            android:id="@+id/description"
 
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-            android:background="@drawable/info_background"
-            android:src="@drawable/ic_info" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
 
-        <ImageButton
-            android:id="@+id/star"
-            android:layout_width="@dimen/floating_button_size"
-            android:layout_height="@dimen/floating_button_size"
+            android:textSize="20sp"
+            android:lineSpacingMultiplier="1.2" />
 
-            android:layout_gravity="bottom|left"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
-
-            android:background="@drawable/info_background"
-            android:src="@drawable/ic_star"
-            />
-
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/detail"
-        android:tag="sticky"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/holo_light_background"
-        android:paddingTop="@dimen/abc_action_bar_default_height"
-        android:paddingLeft="24dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="24dp"
-        android:textSize="40sp"
-        android:fontFamily="sans-serif-light" />
-
-    <TextView
-        android:id="@+id/description"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
-
-        android:textSize="20sp"
-        android:lineSpacingMultiplier="1.2" />
-
-</LinearLayout>
+    </LinearLayout>
 
 </com.cocosw.framework.view.StickyScrollView>

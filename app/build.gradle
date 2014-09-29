@@ -114,10 +114,12 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':framework')
+    compile project(':style')
     debugCompile project(':debug')
-    compile 'uk.co.chrisjenx:calligraphy:+'
+
     compile 'com.balysv.materialmenu:material-menu-abc:1.2.0'
     //  compile 'com.melnykov:floatingactionbutton:1.0.3'
     compile 'com.crashlytics.android:crashlytics:1.+'
-
+    compile 'org.markdownj:markdownj-core:+'
+//    compile 'com.balysv:material-ripple:+@aar'
 }
