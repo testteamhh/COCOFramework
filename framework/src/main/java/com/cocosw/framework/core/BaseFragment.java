@@ -163,7 +163,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected void save(Object obj) {
-        if (getActivity() instanceof Base)
+        if (getActivity() instanceof Base && obj != null)
             ((Base) getActivity()).save(this.getClass().getName()+obj.getClass().getName(),obj);
     }
 
@@ -174,7 +174,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected Object load(Object obj) {
-        if (getActivity() instanceof Base)
+        if (getActivity() instanceof Base && obj != null)
             return ((Base) getActivity()).load(this.getClass().getName()+obj.getClass().getName());
         return null;
     }
