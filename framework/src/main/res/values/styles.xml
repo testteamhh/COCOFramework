@@ -97,7 +97,6 @@
         <item name="android:gravity">center</item>
         <item name="android:minHeight">@dimen/holo_touchable_item_height</item>
         <item name="android:minWidth">64dip</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:foreground">?android:listSelector</item>
     </style>

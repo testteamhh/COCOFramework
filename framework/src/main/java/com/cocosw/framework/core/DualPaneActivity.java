@@ -8,11 +8,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.cocosw.accessory.views.layout.TwoPanelsLayout;
 import com.cocosw.framework.R;
-
-import butterknife.InjectView;
 
 
 public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.PanelSlideListener,
@@ -140,7 +137,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
     public void openDetail(Class<? extends BaseFragment> target, Fragment from, Intent extra, int requestCode) {
         detail = Fragment.instantiate(this, target.getName());
         detail.setArguments(intentToFragmentArguments(extra));
-        detail.setTargetFragment(from,requestCode);
+        detail.setTargetFragment(from, requestCode);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.coco_detail, detail, DETAIL)
                 .commit();
@@ -164,6 +161,15 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
 
     @Override
     public void onBackPressed() {
+        if (detail != null && detail instanceof BaseFragment) {
+            if (((BaseFragment) detail).onBackPressed())
+                return;
+        }
+        if (master != null && master instanceof BaseFragment) {
+            if (((BaseFragment) master).onBackPressed())
+                return;
+        }
+
         if (mPanel.isOpen())
             super.onBackPressed();
         else mPanel.openPane();

@@ -164,7 +164,7 @@ public abstract class BaseFragment<T> extends Fragment implements
 
     protected void save(Object obj) {
         if (getActivity() instanceof Base && obj != null)
-            ((Base) getActivity()).save(this.getClass().getName()+obj.getClass().getName(),obj);
+            ((Base) getActivity()).save(this.getClass().getName() + obj.getClass().getName(), obj);
     }
 
     protected <T> T load(String key) {
@@ -175,7 +175,7 @@ public abstract class BaseFragment<T> extends Fragment implements
 
     protected Object load(Object obj) {
         if (getActivity() instanceof Base && obj != null)
-            return ((Base) getActivity()).load(this.getClass().getName()+obj.getClass().getName());
+            return ((Base) getActivity()).load(this.getClass().getName() + obj.getClass().getName());
         return null;
     }
 
@@ -356,15 +356,12 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected void showRefresh(final CocoException e) {
-        UndoBarController.show(getActivity(), e.getMessage(),
-                new UndoListener() {
-
-                    @Override
-                    public void onUndo(final Parcelable token) {
-                        refresh();
-                    }
-                }, UndoBarController.RETRYSTYLE
-        );
+        new UndoBarController.UndoBar(getActivity()).message(e.getMessage()).listener(new UndoListener() {
+            @Override
+            public void onUndo(Parcelable parcelable) {
+                refresh();
+            }
+        }).style(UndoBarController.RETRYSTYLE).show();
     }
 
     private Base<?> getBase() {
@@ -416,4 +413,7 @@ public abstract class BaseFragment<T> extends Fragment implements
         return true;
     }
 
+    public boolean onBackPressed() {
+        return false;
+    }
 }

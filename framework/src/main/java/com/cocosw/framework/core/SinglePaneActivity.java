@@ -156,4 +156,13 @@ public class SinglePaneActivity<V> extends Base<V> implements
         targetFragment.startActivityForResult(new Intent(targetFragment.getActivity(), SinglePaneActivity.class).setAction(
                 fragment.getName()).putExtras(extras), requestCode);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (mFragment != null && mFragment instanceof BaseFragment) {
+            if (!((BaseFragment) mFragment).onBackPressed())
+                super.onBackPressed();
+        } else
+            super.onBackPressed();
+    }
 }
