@@ -12,9 +12,6 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
 import com.cocosw.lifecycle.FragmentLifecycleCallbacks;
 import com.cocosw.lifecycle.LifecycleDispatcher;
-import com.path.android.jobqueue.BaseJob;
-import com.path.android.jobqueue.config.Configuration;
-import com.path.android.jobqueue.di.DependencyInjector;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.Picasso;
 
@@ -85,8 +82,8 @@ public abstract class CocoApp extends Application {
         if (getAppModule() != null) {
             Injector.init(getAppModule(), this);
         }
-        if (client!=null)
-        Network.init(this, client);
+        if (client != null)
+            Network.init(this, client);
     }
 
     protected Object getAppModule() {
@@ -141,21 +138,4 @@ public abstract class CocoApp extends Application {
         return null;
     }
 
-
-    // setup job manager configuration
-    protected Configuration getJobManagerConfig() {
-        Configuration configuration = new Configuration.Builder(this)
-                .minConsumerCount(1)//always keep at least one consumer alive
-                .maxConsumerCount(2)//up to 3 consumers at a time
-                .loadFactor(1)//3 jobs per consumer
-                .consumerKeepAlive(5 * 60)//wait 2 minute
-                .injector(new DependencyInjector() {
-                    @Override
-                    public void inject(BaseJob baseJob) {
-                        Injector.inject(baseJob);
-                    }
-                })
-                .build();
-        return configuration;
-    }
 }

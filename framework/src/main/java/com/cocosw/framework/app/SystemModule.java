@@ -7,7 +7,6 @@ import android.os.StatFs;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.log.Log;
-import com.path.android.jobqueue.JobManager;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
@@ -35,12 +34,6 @@ public class SystemModule {
 
     public SystemModule(CocoApp app) {
         this.app = app;
-    }
-
-    @Provides
-    @Singleton
-    JobManager provideJobManager(Application context) {
-        return new JobManager(context, ((CocoApp) context).getJobManagerConfig());
     }
 
     @Provides

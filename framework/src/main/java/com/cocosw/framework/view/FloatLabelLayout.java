@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -21,8 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.cocosw.framework.R;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
+
 
 /**
  * A ViewGroup that consists of an EditText and a TextView as the label.<br/>
@@ -35,8 +35,8 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
  *
  * @author Ian G. Clifton
  * @see <a
- *      href="http://dribbble.com/shots/1254439--GIF-Float-Label-Form-Interaction">Float
- *      label inspiration on Dribbble</a>
+ * href="http://dribbble.com/shots/1254439--GIF-Float-Label-Form-Interaction">Float
+ * label inspiration on Dribbble</a>
  */
 public class FloatLabelLayout extends FrameLayout {
 
@@ -166,8 +166,7 @@ public class FloatLabelLayout extends FrameLayout {
      * Sets the text to be displayed above the EditText if the EditText is
      * nonempty or as the EditText hint if it is empty
      *
-     * @param resid
-     *            int String resource ID
+     * @param resid int String resource ID
      */
     public void setLabel(int resid) {
         setLabel(getContext().getString(resid));
@@ -177,8 +176,7 @@ public class FloatLabelLayout extends FrameLayout {
      * Sets the text to be displayed above the EditText if the EditText is
      * nonempty or as the EditText hint if it is empty
      *
-     * @param hint
-     *            CharSequence to set as the label
+     * @param hint CharSequence to set as the label
      */
     public void setLabel(CharSequence hint) {
         mEditText.setHint(hint);
@@ -207,7 +205,7 @@ public class FloatLabelLayout extends FrameLayout {
         final int childBottom = bottom - top - getPaddingBottom();
 
         layoutChild(mLabel, childLeft, childTop, childRight, childBottom);
-        layoutChild(mEditText, childLeft, childTop + mLabel.getMeasuredHeight() , childRight, childBottom);
+        layoutChild(mEditText, childLeft, childTop + mLabel.getMeasuredHeight(), childRight, childBottom);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -359,7 +357,7 @@ public class FloatLabelLayout extends FrameLayout {
             hintColor = a.getColorStateList(R.styleable.FloatLabel_android_textColorHint);
             floatLabelColor = a.getColor(R.styleable.FloatLabel_floatLabelColor,
                     0);
-            inputType = a.getInt(R.styleable.FloatLabel_android_inputType,InputType.TYPE_CLASS_TEXT);
+            inputType = a.getInt(R.styleable.FloatLabel_android_inputType, InputType.TYPE_CLASS_TEXT);
             a.recycle();
         }
 
@@ -381,7 +379,7 @@ public class FloatLabelLayout extends FrameLayout {
         if (hintColor != null) {
             mEditText.setHintTextColor(hintColor);
         }
-        if (inputType != 0){
+        if (inputType != 0) {
             mEditText.setInputType(inputType);
         }
 
@@ -399,7 +397,7 @@ public class FloatLabelLayout extends FrameLayout {
 
         // Check current state of EditText
         if (TextUtils.isEmpty(mEditText.getText())) {
-            ViewHelper.setAlpha(mLabel,0);
+            ViewCompat.animate(mLabel).alpha(0);
             mLabelShowing = false;
         } else {
             mLabel.setVisibility(View.VISIBLE);
@@ -421,23 +419,24 @@ public class FloatLabelLayout extends FrameLayout {
         @Override
         public void onDisplayLabel(View label) {
             final float offset = label.getHeight() / 2;
-            final float currentY = ViewHelper.getY(label);
+            final float currentY = new ViewCompat().getY(label);
             if (currentY != offset) {
-                ViewHelper.setY(label,offset);
+                ViewCompat.setY(label, offset);
             }
-            ViewPropertyAnimator.animate(label).alpha(1).y(0);
+            ViewCompat.animate(label).alpha(1).y(0);
         }
 
         @Override
         public void onHideLabel(View label) {
             final float offset = label.getHeight() / 2;
-            final float currentY = ViewHelper.getY(label);
+            final float currentY = new ViewCompat().getY(label);
             if (currentY != 0) {
-                ViewHelper.setY(label,0);
+                ViewCompat.setY(label, 0);
             }
-            ViewPropertyAnimator.animate(label).alpha(0).y(offset);
+            ViewCompat.animate(label).alpha(0).y(offset);
         }
     }
+
     /**
      * TextWatcher that notifies FloatLabel when the EditText changes between
      * having text and not having text or vice versa.
