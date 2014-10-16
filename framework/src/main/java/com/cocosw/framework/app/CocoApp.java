@@ -31,9 +31,11 @@ public abstract class CocoApp extends Application {
 
     private static String TAG = "Coco";
 
+    // looks hacky but no better way yet
     @Inject
     OkHttpClient client;
 
+    // looks hacky but no better way yet
     @Inject
     Picasso picasso;
 
@@ -68,7 +70,6 @@ public abstract class CocoApp extends Application {
         try {
             NetworkConnectivity.getInstance(this);
         } catch (SecurityException ignore) {
-
         }
         TAG = getString(getApplicationInfo().labelRes);
         CocoQuery.setQueryClass(CocoQuery.ExtViewQuery.class);
