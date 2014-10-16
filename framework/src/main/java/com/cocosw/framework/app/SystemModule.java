@@ -25,7 +25,8 @@ import dagger.Provides;
 
 @Module(
         complete = false,
-        library = true
+        library = true,
+        injects = {CocoApp.class}
 )
 
 public class SystemModule {

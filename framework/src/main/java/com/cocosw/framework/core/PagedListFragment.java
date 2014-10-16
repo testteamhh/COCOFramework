@@ -126,7 +126,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
             throws Exception;
 
     private final Bundle bundel = new Bundle();
-    private MenuItem refresh;
+    protected MenuItem refresh;
 
     @Override
     public void onScroll(final AbsListView view, final int firstVisibleItem,

@@ -39,7 +39,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.+'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.+'
     compile 'com.squareup.picasso:picasso:+'
-    compile 'com.jakewharton:butterknife:5.0.+'
+    compile 'com.jakewharton:butterknife:5.+'
     compile 'com.jakewharton.timber:timber:+'
     compile 'com.iconic:iconic:0.1@aar'
 }

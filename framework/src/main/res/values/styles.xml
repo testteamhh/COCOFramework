@@ -99,6 +99,7 @@
         <item name="android:minWidth">64dip</item>
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:foreground">?android:listSelector</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
     </style>
 
     <style name="Button.WideButton" parent="Button">

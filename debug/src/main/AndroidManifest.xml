@@ -10,16 +10,28 @@
             android:theme="@android:style/Theme.Holo.Light" />
 
         <activity
-            android:name=".DebugCenter"
-            android:theme="@android:style/Theme.NoDisplay" />
+            android:name=".DebugWindow"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light" />
+
+        <activity
+            android:name=".CatLogWindow"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light" />
+
+        <activity
+            android:name="com.jakewharton.u2020.ui.debug.DebugAppContainer"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light" />
+
 
         <activity
             android:name="com.readystatesoftware.notificationlog.LogActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light" />
 
-        <service android:name=".DebugWindow" />
-        <service android:name=".CatLogWindow" />
     </application>
 
 </manifest>
