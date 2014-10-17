@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.cocosw.framework.sample.view.AnimatedLinearLayout
         android:id="@+id/container"
 
         android:layout_width="match_parent"
@@ -80,6 +80,6 @@
             android:textSize="20sp"
             android:lineSpacingMultiplier="1.2" />
 
-    </LinearLayout>
+    </com.cocosw.framework.sample.view.AnimatedLinearLayout>
 
 </com.cocosw.framework.view.StickyScrollView>

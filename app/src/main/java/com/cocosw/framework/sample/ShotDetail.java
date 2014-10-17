@@ -1,6 +1,7 @@
 package com.cocosw.framework.sample;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,13 +15,16 @@ import android.widget.TextView;
 import com.cocosw.accessory.views.ABHelper;
 import com.cocosw.accessory.views.layout.ObservableScrollView;
 import com.cocosw.framework.core.BaseFragment;
-import com.cocosw.framework.core.Presenter;
 import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.sample.network.Bean;
+import com.cocosw.framework.sample.utils.PaletteManager;
+import com.cocosw.framework.sample.view.AnimatedLinearLayout;
 import com.cocosw.framework.view.BackdropImageView;
 import com.cocosw.framework.view.StickyScrollView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+
+import javax.inject.Inject;
 
 import butterknife.InjectView;
 
@@ -28,7 +32,7 @@ import butterknife.InjectView;
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/12.
  */
-public class TodoDetail extends BaseFragment implements ObservableScrollView.OnScrollChangedListener {
+public class ShotDetail extends BaseFragment implements ObservableScrollView.OnScrollChangedListener {
 
     public static final String TODO = "todo";
     @InjectView(R.id.header)
@@ -43,7 +47,15 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
     ImageButton mInfo;
     @InjectView(R.id.star)
     ImageButton mStar;
+    @InjectView(R.id.container)
+    AnimatedLinearLayout mContainer;
     private ABHelper abhelper;
+
+    @Inject
+    Picasso picasso;
+
+    @Inject
+    PaletteManager pm;
 
     @Override
     public int layoutId() {
@@ -54,23 +66,21 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
     protected void setupUI(View view, Bundle bundle) throws Exception {
         if (getArguments() == null)
             return;
+        inject();
+        mContainer.setAnimationsEnabled(true);
         Bean.Shot todo = (Bean.Shot) getArguments().getSerializable(TODO);
-        q.id(R.id.detail).text(todo.title);
-        Picasso.with(context).load(todo.image_teaser_url).into(mHeader);
-        Picasso.with(context).load(todo.image_400_url).into(new Target() {
+        q.v(mDetail).text(todo.title);
+        pm.updatePalette(picasso, todo.image_teaser_url, mHeader, mDetail, mDetail);
+
+        picasso.load(todo.image_400_url).into(mHeader, new Callback() {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                mHeader.setImageBitmap(bitmap);
-                colorize(bitmap);
+            public void onSuccess() {
+                if (mHeader != null && mHeader.getDrawable() != null)
+                    colorize(((BitmapDrawable) mHeader.getDrawable()).getBitmap());
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            public void onError() {
 
             }
         });
@@ -84,14 +94,28 @@ public class TodoDetail extends BaseFragment implements ObservableScrollView.OnS
             }
         };
         mScrollview.setOnScrollChangedListener(this);
-
-        mStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Presenter(TodoDetail.this).target(PagedTodoList.class).open();
-            }
-        });
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        picasso.cancelRequest(mHeader);
+    }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//        View[] views = new View[mContainer.getChildCount()];
+//        for (int i = 0; i < views.length; i++) {
+//            views[i] = mContainer.getChildAt(i);
+//        }
+//        mContainer.removeAllViews();
+//
+//        for (View view : views) {
+//            mContainer.addView(view);
+//        }
+//    }
 
     private void colorize(Bitmap photo) {
         Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {

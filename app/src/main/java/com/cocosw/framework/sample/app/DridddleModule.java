@@ -1,5 +1,11 @@
 package com.cocosw.framework.sample.app;
 
+import com.cocosw.framework.sample.PopularList;
+import com.cocosw.framework.sample.ShotDetail;
+import com.cocosw.framework.sample.utils.PaletteManager;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,7 +19,9 @@ import dagger.Provides;
         overrides = true,
 
         injects = {
-                DridddleApp.class
+                DridddleApp.class,
+                PopularList.class,
+                ShotDetail.class,
         }
 )
 
@@ -30,4 +38,9 @@ public class DridddleModule {
         return app;
     }
 
+    @Provides
+    @Singleton
+    PaletteManager providePaletteManager() {
+        return new PaletteManager();
+    }
 }

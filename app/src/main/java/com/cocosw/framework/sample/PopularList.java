@@ -16,11 +16,14 @@ import com.cocosw.framework.core.PagedListFragment;
 import com.cocosw.framework.core.Presenter;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
+import com.cocosw.framework.sample.utils.PaletteManager;
 import com.cocosw.framework.view.adapter.CocoAdapter;
 import com.cocosw.framework.view.adapter.TypeListAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.InjectView;
 
@@ -32,6 +35,12 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @InjectView(R.id.swipe)
     SwipeRefreshLayout mSwipe;
+
+    @Inject
+    Picasso picasso;
+
+    @Inject
+    PaletteManager pm;
 
     @Override
     public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
@@ -45,6 +54,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Override
     protected void init(View view, Bundle bundle) throws Exception {
+        inject();
         mSwipe.setColorSchemeResources(R.color.themecolor, R.color.transparent, R.color.themecolor, R.color.transparent);
         mSwipe.setOnRefreshListener(this);
     }
@@ -56,7 +66,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Override
     protected void onItemClick(Bean.Shot item, int pos, long id, View view) {
-        new Presenter(this).target(TodoDetail.class).extra(new Intent().putExtra(TodoDetail.TODO, item)).openForResult(1);
+        new Presenter(this).target(ShotDetail.class).extra(new Intent().putExtra(ShotDetail.TODO, item)).openForResult(1);
     }
 
     @Override
@@ -78,14 +88,14 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
         @Override
         protected int[] getChildViewIds() {
-            return new int[]{R.id.title, R.id.image, R.id.subtitle};
+            return new int[]{R.id.title, R.id.image, R.id.subtitle, R.id.info_box};
         }
 
         @Override
         protected void update(int position, Bean.Shot item) {
             textView(0).setText(item.title);
             textView(2).setText(item.player.name);
-            Picasso.with(context).load(item.image_teaser_url).into(imageView(1));
+            pm.updatePalette(picasso, item.image_teaser_url, imageView(1), textView(0), view(3));
         }
     }
 
