@@ -36,8 +36,8 @@ def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '20.0.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.0.2'
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !isTravis
@@ -58,7 +58,7 @@ android {
     defaultConfig {
         applicationId "com.cocosw.framework.sample"
         minSdkVersion 9
-        targetSdkVersion 20
+        targetSdkVersion 21
         versionCode versionMajor * 100000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}-${time}"
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
@@ -117,7 +117,7 @@ dependencies {
     compile project(':style')
     debugCompile project(':debug')
 
-    compile 'com.balysv.materialmenu:material-menu-abc:1.2.0'
+    compile 'com.balysv.materialmenu:material-menu-toolbar:1.4.0'
     //  compile 'com.melnykov:floatingactionbutton:1.0.3'
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'org.markdownj:markdownj-core:+'

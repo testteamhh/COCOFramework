@@ -86,7 +86,7 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
         });
         q.v(mDescription).html(todo.description);
 
-        abhelper = new ABHelper(new ColorDrawable(R.color.transparent), mHeader, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height)) {
+        abhelper = new ABHelper(new ColorDrawable(R.color.transparent), mHeader, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material)) {
 
             @Override
             protected void setActionBarBackground(Drawable who) {

@@ -106,7 +106,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
         subMenu1.add(Menu.NONE, 2, Menu.NONE, R.string.about);
 
         final MenuItem subMenu1Item = subMenu1.getItem();
-        subMenu1Item.setIcon(R.drawable.abc_ic_menu_moreoverflow_normal_holo_dark);
+        subMenu1Item.setIcon(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha);
         MenuItemCompat.setShowAsAction(subMenu1Item, MenuItem.SHOW_AS_ACTION_ALWAYS);
         super.onCreateOptionsMenu(menu, inflater);
     }

@@ -59,7 +59,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/holo_light_background"
-            android:paddingTop="@dimen/abc_action_bar_default_height"
+            android:paddingTop="?actionBarSize"
             android:paddingLeft="24dp"
             android:paddingRight="10dp"
             android:paddingBottom="24dp"

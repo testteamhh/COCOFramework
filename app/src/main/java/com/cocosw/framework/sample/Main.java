@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.extras.abc.MaterialMenuIconCompat;
+import com.balysv.materialmenu.MaterialMenuIcon;
 import com.cocosw.framework.core.DualPaneActivity;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -23,8 +23,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class Main extends DualPaneActivity {
 
-    private MaterialMenuIconCompat materialMenu;
     private ColorDrawable abbg;
+ //   private MaterialMenuIcon materialMenu;
+    private boolean isDrawerOpened;
 
     @Override
     protected Fragment onCreateMasterPane() {
@@ -56,8 +57,7 @@ public class Main extends DualPaneActivity {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN)
             abbg.setCallback(mDrawableCallback);
         getSupportActionBar().setBackgroundDrawable(abbg);
-        materialMenu = new MaterialMenuIconCompat(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
-        materialMenu.setState(MaterialMenuDrawable.IconState.BURGER);
+  //      materialMenu = new MaterialMenuIcon(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
     }
 
     @Override
@@ -69,32 +69,36 @@ public class Main extends DualPaneActivity {
     public void onPanelSlide(View panel, float slideOffset) {
         super.onPanelSlide(panel, slideOffset);
         abbg.setAlpha((int) (slideOffset * 255));
+//        materialMenu.setTransformationOffset(
+//                MaterialMenuDrawable.AnimationState.BURGER_ARROW,
+//                isDrawerOpened ? 2 - slideOffset : slideOffset
+//        );
     }
 
     @Override
     public void onPanelClosed(View panel) {
         super.onPanelClosed(panel);
-        materialMenu.animatePressedState(MaterialMenuDrawable.IconState.ARROW);
+        isDrawerOpened = false;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
     public void onPanelOpened(View panel) {
         super.onPanelOpened(panel);
-        materialMenu.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
+        isDrawerOpened = true;
         getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        materialMenu.syncState(savedInstanceState);
+    //    materialMenu.syncState(savedInstanceState);
     }
 
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        materialMenu.onSaveInstanceState(outState);
+   //     materialMenu.onSaveInstanceState(outState);
     }
 
     @Override

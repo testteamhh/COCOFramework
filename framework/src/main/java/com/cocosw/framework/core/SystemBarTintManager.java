@@ -387,7 +387,7 @@ public class SystemBarTintManager {
 
         @TargetApi(7)
         private int getActionBarHeight(Context context) {
-            return context.getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height);
+            return context.getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material);
         }
 
         @TargetApi(14)

@@ -22,17 +22,17 @@
         <attr name="android:layout" />
         <attr name="android:text" />
         <attr name="android:textColorHint" />
-        <attr name="floatLabelColor" format="color" />
         <attr name="android:inputType" />
+        <attr name="floatLabelColor" format="color" />
     </declare-styleable>
     <declare-styleable name="StickyScrollView">
         <attr name="stuckShadowHeight" format="dimension" />
         <attr name="stuckShadowDrawable" format="reference" />
     </declare-styleable>
     <declare-styleable name="AppTheme">
-        <attr name="colorPrimary" format="color|reference" />
-        <attr name="colorPrimaryDark" format="color|reference" />
-        <attr name="navigationBarColor" format="color|reference" />
-        <attr name="statusBarColor" format="color|reference" />
+        <!--<attr name="colorPrimary" format="color|reference" />-->
+        <!--<attr name="colorPrimaryDark" format="color|reference" />-->
+        <attr name="navigationBarColor" format="color" />
+        <attr name="statusBarColor" format="color" />
     </declare-styleable>
 </resources>
