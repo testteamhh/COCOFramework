@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ForegroundImageView">
-        <attr name="android:foreground" />
-    </declare-styleable>
-    <declare-styleable name="ForegroundLinearLayout">
-        <attr name="android:foreground" />
-        <attr name="android:foregroundInsidePadding" />
-        <attr name="android:foregroundGravity" />
-    </declare-styleable>
-    <declare-styleable name="ForegroundRelativeLayout">
-        <attr name="android:foreground" />
-        <attr name="android:foregroundInsidePadding" />
-        <attr name="android:foregroundGravity" />
-    </declare-styleable>
-    <declare-styleable name="CollectionView">
-        <attr name="internalPadding" format="dimension" />
-        <attr name="contentTopClearance" format="dimension" />
+    <declare-styleable name="AppTheme">
+        <!--<attr name="colorPrimary" format="color|reference" />-->
+        <!--<attr name="colorPrimaryDark" format="color|reference" />-->
+        <attr name="navigationBarColor" format="color" />
+        <attr name="statusBarColor" format="color" />
     </declare-styleable>
     <declare-styleable name="FloatLabel">
         <attr name="android:hint" />
@@ -24,15 +13,5 @@
         <attr name="android:textColorHint" />
         <attr name="android:inputType" />
         <attr name="floatLabelColor" format="color" />
-    </declare-styleable>
-    <declare-styleable name="StickyScrollView">
-        <attr name="stuckShadowHeight" format="dimension" />
-        <attr name="stuckShadowDrawable" format="reference" />
-    </declare-styleable>
-    <declare-styleable name="AppTheme">
-        <!--<attr name="colorPrimary" format="color|reference" />-->
-        <!--<attr name="colorPrimaryDark" format="color|reference" />-->
-        <attr name="navigationBarColor" format="color" />
-        <attr name="statusBarColor" format="color" />
     </declare-styleable>
 </resources>
