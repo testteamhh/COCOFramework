@@ -55,7 +55,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implement
     @Override
     public void add(final List<T> values) {
         if (values != null && values.size() > 0) {
-            this.dataList.addAll(values);
+            //  this.dataList.addAll(values);
             for (T obj : values) {
                 add(obj);
             }
@@ -97,12 +97,14 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implement
 
     @Override
     public void updateList(List<T> values) {
-        this.dataList = values;
+        clear();
+        add(values);
     }
 
     @Override
     public void remove(int position) {
         this.dataList.remove(position);
+        removeItem(position);
     }
 
     /**
@@ -136,6 +138,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter implement
 
     @Override
     public void refresh() {
+        super.clear();
         getDataList().clear();
     }
 

@@ -22,6 +22,7 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -212,15 +213,20 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected abstract void onItemClick(T item, int pos, long id, View view);
 
     @Override
-    public void onLoadFinished(final Loader<List<T>> loader, final List<T> items) {
+    public void onLoadFinished(final Loader<List<T>> loader, List<T> items) {
         final Exception exception = getException(loader);
         if (exception != null) {
             showError(exception);
             showList();
             return;
         }
+
+        if (items == null)
+            items = Collections.EMPTY_LIST;
+
         if (items != null && mAdapter != null) {
-            ((CocoAdapter) mAdapter).add(items);
+            ((CocoAdapter<?>) mAdapter).refresh();
+            ((CocoAdapter<T>) mAdapter).add(items);
             updateAdapter();
         }
         onLoaderDone(items);
@@ -257,21 +263,25 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
      * 刷新当前页面内容
      */
     @Override
-    public void refresh() {
-        Log.d("页面有更新,刷新中");
+    public void refresh(final Bundle b) {
+        Log.i("页面有更新,刷新中");
         if (!isUsable()) {
             return;
         }
         if (getLoaderManager().hasRunningLoaders()) {
             loader.cancelLoad();
         }
-
-        hide(emptyView);
-        items.clear();
-        ((CocoAdapter<?>) mAdapter).refresh();
-        setListShown(false);
-        super.refresh();
+        if (hideListWhenRefreshing()) {
+            hide(emptyView);
+            setListShown(false);
+        }
+        super.refresh(b);
     }
+
+    protected boolean hideListWhenRefreshing() {
+        return true;
+    }
+
 
     /**
      * Set list shown or progress bar show

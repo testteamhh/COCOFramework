@@ -42,12 +42,6 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
     }
 
     @Override
-    public CocoAdapter<T> getAdapter() {
-        return (CocoAdapter<T>) mAdapter;
-    }
-
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         save(TIME, time);
@@ -79,6 +73,8 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
             return;
         }
         if (items != null && mAdapter != null && !items.isEmpty()) {
+            if (time == 0)
+                getAdapter().refresh();
             getAdapter().add(items);
         }
         showList();
@@ -94,6 +90,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
 
         time++;
     }
+
 
     @Override
     public final List<T> pendingData(Bundle args) throws Exception {
@@ -199,22 +196,6 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
     protected int pagedSize(final int time) {
         return 10;
     }
-
-//    @Override
-//    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-//        refresh = menu.add(0, 999, 0, R.string.refresh).setIcon(
-//                R.drawable.ic_action_refresh);
-//        refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(final MenuItem item) {
-//        if (item.getItemId() == 999) {
-//            refresh();
-//            return true;
-//        }
-//        return false;
-//    }
 
     @Override
     protected void onStartLoading() {
