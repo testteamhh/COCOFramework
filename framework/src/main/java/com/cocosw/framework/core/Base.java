@@ -18,6 +18,7 @@
 package com.cocosw.framework.core;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
@@ -30,9 +31,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.accessory.utils.UIUtils;
+import com.cocosw.accessory.views.QuickReturn;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.app.Injector;
@@ -68,6 +71,7 @@ public abstract class Base<T> extends ActionBarActivity implements
     private SystemBarTintManager.SystemBarConfig mInsets;
     private SystemBarTintManager tintManager;
     RetainedFragment retainedFragment;
+    private QuickReturn qr;
 
     private static final String TAG_RETAINED_STATE_FRAGMENT = "_retainedStateFragment";
 
@@ -463,6 +467,26 @@ public abstract class Base<T> extends ActionBarActivity implements
         if (retainedFragment != null)
             return (T) retainedFragment.get(key);
         return null;
+    }
+
+    public void startActivitySafely(Intent intent) {
+        try {
+            super.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void startActivityForResultSafely(Intent intent, int requestCode) {
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
     }
 
     protected Object load(Object obj) {

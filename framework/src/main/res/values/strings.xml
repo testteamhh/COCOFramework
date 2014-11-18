@@ -89,5 +89,6 @@
 
     <!-- Optional button to Skip a PreferenceActivity [CHAR LIMIT=20] -->
     <string name="skip_button_label">Skip</string>
+    <string name="activity_not_found">打开应用失败</string>
 
 </resources>

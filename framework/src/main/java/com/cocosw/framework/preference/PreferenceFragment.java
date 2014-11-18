@@ -16,6 +16,7 @@
 
 package com.cocosw.framework.preference;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cocosw.framework.R;
 
@@ -313,5 +315,23 @@ public abstract class PreferenceFragment extends Fragment implements
 
     };
 
+    public void startActivitySafely(Intent intent) {
+        try {
+            super.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    public void startActivityForResultSafely(Intent intent, int requestCode) {
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
+    }
 }

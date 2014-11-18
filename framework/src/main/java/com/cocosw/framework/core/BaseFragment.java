@@ -1,6 +1,7 @@
 package com.cocosw.framework.core;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
@@ -395,7 +397,8 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected void hideLoading() {
-        getBase().hideLoading();
+        if (getBase() != null)
+            getBase().hideLoading();
     }
 
     @Override
@@ -411,6 +414,26 @@ public abstract class BaseFragment<T> extends Fragment implements
         if (getActionBar() == null || !getActionBar().isShowing())
             return false;
         return true;
+    }
+
+    public void startActivitySafely(Intent intent) {
+        try {
+            super.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void startActivityForResultSafely(Intent intent, int requestCode) {
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getActivity(), R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean onBackPressed() {
