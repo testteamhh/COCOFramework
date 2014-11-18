@@ -77,14 +77,14 @@ android {
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
             // 2.3 workaround
-            runProguard false
+            minifyEnabled false
             debuggable true
             //    proguardFile '../proguard.cfg'
         }
         release {
             versionNameSuffix '-release'
-            zipAlign true
-            runProguard false
+            zipAlignEnabled true
+            minifyEnabled false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -116,10 +116,10 @@ dependencies {
     compile project(':framework')
     compile project(':style')
     debugCompile project(':debug')
-
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.4.0'
     //  compile 'com.melnykov:floatingactionbutton:1.0.3'
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'org.markdownj:markdownj-core:+'
-//    compile 'com.balysv:material-ripple:+@aar'
+    //    compile 'com.balysv:material-ripple:+@aar'
+    compile project(':debug')
 }
