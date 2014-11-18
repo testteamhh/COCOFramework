@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cocosw.framework.view.StickyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cocosw.accessory.views.layout.StickyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.io2014.DetailActivity"
 
@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.cocosw.framework.sample.view.AnimatedLinearLayout
+    <LinearLayout
         android:id="@+id/container"
 
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.cocosw.framework.view.BackdropImageView
+            <com.cocosw.accessory.views.widgets.BackdropImageView
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,6 +80,6 @@
             android:textSize="20sp"
             android:lineSpacingMultiplier="1.2" />
 
-    </com.cocosw.framework.sample.view.AnimatedLinearLayout>
+    </LinearLayout>
 
-</com.cocosw.framework.view.StickyScrollView>
+</com.cocosw.accessory.views.layout.StickyScrollView>

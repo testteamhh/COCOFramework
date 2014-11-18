@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.cocosw.accessory.views.ABHelper;
 import com.cocosw.accessory.views.layout.ObservableScrollView;
+import com.cocosw.accessory.views.layout.StickyScrollView;
+import com.cocosw.accessory.views.widgets.BackdropImageView;
 import com.cocosw.framework.core.BaseFragment;
 import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.utils.PaletteManager;
 import com.cocosw.framework.sample.view.AnimatedLinearLayout;
-import com.cocosw.framework.view.BackdropImageView;
-import com.cocosw.framework.view.StickyScrollView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
