@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -58,8 +59,6 @@ import butterknife.ButterKnife;
 
 /**
  * Activity
- *
- * @author solosky <solosky772@qq.com>
  */
 public abstract class Base<T> extends ActionBarActivity implements
         DialogResultListener, CocoLoader<T> {
@@ -93,6 +92,11 @@ public abstract class Base<T> extends ActionBarActivity implements
         q = q == null ? new CocoQuery(this) : q;
         setContentView(layoutId());
         tintManager = new SystemBarTintManager(this);
+
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         // enable status bar tint
         tintManager.setStatusBarTintEnabled(true);

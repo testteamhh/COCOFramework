@@ -44,6 +44,11 @@
         <item name="android:drawSelectorOnTop">true</item>
     </style>
 
+    <style name="HeaderBar">
+        <item name="android:background">?colorPrimary</item>
+        <!--<item name="android:elevation">@dimen/headerbar_elevation</item>-->
+    </style>
+
     <style name="ListSpinner">
         <item name="android:indeterminateDrawable">@drawable/progress_indeterminate</item>
         <item name="android:indeterminateOnly">true</item>

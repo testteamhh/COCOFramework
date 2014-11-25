@@ -83,6 +83,9 @@
     <color name="blue_button_background_pressed_end">#00b5b8</color>
     <color name="divider_line">#ffd4cec7</color>
 
+    <color name="translucent_actionbar_background">#cc3f51b5</color>
+    <color name="translucent_statusbar_background">#cc3f51b5</color>
+
 
     <!-- Holo -->
     <color name="pureblue">#ff33B5E5</color>
