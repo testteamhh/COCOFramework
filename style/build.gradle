@@ -1,5 +1,5 @@
-apply from: 'D:\\develop\\gradle\\android-library.gradle'
-apply from: 'D:\\develop\\gradle\\maven_push.gradle'
+apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/android-library.gradle'
+apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.gradle'
 
 dependencies {
     compile project(':framework')
