@@ -62,6 +62,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 
     @Override
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+        if (mListContainer == null) return;
         mListContainer.setClipToPadding(false);
         mListContainer.setPadding(
                 0, insets.getPixelInsetTop(hasActionBarBlock())
@@ -131,7 +132,11 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 
 
     protected T getItem(final int position) {
-        return (T) getList().getAdapter().getItem(position);
+        try {
+            return (T) getList().getAdapter().getItem(position);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public A getList() {
@@ -268,7 +273,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         if (!isUsable()) {
             return;
         }
-        if (getLoaderManager().hasRunningLoaders()) {
+        if (getLoaderManager().hasRunningLoaders() && loader != null) {
             loader.cancelLoad();
         }
         if (hideListWhenRefreshing()) {
@@ -307,9 +312,9 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected void setOnViewClickInList() {
         if (this instanceof ItemViewClickLisener) {
             final View.OnClickListener listener = new View.OnClickListener() {
-
                 @Override
                 public void onClick(final View v) {
+                    if (getList() == null) return;
                     final int position = getList().getPositionForView(v);
                     ((ItemViewClickLisener) AdapterViewFragment.this).onItemViewClick(
                             position, v);
