@@ -14,18 +14,26 @@ public class DebugUtils {
 
     /**
      * ViewServer only apply for unrooted <r11 device
+     *
      * @param context
      * @return
      */
-    public static boolean isViewServerNeeded(Context context){
-        return (Build.VERSION.SDK_INT>11 && !Utils.isRooted(context));
+    public static boolean isViewServerNeeded(Context context) {
+        return (Build.VERSION.SDK_INT > 11 && !Utils.isRooted(context));
     }
 
     public static void setupStrictMode() {
         if (UIUtils.hasGingerbread()) {
-            StrictMode
-                    .setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                            .detectNetwork().penaltyLog().build());
+            StrictMode.ThreadPolicy.Builder threadPolicyBuilder =
+                    new StrictMode.ThreadPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog();
+            StrictMode.VmPolicy.Builder vmPolicyBuilder =
+                    new StrictMode.VmPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog();
+            StrictMode.setThreadPolicy(threadPolicyBuilder.build());
+            StrictMode.setVmPolicy(vmPolicyBuilder.build());
         }
     }
 
