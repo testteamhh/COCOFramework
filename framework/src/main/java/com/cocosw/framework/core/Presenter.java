@@ -2,6 +2,8 @@ package com.cocosw.framework.core;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 /**
@@ -19,6 +21,7 @@ public class Presenter {
 
     private Intent extra;
     private boolean blank;
+    private Bundle options;
 
     public Presenter(Fragment from) {
         this.from = from;
@@ -48,6 +51,11 @@ public class Presenter {
         return this;
     }
 
+    public Presenter options(Bundle options) {
+        this.options = options;
+        return this;
+    }
+
     /**
      * Open target fragment in target container
      */
@@ -56,57 +64,58 @@ public class Presenter {
             extra = new Intent();
 
         // start activity from fragment
-        if (from!=null) {
+        if (from != null) {
             fromAct = from.getActivity();
             if (fromAct == null)
                 return;
 
             if (!(fromAct instanceof DualPaneActivity) || blank) {
-                // open target fragment in a new container
-                from.startActivity(new Intent(fromAct, container==null?SinglePaneActivity.class:container)
-                        .setAction(target.getName()).putExtras(extra));
+
+                ActivityCompat.startActivity(fromAct, new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
+                        .setAction(target.getName()).putExtras(extra), options);
             } else {
                 // open target fragment in current DualPaneActivity
-                ((DualPaneActivity)fromAct).openDetail(target,  extra);
+                ((DualPaneActivity) fromAct).openDetail(target, extra);
             }
         } else {
             if (!(fromAct instanceof DualPaneActivity) || blank) {
                 // open target fragment in a new container
-                fromAct.startActivity(new Intent(fromAct, container==null?SinglePaneActivity.class:container)
-                        .setAction(target.getName()).putExtras(extra));
+                ActivityCompat.startActivity(fromAct, new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
+                        .setAction(target.getName()).putExtras(extra), options);
             } else {
                 // open target fragment in current DualPaneActivity
-                ((DualPaneActivity)fromAct).openDetail(target,  extra);
+                ((DualPaneActivity) fromAct).openDetail(target, extra);
             }
         }
     }
+
 
     public void openForResult(int requestCode) {
         if (extra == null)
             extra = new Intent();
 
         // start activity from fragment
-        if (from!=null) {
+        if (from != null) {
             fromAct = from.getActivity();
             if (fromAct == null)
                 return;
 
             if (!(fromAct instanceof DualPaneActivity) || blank) {
                 // open target fragment in a new container
+                // So far, there is no way to set activity options for this.
                 from.startActivityForResult(new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
                         .setAction(target.getName()).putExtras(extra), requestCode);
             } else {
                 // open target fragment in current DualPaneActivity
-                ((DualPaneActivity)fromAct).openDetail(target, from , extra, requestCode);
+                ((DualPaneActivity) fromAct).openDetail(target, from, extra, requestCode);
             }
         } else {
             if (!(fromAct instanceof DualPaneActivity) || blank) {
-                // open target fragment in a new container
-                fromAct.startActivityForResult(new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
-                        .setAction(target.getName()).putExtras(extra), requestCode);
+                ActivityCompat.startActivityForResult(fromAct, new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
+                        .setAction(target.getName()).putExtras(extra), requestCode, options);
             } else {
                 // open target fragment in current DualPaneActivity
-                ((DualPaneActivity)fromAct).openDetail(target, null , extra, requestCode);
+                ((DualPaneActivity) fromAct).openDetail(target, null, extra, requestCode);
             }
         }
     }
