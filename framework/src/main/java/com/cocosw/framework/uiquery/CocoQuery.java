@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -15,8 +14,8 @@ import android.widget.TextView;
 
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
+import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.accessory.views.textview.StyledText;
-import com.cocosw.framework.app.CocoApp;
 import com.cocosw.query.AbstractViewQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.squareup.picasso.Callback;
@@ -71,7 +70,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
         public ExtViewQuery(View root) {
             super(root);
-            picasso = CocoApp.getApp().getPicasso();
+            picasso = Picasso.with(root.getContext());
         }
 
         /**
@@ -107,7 +106,6 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
             }
             return self();
         }
-
 
         /**
          * Load network image to current ImageView with cache control
@@ -442,17 +440,18 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @return
          */
         public ExtViewQuery background(Drawable draw) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                view.setBackgroundDrawable(draw);
-            } else {
-                view.setBackground(draw);
-            }
+            ViewUtils.setBackground(view, draw);
             return self();
         }
 
         private int dip2pixel(float n) {
             int value = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, n, context.getResources().getDisplayMetrics());
             return value;
+        }
+
+        public ExtViewQuery padding(int left, int top, int right, int bottom) {
+            view.setPadding(dip2pixel(left), dip2pixel(top), dip2pixel(right), dip2pixel(bottom));
+            return self();
         }
 
 

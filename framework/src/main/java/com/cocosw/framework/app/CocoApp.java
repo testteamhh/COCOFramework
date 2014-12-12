@@ -13,7 +13,6 @@ import com.cocosw.lifecycle.ActivityLifecycleCallbacksCompat;
 import com.cocosw.lifecycle.FragmentLifecycleCallbacks;
 import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,10 +34,6 @@ public abstract class CocoApp extends Application {
     @Inject
     OkHttpClient client;
 
-    // looks hacky but no better way yet
-    @Inject
-    Picasso picasso;
-
     /**
      * Create main application
      */
@@ -58,10 +53,6 @@ public abstract class CocoApp extends Application {
     public CocoApp(final Context context) {
         this();
         attachBaseContext(context);
-    }
-
-    public Picasso getPicasso() {
-        return picasso;
     }
 
     @Override
