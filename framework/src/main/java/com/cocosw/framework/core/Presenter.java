@@ -2,9 +2,12 @@ package com.cocosw.framework.core;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 /**
  * Project: cocoframework
@@ -36,6 +39,7 @@ public class Presenter {
         return this;
     }
 
+
     public Presenter container(Class<? extends Activity> container) {
         this.container = container;
         return this;
@@ -56,6 +60,14 @@ public class Presenter {
         return this;
     }
 
+    public Presenter scaleUp(View v) {
+        return options(ActivityOptionsCompat.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight()).toBundle());
+    }
+
+    public Presenter thumbnail(View v, Bitmap bitmap) {
+        return options(ActivityOptionsCompat.makeThumbnailScaleUpAnimation(v, bitmap, 0, 0).toBundle());
+    }
+
     /**
      * Open target fragment in target container
      */
@@ -70,7 +82,6 @@ public class Presenter {
                 return;
 
             if (!(fromAct instanceof DualPaneActivity) || blank) {
-
                 ActivityCompat.startActivity(fromAct, new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
                         .setAction(target.getName()).putExtras(extra), options);
             } else {

@@ -22,8 +22,9 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.android.support:support-v4:21.0.2'
+    compile "com.github.andkulikov:transitions-everywhere:1.+"
+    compile 'com.android.support:appcompat-v7:21.+'
+    compile 'com.android.support:support-v4:21.+'
     compile 'com.cocosw.accessory:utils:+'
     compile 'com.cocosw.accessory:views:+'
     compile 'com.cocosw.accessory:connectivity:+'
@@ -39,7 +40,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.+'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.+'
     compile 'com.squareup.picasso:picasso:+'
-    compile 'com.jakewharton:butterknife:5.+'
+    compile 'com.jakewharton:butterknife:6.+'
     compile 'com.jakewharton.timber:timber:+'
     compile 'com.iconic:iconic:0.1@aar'
 }
