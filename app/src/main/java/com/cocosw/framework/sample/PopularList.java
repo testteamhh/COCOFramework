@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.GridView;
 
@@ -41,6 +41,8 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Inject
     PaletteManager pm;
+    @InjectView(R.id.toolbar_actionbar)
+    Toolbar mToolbarActionbar;
 
     @Override
     public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
@@ -57,6 +59,8 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
         inject();
         mSwipe.setColorSchemeResources(R.color.themecolor, R.color.transparent, R.color.themecolor, R.color.transparent);
         mSwipe.setOnRefreshListener(this);
+        mSwipe.setProgressViewOffset(false, getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material), getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material) * 2);
+        getActionBarActivity().setSupportActionBar(mToolbarActionbar);
     }
 
     @Override
@@ -101,13 +105,8 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        final SubMenu subMenu1 = menu.addSubMenu(R.string.more);
-        menu.add(Menu.NONE, 3, Menu.NONE, R.string.about);
-        subMenu1.add(Menu.NONE, 2, Menu.NONE, R.string.about);
-
-        final MenuItem subMenu1Item = subMenu1.getItem();
-        subMenu1Item.setIcon(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha);
-        MenuItemCompat.setShowAsAction(subMenu1Item, MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuItem item = menu.add(Menu.NONE, 2, Menu.NONE, R.string.about);
+        MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_NEVER);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

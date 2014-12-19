@@ -2,17 +2,14 @@ package com.cocosw.framework.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
-import android.support.v7.graphics.PaletteItem;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.cocosw.accessory.views.ABHelper;
 import com.cocosw.accessory.views.layout.ObservableScrollView;
 import com.cocosw.accessory.views.layout.StickyScrollView;
 import com.cocosw.accessory.views.widgets.BackdropImageView;
@@ -20,7 +17,7 @@ import com.cocosw.framework.core.BaseFragment;
 import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.utils.PaletteManager;
-import com.cocosw.framework.sample.view.AnimatedLinearLayout;
+import com.cocosw.framework.toolkit.ToolbarHelper;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -32,24 +29,20 @@ import butterknife.InjectView;
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/12.
  */
-public class ShotDetail extends BaseFragment implements ObservableScrollView.OnScrollChangedListener {
+public class ShotDetail extends BaseFragment implements ObservableScrollView.OnScrollChangedListener, View.OnClickListener {
 
     public static final String TODO = "todo";
-    @InjectView(R.id.header)
-    BackdropImageView mHeader;
-    @InjectView(R.id.detail)
-    TextView mDetail;
     @InjectView(R.id.description)
     TextView mDescription;
     @InjectView(R.id.scrollview)
     StickyScrollView mScrollview;
-    @InjectView(R.id.info)
-    ImageButton mInfo;
-    @InjectView(R.id.star)
-    ImageButton mStar;
-    @InjectView(R.id.container)
-    AnimatedLinearLayout mContainer;
-    private ABHelper abhelper;
+    @InjectView(R.id.header_image)
+    BackdropImageView mHeader;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+    @InjectView(R.id.backdrop_toolbar)
+    FrameLayout mBackdropToolbar;
+    private ToolbarHelper abhelper;
 
     @Inject
     Picasso picasso;
@@ -67,11 +60,9 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
         if (getArguments() == null)
             return;
         inject();
-        mContainer.setAnimationsEnabled(true);
         Bean.Shot todo = (Bean.Shot) getArguments().getSerializable(TODO);
-        q.v(mDetail).text(todo.title);
-        pm.updatePalette(picasso, todo.image_teaser_url, mHeader, mDetail, mDetail);
-
+        pm.updatePalette(picasso, todo.image_teaser_url, mHeader, null, mBackdropToolbar);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         picasso.load(todo.image_400_url).into(mHeader, new Callback() {
             @Override
             public void onSuccess() {
@@ -86,14 +77,11 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
         });
         q.v(mDescription).html(todo.description);
 
-        abhelper = new ABHelper(new ColorDrawable(R.color.transparent), mHeader, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material)) {
-
-            @Override
-            protected void setActionBarBackground(Drawable who) {
-
-            }
-        };
+        abhelper = new ToolbarHelper(mToolbar, mBackdropToolbar)
+                .image(mHeader, getResources().getColor(R.color.accent_1)).autoHide(true);
+        //   mBackdropToolbar.setTitle(todo.title);
         mScrollview.setOnScrollChangedListener(this);
+        mToolbar.setNavigationOnClickListener(this);
     }
 
     @Override
@@ -127,25 +115,13 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
     }
 
     private void applyPalette(Palette palette) {
-        PaletteItem item = palette.getDarkMutedColor();
-        if (item != null) {
-            mDetail.setBackgroundColor(item.getRgb());
-            v.setBackgroundDrawable(new ColorDrawable(item.getRgb()));
-        }
-
-        item = palette.getVibrantColor();
-        if (item != null)
-            mDetail.setTextColor(item.getRgb());
-
-        item = palette.getMutedColor();
-        if (item != null) {
-            mDetail.setBackgroundColor(item.getRgb());
-        }
-
-        item = palette.getLightVibrantColor();
-        if (item != null)
-            mDescription.setTextColor(item.getRgb());
-
+        if (palette == null || v == null)
+            return;
+        Palette.Swatch item = palette.getDarkMutedSwatch();
+        if (item == null)
+            return;
+        v.setBackgroundColor(item.getRgb());
+        mDescription.setTextColor(item.getBodyTextColor());
     }
 
     @Override
@@ -155,12 +131,17 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
 
     @Override
     public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
-        mHeader.offsetBackdrop(abhelper.onScroll(who, t));
+        abhelper.onScroll(who, t);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         Picasso.with(context).cancelRequest(mHeader);
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().onBackPressed();
     }
 }

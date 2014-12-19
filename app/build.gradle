@@ -122,4 +122,5 @@ dependencies {
     compile 'org.markdownj:markdownj-core:+'
     //    compile 'com.balysv:material-ripple:+@aar'
     compile project(':debug')
+    compile 'com.android.support:palette-v7:21.+'
 }
