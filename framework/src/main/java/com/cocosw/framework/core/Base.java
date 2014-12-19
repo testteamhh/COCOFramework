@@ -324,7 +324,7 @@ public abstract class Base<T> extends ActionBarActivity implements
 
     protected void refresh() {
         onStartLoading();
-        getSupportLoaderManager().restartLoader(0, new Bundle(), this);
+        getSupportLoaderManager().restartLoader(this.hashCode(), new Bundle(), this);
     }
 
 

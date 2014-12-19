@@ -343,7 +343,7 @@ public abstract class BaseFragment<T> extends Fragment implements
      */
     protected void refresh(final Bundle b) {
         onStartLoading();
-        getLoaderManager().restartLoader(0, b, this);
+        getLoaderManager().restartLoader(this.hashCode(), b, this);
     }
 
     protected abstract void setupUI(View view, Bundle bundle) throws Exception;

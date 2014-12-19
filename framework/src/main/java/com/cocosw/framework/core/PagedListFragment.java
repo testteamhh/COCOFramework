@@ -148,7 +148,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
         onStartLoading();
         getLoaderManager()
                 .restartLoader(
-                        0,
+                        this.hashCode(),
                         CocoBundle.builder(bundel).setIndex(getLastIndex())
                                 .getBundle(), this
                 );
