@@ -67,6 +67,10 @@ public abstract class BaseFragment<T> extends Fragment implements
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
+    public ActionBarActivity getActionBarActivity() {
+        return ((ActionBarActivity) getActivity());
+    }
+
     /**
      * Close current UI container(activity/dialog)
      */
@@ -231,6 +235,7 @@ public abstract class BaseFragment<T> extends Fragment implements
         q = null;
         loader = null;
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

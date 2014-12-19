@@ -21,9 +21,13 @@
         <item name="android:listSelector">@drawable/standard_selector</item>
     </style>
 
-    <style name="Theme.App.NoActionBar" parent="Theme.App">
-        <item name="android:windowActionBar">false</item>
+    <style name="Theme.App.Toolbar" parent="Theme.App">
         <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.App.Toolbar.Translucent" parent="Theme.App.Toolbar">
+
     </style>
 
     <style name="Theme.App.Translucent" parent="Theme.App">
