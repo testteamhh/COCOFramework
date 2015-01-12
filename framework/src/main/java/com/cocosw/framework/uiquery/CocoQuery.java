@@ -2,6 +2,7 @@ package com.cocosw.framework.uiquery;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.accessory.views.textview.StyledText;
+import com.cocosw.framework.R;
 import com.cocosw.query.AbstractViewQuery;
 import com.cocosw.undobar.UndoBarController;
 import com.squareup.picasso.Callback;
@@ -181,6 +184,27 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                 .setItems(list, listener);
         builder.create().show();
     }
+
+    /**
+     * Show huge amount info with a dialog, HTML is allowed
+     */
+    public void dialog(String content, CharSequence title) {
+        create(content, title).show();
+    }
+
+    private Dialog create(String mLicensesText, CharSequence str) {
+        //Get resources
+        final WebView webView = new WebView(getContext());
+        webView.loadDataWithBaseURL(null, mLicensesText, "text/html", "utf-8", null);
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext())
+
+                .customView(webView, false)
+                .positiveText(R.string.ok);
+        if (str != null)
+            builder.title(str);
+        return builder.build();
+    }
+
 
     public static class ExtViewQuery extends AbstractViewQuery<ExtViewQuery> {
 

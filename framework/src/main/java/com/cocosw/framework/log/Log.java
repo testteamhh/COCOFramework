@@ -1,13 +1,6 @@
 package com.cocosw.framework.log;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.webkit.WebView;
-
-import com.cocosw.framework.R;
 
 import timber.log.Timber;
 
@@ -120,32 +113,6 @@ public class Log {
 
     public static void e(final Throwable t, String str, Object... arg) {
         Timber.e(t, str, arg);
-    }
-
-    /**
-     * Show huge amount info with a dialog, HTML is allowed
-     *
-     * @param str
-     */
-    public static void dialog(Context context, String content, String... str) {
-        create(context, content, str).show();
-    }
-
-    private static Dialog create(Context mContext, String mLicensesText, CharSequence... str) {
-        //Get resources
-        final WebView webView = new WebView(mContext);
-        webView.loadDataWithBaseURL(null, mLicensesText, "text/html", "utf-8", null);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
-
-                .setView(webView)
-                .setPositiveButton(R.string.ok, new Dialog.OnClickListener() {
-                    public void onClick(final DialogInterface dialogInterface, final int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-        if (str != null && str.length > 0)
-            builder.setTitle(str[0]);
-        return builder.create();
     }
 
 }
