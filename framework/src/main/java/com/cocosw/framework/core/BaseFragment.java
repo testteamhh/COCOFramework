@@ -50,6 +50,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     protected CocoQuery q;
     protected View v;
     protected Bus bus = CocoBus.getInstance();
+    private boolean loaderRunning;
 
 
     /**
@@ -201,10 +202,11 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected void onStartLoading() {
-
+         loaderRunning = true;
     }
 
     protected void onStopLoading() {
+        loaderRunning = false;
         hideLoading();
     }
 
@@ -344,6 +346,10 @@ public abstract class BaseFragment<T> extends Fragment implements
     protected void refresh(final Bundle b) {
         onStartLoading();
         getLoaderManager().restartLoader(this.hashCode(), b, this);
+    }
+
+    protected boolean isLoaderRunning() {
+        return loaderRunning;
     }
 
     protected abstract void setupUI(View view, Bundle bundle) throws Exception;

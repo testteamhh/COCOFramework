@@ -14,6 +14,7 @@ import android.widget.GridView;
 
 import com.cocosw.framework.core.PagedListFragment;
 import com.cocosw.framework.core.Presenter;
+import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
 import com.cocosw.framework.sample.utils.PaletteManager;
@@ -82,6 +83,17 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
     public void onLoaderDone(List<Bean.Shot> items) {
         mSwipe.setRefreshing(false);
 
+    }
+
+
+
+    @Override
+    public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+        v.setPadding(0, insets.getPixelInsetTop(false),insets.getPixelInsetRight(), insets.getPixelInsetBottom());
+        getList().setPadding(
+                0, insets.getPixelInsetTop(hasActionBarBlock())
+                , insets.getPixelInsetRight(), insets.getPixelInsetBottom()
+        );
     }
 
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {

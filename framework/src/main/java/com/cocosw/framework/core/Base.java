@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -450,7 +451,7 @@ public abstract class Base<T> extends ActionBarActivity implements
     }
 
     protected static interface OnActivityInsetsCallback {
-        public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets);
+        public void onInsetsChanged(@NonNull SystemBarTintManager.SystemBarConfig insets);
     }
 
     protected boolean hasRetainData() {

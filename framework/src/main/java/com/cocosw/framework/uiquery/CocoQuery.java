@@ -1,7 +1,9 @@
 package com.cocosw.framework.uiquery;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialogCompat;
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.accessory.views.ViewUtils;
@@ -63,6 +67,120 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         return this;
     }
 
+
+    /**
+     * Open a alert dialog with title and message
+     *
+     * @param title
+     * @param message
+     */
+    public void alert(final String title, final CharSequence message) {
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(
+                getContext());
+        builder.title(title);
+        builder.content(message);
+        builder.positiveText(android.R.string.ok);
+        builder.show();
+    }
+
+    /**
+     * Open a alert dialog with title and message
+     *
+     * @param title
+     * @param message
+     */
+    public void alert(final int title, final int message) {
+        alert(getContext().getString(title),
+                getContext().getString(message));
+    }
+
+    /**
+     * Open a confirm dialog with title and message
+     *
+     * @param title
+     * @param message
+     */
+    public void confirm(final int title, final int message,
+                        final DialogInterface.OnClickListener onClickListener) {
+        final MaterialDialog.Builder builder = new MaterialDialog.Builder(
+                getContext());
+        builder.title(title).content(message);
+        builder.positiveText(android.R.string.ok);
+        builder.negativeText(android.R.string.cancel);
+        builder.callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                }
+            }
+
+            @Override
+            public void onNegative(MaterialDialog dialog) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                }
+            }
+        });
+        builder.show();
+    }
+
+
+    /**
+     * Open a alert dialog with title and message
+     *
+     * @param title
+     * @param message
+     */
+    public void alert(final int title, final int message,
+                      final DialogInterface.OnClickListener onClickListener) {
+
+        final MaterialDialogCompat.Builder builder = new MaterialDialogCompat.Builder(
+                getContext());
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+                        if (onClickListener != null) {
+                            onClickListener.onClick(dialog, which);
+                        }
+                        final AlertDialog ad = builder.create();
+                        ad.cancel();
+                    }
+                });
+        builder.show();
+    }
+
+    /**
+     * Open a dialog with single choice list
+     *
+     * @param title
+     * @param list
+     * @param listener
+     */
+    public void dialog(final int title, int list, DialogInterface.OnClickListener listener) {
+        MaterialDialogCompat.Builder builder = new MaterialDialogCompat.Builder(getContext());
+        builder.setTitle(title)
+                .setItems(list, listener);
+        builder.create().show();
+    }
+
+    /**
+     * Open a dialog with single choice list
+     *
+     * @param title
+     * @param list
+     * @param listener
+     */
+    public void dialog(final int title, CharSequence[] list, DialogInterface.OnClickListener listener) {
+        MaterialDialogCompat.Builder builder = new MaterialDialogCompat.Builder(getContext());
+        builder.setTitle(title)
+                .setItems(list, listener);
+        builder.create().show();
+    }
 
     public static class ExtViewQuery extends AbstractViewQuery<ExtViewQuery> {
 

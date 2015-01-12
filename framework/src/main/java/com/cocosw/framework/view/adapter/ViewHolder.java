@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.framework.uiquery.CocoQuery;
 
+import butterknife.ButterKnife;
+
 public class ViewHolder {
 
     protected CocoQuery q;
@@ -16,14 +18,12 @@ public class ViewHolder {
     int position;
     ViewGroup parent;
 
-    public ViewHolder() {
-    }
-
     public ViewHolder(final View view) {
         setContentView(view);
+        ButterKnife.inject(this, view);
     }
 
-    public void setContentView(View contentView) {
+    private void setContentView(View contentView) {
         this.contentView = contentView;
         q = new CocoQuery(contentView);
     }

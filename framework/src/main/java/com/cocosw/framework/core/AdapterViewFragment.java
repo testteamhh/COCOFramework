@@ -3,6 +3,7 @@ package com.cocosw.framework.core;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +56,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     private A mListContainer;
     private View progressBar;
 
-    protected void setOnScrollListener(final AbsListView.OnScrollListener listener) {
+    protected void setOnScrollListener(@NonNull final AbsListView.OnScrollListener listener) {
         q.id(R.id.list).scrolled(listener);
     }
 

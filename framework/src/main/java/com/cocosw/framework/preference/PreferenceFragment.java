@@ -18,6 +18,7 @@ package com.cocosw.framework.preference;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,10 +32,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cocosw.framework.R;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public abstract class PreferenceFragment extends Fragment implements
         PreferenceManagerCompat.OnPreferenceTreeClickListener {
@@ -266,6 +271,34 @@ public abstract class PreferenceFragment extends Fragment implements
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
         if (preferenceScreen != null) {
             preferenceScreen.bind(getListView());
+        }
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+            // Workaround android bug for SDK 10 and below - see
+            // https://github.com/android/platform_frameworks_base/commit/2d43d283fc0f22b08f43c6db4da71031168e7f59
+            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // If the list has headers, subtract them from the index.
+                    if (parent instanceof ListView) {
+                        position -= ((ListView)parent).getHeaderViewsCount();
+                    }
+
+                    Object item = preferenceScreen.getRootAdapter().getItem(position);
+                    if (!(item instanceof Preference))
+                        return;
+
+                    final Preference preference = (Preference)item;
+                    try {
+                        Method performClick = Preference.class.getDeclaredMethod(
+                                "performClick", PreferenceScreen.class);
+                        performClick.setAccessible(true);
+                        performClick.invoke(preference, preferenceScreen);
+                    } catch (InvocationTargetException e) {
+                    } catch (IllegalAccessException e) {
+                    } catch (NoSuchMethodException e) {
+                    }
+                }
+            });
         }
     }
 

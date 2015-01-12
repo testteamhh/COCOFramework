@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 import com.cocosw.framework.core.DualPaneActivity;
+import com.cocosw.framework.core.SystemBarTintManager;
 
 /**
  * Project: cocoframework
@@ -31,5 +32,10 @@ public class Main extends DualPaneActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
+        super.onInsetsChanged(insets);
     }
 }

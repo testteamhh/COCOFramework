@@ -199,6 +199,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
 
     @Override
     protected void onStartLoading() {
+        super.onStartLoading();
         if (refresh != null) {
             refresh.setActionView(R.layout.indeterminate_progress_action);
         }

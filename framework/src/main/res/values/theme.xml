@@ -12,7 +12,7 @@
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
-    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light.DarkActionBar"></style>
+    <style name="ThemeActivity" parent="@style/Theme.AppCompat.Light.DarkActionBar"/>
 
     <style name="Theme.App" parent="ThemeActivity">
         <item name="android:buttonStyle">@style/Button</item>

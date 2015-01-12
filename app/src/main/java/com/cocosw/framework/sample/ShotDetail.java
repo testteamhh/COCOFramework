@@ -55,6 +55,8 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
         return R.layout.tododetail;
     }
 
+
+
     @Override
     protected void setupUI(View view, Bundle bundle) throws Exception {
         if (getArguments() == null)
@@ -126,7 +128,12 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
 
     @Override
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
-        //super.onInsetsChanged(insets);
+        super.onInsetsChanged(insets);
+    }
+
+    @Override
+    protected boolean hasActionBarBlock() {
+        return false;
     }
 
     @Override
