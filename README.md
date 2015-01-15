@@ -53,7 +53,6 @@ How to define your app style
     </style>
 ```
 - To compatible with API 20, create a separate style under values-v20 folder
-- You can introduce (Holoaccent)[https://github.com/negusoft/holoaccent] to further customize your ui style
 
 
 Translucent
