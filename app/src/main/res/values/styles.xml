@@ -2,7 +2,6 @@
 
     <style name="TODOTheme" parent="@style/Theme.App.Toolbar.Translucent">
         <item name="colorPrimary">@color/themecolor</item>
-        <item name="navigationBarColor">@color/transparent</item>
     </style>
 
 

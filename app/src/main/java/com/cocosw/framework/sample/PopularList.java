@@ -86,12 +86,11 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
     }
 
 
-
     @Override
     public void onInsetsChanged(SystemBarTintManager.SystemBarConfig insets) {
-        v.setPadding(0, insets.getPixelInsetTop(false),insets.getPixelInsetRight(), insets.getPixelInsetBottom());
+        v.setPadding(0, insets.getPixelInsetTop(false), insets.getPixelInsetRight(), insets.getPixelInsetBottom());
         getList().setPadding(
-                0, insets.getPixelInsetTop(hasActionBarBlock())
+                0, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material)
                 , insets.getPixelInsetRight(), insets.getPixelInsetBottom()
         );
     }

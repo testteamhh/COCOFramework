@@ -114,7 +114,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':framework')
-    compile project(':style')
     debugCompile project(':debug')
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.4.0'
     //  compile 'com.melnykov:floatingactionbutton:1.0.3'

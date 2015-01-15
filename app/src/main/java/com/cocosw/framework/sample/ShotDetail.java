@@ -56,7 +56,6 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
     }
 
 
-
     @Override
     protected void setupUI(View view, Bundle bundle) throws Exception {
         if (getArguments() == null)
@@ -80,7 +79,7 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
         q.v(mDescription).html(todo.description);
 
         abhelper = new ToolbarHelper(mToolbar, mBackdropToolbar)
-                .image(mHeader, getResources().getColor(R.color.accent_1)).autoHide(true);
+                .image(mHeader, getResources().getColor(R.color.primarycolor)).autoHide(true);
         //   mBackdropToolbar.setTitle(todo.title);
         mScrollview.setOnScrollChangedListener(this);
         mToolbar.setNavigationOnClickListener(this);
