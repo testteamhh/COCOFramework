@@ -363,7 +363,9 @@ public abstract class Base<T> extends ActionBarActivity implements
     /**
      * Override to implement a compatibility menu key press action.
      */
-    protected abstract void onCompatMenuKeyPressed();
+    protected void onCompatMenuKeyPressed() {
+
+    }
 
     @Override
     public void onResume() {
