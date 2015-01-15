@@ -1,7 +1,0 @@
-apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/android-library.gradle'
-apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.gradle'
-
-dependencies {
-    compile project(':framework')
-    compile 'uk.co.chrisjenx:calligraphy:+'
-}

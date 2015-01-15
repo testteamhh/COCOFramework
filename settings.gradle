@@ -1,3 +1,3 @@
-include ':debug', ':style'
+include ':debug'
 include ':framework'
 include ':app'

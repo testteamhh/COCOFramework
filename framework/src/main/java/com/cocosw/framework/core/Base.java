@@ -22,6 +22,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -30,9 +31,11 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
@@ -309,6 +312,58 @@ public abstract class Base<T> extends ActionBarActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    /**
+     * Flag for a window belonging to an activity that responds to {@link KeyEvent#KEYCODE_MENU}
+     * and therefore needs a Menu key. For devices where Menu is a physical button this flag is
+     * ignored, but on devices where the Menu key is drawn in software it may be hidden unless
+     * this flag is set.
+     * <p/>
+     * (Note that Action Bars, when available, are the preferred way to offer additional
+     * functions otherwise accessed via an options menu.)
+     * <p/>
+     * {@hide}
+     */
+    private static final int FLAG_NEEDS_MENU_KEY = 0x08000000;
+
+    private boolean mCompatMenuKeyEnabled = false;
+
+    /**
+     * Enable the compatibility menu button on devices that don't have
+     * a permanent menu key.
+     *
+     * @param enabled true to enable the compatibility menu button, false to disable it.
+     */
+    protected void setCompatMenuKeyEnabled(boolean enabled) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            ViewConfiguration vc = ViewConfiguration.get(this);
+            if (!vc.hasPermanentMenuKey()) {
+                if (enabled) {
+                    getWindow().addFlags(FLAG_NEEDS_MENU_KEY);
+                } else {
+                    getWindow().clearFlags(FLAG_NEEDS_MENU_KEY);
+                }
+                mCompatMenuKeyEnabled = enabled;
+            }
+        }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (mCompatMenuKeyEnabled) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_MENU && event.getAction() == KeyEvent.ACTION_UP) {
+                onCompatMenuKeyPressed();
+                return false;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    /**
+     * Override to implement a compatibility menu key press action.
+     */
+    protected abstract void onCompatMenuKeyPressed();
 
     @Override
     public void onResume() {
