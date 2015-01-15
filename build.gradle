@@ -32,7 +32,8 @@ allprojects {
         mavenLocal()
         jcenter()
         mavenCentral()
-   //     maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url LOCALMVNGIT }
+        //     maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     tasks.withType(JavaCompile) {

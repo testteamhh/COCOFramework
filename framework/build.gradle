@@ -23,6 +23,7 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 dependencies {
     compile 'com.afollestad:material-dialogs:0.6.0'
+    compile "com.android.support:recyclerview-v7:21.+"
     compile "com.github.andkulikov:transitions-everywhere:1.+"
     compile 'com.android.support:appcompat-v7:21.+'
     compile 'com.android.support:support-v4:21.+'
