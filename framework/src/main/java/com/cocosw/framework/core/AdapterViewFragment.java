@@ -56,8 +56,10 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     private A mListContainer;
     private View progressBar;
 
+    private AbsListView.OnScrollListener externalListener;
+
     protected void setOnScrollListener(@NonNull final AbsListView.OnScrollListener listener) {
-        q.id(R.id.list).scrolled(listener);
+        this.externalListener = listener;
     }
 
 
@@ -353,7 +355,9 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     @Override
     public void onScrollStateChanged(final AbsListView view,
                                      final int scrollState) {
-
+        if (externalListener != null) {
+            externalListener.onScrollStateChanged(view, scrollState);
+        }
     }
 
     @Override
@@ -366,6 +370,9 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
                 scrollUp(totalItemCount);
             }
             lastVisibleItem = firstVisibleItem;
+        }
+        if (externalListener != null) {
+            externalListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
         }
     }
 
