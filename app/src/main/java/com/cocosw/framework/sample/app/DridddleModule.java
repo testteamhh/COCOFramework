@@ -1,6 +1,7 @@
 package com.cocosw.framework.sample.app;
 
 import com.cocosw.framework.sample.PopularList;
+import com.cocosw.framework.sample.PopularRecyclerList;
 import com.cocosw.framework.sample.ShotDetail;
 import com.cocosw.framework.sample.utils.PaletteManager;
 
@@ -22,6 +23,7 @@ import dagger.Provides;
                 DridddleApp.class,
                 PopularList.class,
                 ShotDetail.class,
+                PopularRecyclerList.class
         }
 )
 

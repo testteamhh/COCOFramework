@@ -19,7 +19,7 @@ public class Main extends DualPaneActivity {
 
     @Override
     protected Fragment onCreateMasterPane() {
-        return Fragment.instantiate(this, PopularList.class.getName());
+        return Fragment.instantiate(this, PopularRecyclerList.class.getName());
     }
 
 

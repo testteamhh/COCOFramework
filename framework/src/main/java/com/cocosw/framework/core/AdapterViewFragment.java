@@ -76,7 +76,8 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     @Override
     public void onDestroy() {
         super.onDestroy();
-        save(DATA, items);
+        save(DATA, getAdapter().getItems());
+        mAdapter = null;
     }
 
     protected boolean reloadNeeded(final Bundle savedInstanceState) {
@@ -196,7 +197,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
 
     @Override
     public void onDestroyView() {
-        mAdapter = null;
         mListContainer = null;
         listShown = false;
         progressBar = null;
@@ -233,8 +233,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
             items = Collections.EMPTY_LIST;
 
         if (items != null && mAdapter != null) {
-            ((CocoAdapter<?>) mAdapter).refresh();
-            ((CocoAdapter<T>) mAdapter).add(items);
+            ((CocoAdapter<T>) mAdapter).updateList(items);
             updateAdapter();
         }
         onLoaderDone(items);

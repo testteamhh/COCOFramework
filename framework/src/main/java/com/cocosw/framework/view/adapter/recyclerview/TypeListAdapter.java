@@ -1,12 +1,11 @@
-package com.cocosw.framework.view.adapter;
+package com.cocosw.framework.view.adapter.recyclerview;
 
 import android.content.Context;
 import android.view.View;
 
-import com.cocosw.adapter.MultiTypeAdapter;
-import com.cocosw.framework.uiquery.CocoQuery;
+import com.cocosw.adapter.recyclerview.SingleTypeAdapter;
+import com.cocosw.framework.view.adapter.CocoAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,41 +13,33 @@ import java.util.List;
  * Date: 13-7-17
  * Time: 下午6:32
  */
-public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implements
+public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         CocoAdapter<T> {
 
-    private List<T> dataList;
     protected Context context;
     protected View.OnClickListener onViewClickInListListener;
     private boolean loading = true;
 
-    public MultiTypeListAdatper(Context context) {
-        this(context, null);
+    public TypeListAdapter(Context context, int layoutResourceId) {
+        this(context, layoutResourceId, null);
     }
 
-    public MultiTypeListAdatper(Context context, List<T> dataList) {
-        super(context);
+    public TypeListAdapter(Context context, int layoutResourceId, List<T> dataList) {
+        super(context, layoutResourceId);
         this.context = context;
-        if (dataList == null) {
-            this.dataList = new ArrayList<T>();
-        } else
-            this.dataList = dataList;
+        setItems(dataList);
     }
 
 
     @Override
-    public T getItem(int position) {
-        return super.getItem(position);
+    public int getCount() {
+        return getItems().size();
     }
 
-    /**
-     * get object item type
-     *
-     * @param obj
-     * @return
-     */
-    public abstract int getType(T obj);
-
+    @Override
+    public void remove(int position) {
+        getItems().remove(position);
+    }
 
     /**
      * 往数据后面加入数据
@@ -57,11 +48,8 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
      */
     @Override
     public void add(final List<T> values) {
-        if (values != null && values.size() > 0) {
-            //  this.dataList.addAll(values);
-            for (T obj : values) {
-                add(obj);
-            }
+        if (values != null) {
+            getItems().addAll(values);
         }
     }
 
@@ -73,8 +61,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
     @Override
     public void add(final T value) {
         if (value != null) {
-            this.dataList.add(value);
-            addItem(getType(value), value);
+            getItems().add(value);
         }
     }
 
@@ -85,7 +72,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
      */
     @Override
     public void append(final List<T> values) {
-        this.dataList.addAll(0, values);
+        getItems().addAll(0, values);
     }
 
     /**
@@ -95,19 +82,12 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
      */
     @Override
     public void append(final T values) {
-        this.dataList.add(0, values);
+        getItems().add(0, values);
     }
 
     @Override
     public void updateList(List<T> values) {
-        clear();
-        add(values);
-    }
-
-    @Override
-    public void remove(int position) {
-        this.dataList.remove(position);
-        removeItem(position);
+        setItems(values);
     }
 
     /**
@@ -131,7 +111,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
      * @param item Item to be verified whether it is in the adapter.
      */
     public boolean contains(final T item) {
-        return getDataList().contains(item);
+        return getItems().contains(item);
     }
 
     @Override
@@ -141,17 +121,11 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
 
     @Override
     public void refresh() {
-        super.clear();
-        getDataList().clear();
+        getItems().clear();
     }
 
     @Override
-    public boolean isEmpty() {
-        return getDataList().size() == 0 & !loading;
+    public List<T> getItems() {
+        return super.getItems();
     }
-
-    protected List<T> getDataList() {
-        return dataList;
-    }
-
 }

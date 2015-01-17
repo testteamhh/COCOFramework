@@ -91,16 +91,6 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.widget.Adapter#getItemId(int)
-     */
-    @Override
-    public long getItemId(final int i) {
-        return 0;
-    }
-
     @Override
     public View getView(final int position, final View convertView,
                         final ViewGroup parent) {
@@ -215,25 +205,5 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
     @Override
     public void refresh() {
         getDataList().clear();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return getDataList().size() == 0 & !loading;
-    }
-
-    @Override
-    public boolean areAllItemsEnabled() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return true;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return true;
     }
 }

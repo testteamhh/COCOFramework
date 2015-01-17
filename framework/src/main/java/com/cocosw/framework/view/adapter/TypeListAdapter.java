@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cocosw.accessory.views.adapter.SingleTypeAdapter;
+import com.cocosw.adapter.SingleTypeAdapter;
 import com.cocosw.framework.uiquery.CocoQuery;
 
 import java.util.ArrayList;
@@ -18,9 +18,7 @@ import java.util.List;
 public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         CocoAdapter<T> {
 
-    private List<T> dataList;
     protected Context context;
-    protected CocoQuery q;
     protected View.OnClickListener onViewClickInListListener;
     private boolean loading = true;
 
@@ -28,43 +26,16 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         this(context, layoutResourceId, null);
     }
 
-    public TypeListAdapter(Context context, int layoutResourceId, List<T> dataList) {
+    public TypeListAdapter(Context context, int layoutResourceId, List<T> items) {
         super(context, layoutResourceId);
         this.context = context;
-        if (dataList == null) {
-            this.dataList = new ArrayList<T>();
-        } else
-            this.dataList = dataList;
-        q = new CocoQuery(context);
+        setItems(items);
     }
 
-    /*
- * (non-Javadoc)
- *
- * @see android.widget.Adapter#getCount()
- */
-    @Override
-    public int getCount() {
-        return dataList.size();
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.widget.Adapter#getItem(int)
-     */
-    @Override
-    public T getItem(final int i) {
-        if (i != AdapterView.INVALID_POSITION & i < dataList.size()) {
-            return dataList.get(i);
-        } else {
-            return null;
-        }
-    }
 
     @Override
     public void remove(int position) {
-        this.dataList.remove(position);
+        this.getItems().remove(position);
     }
 
     /**
@@ -75,7 +46,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
     @Override
     public void add(final List<T> values) {
         if (values != null) {
-            this.dataList.addAll(values);
+            this.getItems().addAll(values);
         }
     }
 
@@ -87,7 +58,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
     @Override
     public void add(final T value) {
         if (value != null) {
-            this.dataList.add(value);
+            this.getItems().add(value);
         }
     }
 
@@ -98,7 +69,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
      */
     @Override
     public void append(final List<T> values) {
-        this.dataList.addAll(0, values);
+        this.getItems().addAll(0, values);
     }
 
     /**
@@ -108,12 +79,12 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
      */
     @Override
     public void append(final T values) {
-        this.dataList.add(0, values);
+        this.getItems().add(0, values);
     }
 
     @Override
     public void updateList(List<T> values) {
-        this.dataList = values;
+        setItems(values);
     }
 
     /**
@@ -137,7 +108,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
      * @param item Item to be verified whether it is in the adapter.
      */
     public boolean contains(final T item) {
-        return getDataList().contains(item);
+        return getItems().contains(item);
     }
 
     @Override
@@ -147,16 +118,16 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
 
     @Override
     public void refresh() {
-        getDataList().clear();
+        getItems().clear();
     }
 
     @Override
     public boolean isEmpty() {
-        return getDataList().size() == 0 & !loading;
+        return getItems().size() == 0 & !loading;
     }
 
-    protected List<T> getDataList() {
-        return dataList;
+    @Override
+    public List<T> getItems() {
+        return super.getItems();
     }
-
 }

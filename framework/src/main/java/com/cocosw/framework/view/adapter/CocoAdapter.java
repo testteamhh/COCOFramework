@@ -5,7 +5,7 @@ import android.widget.ListAdapter;
 
 import java.util.List;
 
-public interface CocoAdapter<T> extends ListAdapter {
+public interface CocoAdapter<T> {
 
     /**
      * 往数据后面加入数据
@@ -35,6 +35,13 @@ public interface CocoAdapter<T> extends ListAdapter {
      */
     public void append(T values);
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.widget.Adapter#getItem(int)
+     */
+    T getItem(int i);
+
     void updateList(List<T> values);
 
     /**
@@ -60,4 +67,8 @@ public interface CocoAdapter<T> extends ListAdapter {
      * @param position
      */
     public void remove(int position);
+
+    int getCount();
+
+    java.util.List<T> getItems();
 }

@@ -1,13 +1,15 @@
-package com.cocosw.framework.core;
+package com.cocosw.framework.core.recyclerview;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 
 import com.cocosw.accessory.views.CocoBundle;
 import com.cocosw.framework.R;
@@ -29,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Date: 13-12-19
  * Time: 下午9:35
  */
-public abstract class PagedListFragment<T, A extends AbsListView> extends ListAdapterViewFragment<T, A> {
+public abstract class PagedRecyclerViewFragment<T, A extends RecyclerView> extends RecyclerViewFragment<T, A> {
 
     private static final String TIME = "_pagedlist_time";
     private static final String ENDED = "_pagedlist_ended";
@@ -128,21 +130,38 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
     protected MenuItem refresh;
 
     @Override
-    public void onScroll(final AbsListView view, final int firstVisibleItem,
-                         final int visibleItemCount, final int totalItemCount) {
-        super.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+    protected void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
         if (ended.get()) {
             return;
         }
-        if (getLoaderManager().hasRunningLoaders()) {
+        if (isLoaderRunning()) {
             return;
         }
-        if (getList() != null && wrapAdapter != null) {
-            if (getList().getLastVisiblePosition() + 1 >= wrapAdapter.getCount()) {
+        if (getList() != null) {
+            if (getLastVisiblePostion(mLayoutManager)+ 1 >= getAdapter().getCount()) {
                 loadmore();
             }
         }
     }
+
+    /**
+     * Get the position of last visible view item
+     *
+     * @param mLayoutManager
+     * @return
+     */
+    protected int getLastVisiblePostion(RecyclerView.LayoutManager mLayoutManager) {
+        if (mLayoutManager instanceof LinearLayoutManager) {
+            return ((LinearLayoutManager)mLayoutManager).findLastVisibleItemPosition();
+        } else
+        if (mLayoutManager instanceof StaggeredGridLayoutManager) {
+            int[] out = ((StaggeredGridLayoutManager)mLayoutManager).findLastVisibleItemPositions(null);
+            if (out.length>0) return out[0];
+        }
+        return -1;
+    }
+
 
     private void loadmore() {
         //q.v("start loading more");
@@ -158,8 +177,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
 
     @Override
     protected void refreshAction() {
-        // ended.set(true);
-        getList().setSelection(0);
+        getList().smoothScrollToPosition(0);
         showLoading();
         loadmore();
     }
@@ -177,17 +195,17 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
     }
 
     protected void showLoading() {
-        if (loadview == null && getHeaderAdapter() != null) {
-            loadview = getLoadingView();
-            getHeaderAdapter().addFooter(loadview);
-        }
+//        if (loadview == null && getHeaderAdapter() != null) {
+//            loadview = getLoadingView();
+//            getHeaderAdapter().addFooter(loadview);
+//        }
     }
 
     @Override
     protected void hideLoading() {
-        if (loadview != null) {
-            getHeaderAdapter().removeFooter(loadview);
-        }
+//        if (loadview != null) {
+//            getHeaderAdapter().removeFooter(loadview);
+//        }
         loadview = null;
     }
 

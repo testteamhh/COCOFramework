@@ -10,6 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.transitions.everywhere.ChangeBounds;
+import android.transitions.everywhere.Transition;
+import android.transitions.everywhere.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -449,5 +452,71 @@ public abstract class BaseFragment<T> extends Fragment implements
 
     public boolean onBackPressed() {
         return false;
+    }
+
+    public abstract class ItemClickListener<V> implements View.OnClickListener {
+
+        private int entryLayout;
+
+        private class TransitionAdapter implements Transition.TransitionListener {
+
+            @Override
+            public void onTransitionStart( Transition transition ) {
+            }
+
+            @Override
+            public void onTransitionResume( Transition transition ) {
+            }
+
+            @Override
+            public void onTransitionPause( Transition transition ) {
+            }
+
+            @Override
+            public void onTransitionEnd( Transition transition ) {
+
+            }
+
+            @Override
+            public void onTransitionCancel( Transition transition ) {
+            }
+        }
+
+        private final Context activity;
+        private final V entry;
+        private final ViewGroup rootView;
+        private final ViewGroup destContainer;
+
+        public ItemClickListener(Context activity, V entry, ViewGroup rootView, ViewGroup dest) {
+            this.activity = activity;
+            this.entry = entry;
+            this.rootView = rootView;
+            this.destContainer = dest;
+        }
+
+        @Override
+        public void onClick( View v ) {
+            final ViewGroup entryView = createEntryView();
+            ChangeBounds changeBounds = new ChangeBounds();
+            changeBounds.setReparent( true );
+            changeBounds.addListener( new TransitionAdapter() {
+
+                @Override
+                public void onTransitionEnd( Transition transition ) {
+                   // entryView.findViewById( entry.getId() ).setId( -1 );
+                }
+            } );
+            TransitionManager.beginDelayedTransition(rootView, changeBounds);
+            destContainer.addView( entryView );
+        }
+
+        private ViewGroup createEntryView() {
+            LayoutInflater layoutInflater = LayoutInflater.from( activity );
+            ViewGroup entryView = ( ViewGroup )layoutInflater.inflate( entryLayout, destContainer, false );
+            createEntryView(entryView,entry);
+            return entryView;
+        }
+
+        protected abstract void createEntryView(ViewGroup view,V obj);
     }
 }

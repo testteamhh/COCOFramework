@@ -5,9 +5,17 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.GestureDetector;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -30,8 +38,7 @@ import java.util.List;
  * Project: cocoframework
  * Created by LiaoKai(soarcn) on 2015/1/15.
  */
-public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends BaseFragment<List<T>> implements
-        RecyclerView.OnItemTouchListener {
+public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends BaseFragment<List<T>> {
 
 
     private final static String DATA = "_adatperview_data";
@@ -46,9 +53,15 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
     RecyclerView.Adapter mAdapter;
     private boolean updated;
 
+
+
     private A mListContainer;
     private View progressBar;
     private RecyclerView.OnScrollListener externalListener;
+    protected RecyclerView.LayoutManager mLayoutManager;
+    private LayoutManagerType mCurrentLayoutManagerType;
+    private int SPAN_COUNT = 2;
+    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
 
     protected void setOnScrollListener(@NonNull final RecyclerView.OnScrollListener listener) {
         externalListener = listener;
@@ -68,7 +81,8 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
     @Override
     public void onDestroy() {
         super.onDestroy();
-        save(DATA, items);
+        save(DATA, getAdapter().getItems());
+        mAdapter = null;
     }
 
     protected boolean reloadNeeded(final Bundle savedInstanceState) {
@@ -128,7 +142,7 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
 
     protected T getItem(final int position) {
         try {
-            return (T) getAdapter().getItem(position);
+            return getAdapter().getItem(position);
         } catch (Exception e) {
             return null;
         }
@@ -175,7 +189,7 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
 
     @Override
     public int layoutId() {
-        return R.layout.inc_progressgrid;
+        return R.layout.inc_recyclerview;
     }
 
     @Override
@@ -186,9 +200,50 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         }
     }
 
+    protected enum LayoutManagerType {
+        GRID_LAYOUT_MANAGER,
+        LINEAR_LAYOUT_MANAGER, STAGGEREDGRID_LAYOUT_MANAGER,
+
+    }
+
+    /**
+     * Set RecyclerView's LayoutManager to the one given.
+     *
+     * @param layoutManagerType Type of layout manager to switch to.
+     */
+    public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
+        int scrollPosition = 0;
+
+        // If a layout manager has already been set, get current scroll position.
+        if (getList().getLayoutManager() != null) {
+            scrollPosition = ((LinearLayoutManager) getList().getLayoutManager())
+                    .findFirstCompletelyVisibleItemPosition();
+        }
+
+        switch (layoutManagerType) {
+            case GRID_LAYOUT_MANAGER:
+                mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT,orientation(),false);
+                mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
+                break;
+            case STAGGEREDGRID_LAYOUT_MANAGER:
+                mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT,orientation());
+                mCurrentLayoutManagerType = LayoutManagerType.STAGGEREDGRID_LAYOUT_MANAGER;
+                break;
+            default:
+                mLayoutManager = new LinearLayoutManager(getActivity(),orientation(),false);
+                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+        }
+
+        getList().setLayoutManager(mLayoutManager);
+        getList().scrollToPosition(scrollPosition);
+    }
+
+    protected int orientation() {
+        return OrientationHelper.VERTICAL;
+    }
+
     @Override
     public void onDestroyView() {
-        mAdapter = null;
         mListContainer = null;
         listShown = false;
         progressBar = null;
@@ -196,25 +251,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         super.onDestroyView();
     }
 
-    @Override
-    public void onTouchEvent(RecyclerView recyclerView, MotionEvent e) {
-        try {
-            View view = mListContainer.findChildViewUnder(e.getX(), e.getY());
-            int position = mListContainer.getChildPosition(view);
-            final T item = getItem(position);
-            if (item != null) {
-                onItemClick(item, position, mAdapter.getItemId(position), view);
-            }
-        } catch (Exception ex) {
-            // for possible Cast exception, this will at least ensure the UI would not crash.
-            Log.e(ex);
-        }
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        return false;
-    }
 
     /**
      * Handle item click event
@@ -225,6 +261,18 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
      * @param view
      */
     protected abstract void onItemClick(T item, int position, long id, View view);
+
+    /**
+     * Handle item long click event
+     *
+     * @param item
+     * @param position
+     * @param id
+     * @param view
+     */
+    protected void onItemLongClick(T item, int position, long id, View view) {
+
+    }
 
     @Override
     public void onLoadFinished(final Loader<List<T>> loader, List<T> items) {
@@ -239,20 +287,25 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
             items = Collections.EMPTY_LIST;
 
         if (items != null && mAdapter != null) {
-            ((CocoAdapter<?>) mAdapter).refresh();
-            ((CocoAdapter<T>) mAdapter).add(items);
+            ((CocoAdapter<T>) mAdapter).updateList(items);
             updateAdapter();
         }
         onLoaderDone(items);
         showList();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save currently selected layout manager.
+        savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
     /**
      * notifiy adapter to update
      */
     protected void updateAdapter() {
-        RecyclerView.Adapter adapter = mListContainer.getAdapter();
-        adapter.notifyDataSetChanged();
+        getAdapter().notifyDataChange();
     }
 
     @Override
@@ -326,10 +379,42 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         }
     }
 
+    protected LayoutManagerType layoutType() {
+        return  LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+    }
+
     @Override
     protected void setupUI(final View view, final Bundle bundle) {
         try {
-            mListContainer = view(R.id.listcontainer);
+            mListContainer = view(R.id.list);
+            mListContainer.addOnItemTouchListener(new ClickItemTouchListener(mListContainer) {
+
+                @Override
+                boolean performItemClick(RecyclerView parent, View view, int position, long id) {
+                    view.playSoundEffect(SoundEffectConstants.CLICK);
+                    onItemClick(getItem(position), position, id, view);
+                    return true;
+                }
+
+
+                @Override
+                boolean performItemLongClick(RecyclerView parent, View view, int position, long id) {
+                    if (mListContainer.isLongClickable()) {
+                        view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        onItemLongClick(getItem(position),position,id,view);
+                    }
+                    return false;
+                }
+            });
+            if (bundle != null) {
+                // Restore saved layout manager type.
+                mCurrentLayoutManagerType = (LayoutManagerType) bundle
+                        .getSerializable(KEY_LAYOUT_MANAGER);
+            } else
+                mCurrentLayoutManagerType = layoutType();
+
+            setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+            mListContainer.setItemAnimator(new DefaultItemAnimator());
             mListContainer.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(final RecyclerView view,
@@ -362,6 +447,8 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
             getActivity().finish();
         }
     }
+
+
 
     protected void constractAdapter() throws Exception {
         mAdapter = (RecyclerView.Adapter) createAdapter(items);

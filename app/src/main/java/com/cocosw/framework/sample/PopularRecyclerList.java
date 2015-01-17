@@ -5,21 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
 
-import com.cocosw.framework.core.PagedListFragment;
 import com.cocosw.framework.core.Presenter;
 import com.cocosw.framework.core.SystemBarTintManager;
+import com.cocosw.framework.core.recyclerview.PagedRecyclerViewFragment;
+import com.cocosw.framework.core.recyclerview.RecyclerViewFragment;
+import com.cocosw.framework.log.Log;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
 import com.cocosw.framework.sample.utils.PaletteManager;
 import com.cocosw.framework.view.adapter.CocoAdapter;
-import com.cocosw.framework.view.adapter.TypeListAdapter;
+import com.cocosw.framework.view.adapter.recyclerview.TypeListAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -32,7 +34,7 @@ import butterknife.InjectView;
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/9.
  */
-public class PopularList extends PagedListFragment<Bean.Shot, GridView> implements SwipeRefreshLayout.OnRefreshListener {
+public class PopularRecyclerList extends PagedRecyclerViewFragment<Bean.Shot, RecyclerView> implements SwipeRefreshLayout.OnRefreshListener {
 
     @InjectView(R.id.swipe)
     SwipeRefreshLayout mSwipe;
@@ -46,13 +48,8 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
     Toolbar mToolbarActionbar;
 
     @Override
-    public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
-        return DataSource.getShots(index < 0 ? 1 : time + 1).shots;
-    }
-
-    @Override
-    protected CocoAdapter<Bean.Shot> createEndlessAdapter(List<Bean.Shot> items) throws Exception {
-        return new ShotAdapter(context, items);
+    protected LayoutManagerType layoutType() {
+        return LayoutManagerType.STAGGEREDGRID_LAYOUT_MANAGER;
     }
 
     @Override
@@ -60,7 +57,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
         inject();
         mSwipe.setColorSchemeResources(R.color.themecolor, R.color.primarycolor, R.color.themecolor, R.color.primarycolor);
         mSwipe.setOnRefreshListener(this);
-        mSwipe.setProgressViewOffset(false, getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material), getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material) * 2);
+        mSwipe.setProgressViewOffset(false, 0, getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material) * 2);
         getActionBarActivity().setSupportActionBar(mToolbarActionbar);
     }
 
@@ -74,6 +71,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
         new Presenter(this).target(ShotDetail.class).extra(new Intent().putExtra(ShotDetail.TODO, item)).openForResult(1);
     }
 
+
     @Override
     public void onRefresh() {
         refresh();
@@ -82,7 +80,6 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
     @Override
     public void onLoaderDone(List<Bean.Shot> items) {
         mSwipe.setRefreshing(false);
-
     }
 
 
@@ -93,6 +90,16 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
                 0, getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material)
                 , insets.getPixelInsetRight(), insets.getPixelInsetBottom()
         );
+    }
+
+    @Override
+    public List<Bean.Shot> pendingPagedData(long index, int time, int size, Bundle args) throws Exception {
+        return DataSource.getShots(index < 0 ? 1 : time + 1).shots;
+    }
+
+    @Override
+    protected CocoAdapter<Bean.Shot> createEndlessAdapter(List<Bean.Shot> items) throws Exception {
+        return new ShotAdapter(context, items);
     }
 
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {
@@ -117,7 +124,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         MenuItem item = menu.add(Menu.NONE, 2, Menu.NONE, R.string.about);
-        MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_NEVER);
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
