@@ -8,7 +8,7 @@ import android.os.IBinder;
  * Project: cocoframework
  * Created by LiaoKai(soarcn) on 2014/12/23.
  */
-public class SyncService extends Service {
+public abstract class SyncService extends Service {
     // Storage for an instance of the sync adapter
     private static CocoSyncAdapter sSyncAdapter = null;
     // Object to use as a thread-safe lock
@@ -25,10 +25,13 @@ public class SyncService extends Service {
          */
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
-                sSyncAdapter = new CocoSyncAdapter(getApplicationContext(), true);
+                sSyncAdapter = getSyncAdatper();
             }
         }
     }
+
+    protected abstract CocoSyncAdapter getSyncAdatper();
+
     /**
      * Return an object that allows the system to invoke
      * the sync adapter.
