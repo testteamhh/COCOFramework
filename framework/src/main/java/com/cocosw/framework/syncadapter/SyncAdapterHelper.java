@@ -97,16 +97,7 @@ public class SyncAdapterHelper {
     }
 
     public void periodicSync(int minutes) {
-        // Get the content resolver for your app
-        context.getContentResolver();
-        /*
-         * Turn on periodic syncing
-         */
-        ContentResolver.addPeriodicSync(
-                mAccount,
-                AUTHORITY,
-                Bundle.EMPTY,
-                minutes * 3600);
+        periodicSync(mAccount, minutes);
     }
 
     public void periodicSync(Account mAccount, int minutes) {
@@ -123,12 +114,11 @@ public class SyncAdapterHelper {
     }
 
     public void turnOnSync() {
-        context.getContentResolver();
-        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+        turnOnSync(mAccount);
     }
 
     public void turnOffSync() {
-        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, false);
+        turnOffSync(mAccount);
     }
 
     public void turnOnSync(Account mAccount) {
