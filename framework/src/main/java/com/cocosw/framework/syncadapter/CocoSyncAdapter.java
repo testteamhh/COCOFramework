@@ -38,11 +38,12 @@ public abstract class CocoSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("> onPerformSync for account[" + account.name + "]. Extras: " + sb.toString());
 
         try {
-            run();
-        } catch (Exception e) {
+            run(account, extras, authority,
+                    provider, syncResult);
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
 
-    protected abstract void run() throws Exception;
+    protected abstract void run(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) throws Throwable;
 }

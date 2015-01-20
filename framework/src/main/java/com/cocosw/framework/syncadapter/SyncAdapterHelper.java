@@ -55,20 +55,24 @@ public class SyncAdapterHelper {
          * If successful, return the Account object, otherwise report an error.
          */
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
-            /*
-             * If you don't set android:syncable="true" in
-             * in your <provider> element in the manifest,
-             * then call context.setIsSyncable(account, AUTHORITY, 1)
-             * here.
-             */
-        } else {
-            /*
-             * The account exists or some other error occurred. Log this, report it,
-             * or handle it internally.
-             */
+            ContentResolver.setIsSyncable(newAccount, AUTHORITY, 1);
+            turnOnSync(newAccount);
         }
         return newAccount;
     }
+
+    public boolean isAutoSync() {
+        return isAutoSync(mAccount);
+    }
+
+    public boolean isAutoSync(Account mAccount) {
+        return ContentResolver.getIsSyncable(mAccount, AUTHORITY) > 0 && ContentResolver.getMasterSyncAutomatically() && ContentResolver.getSyncAutomatically(mAccount, AUTHORITY);
+    }
+
+    public java.util.List<android.content.PeriodicSync> getPeriodicSyncs() {
+        return ContentResolver.getPeriodicSyncs(mAccount, AUTHORITY);
+    }
+
 
     public void triggerSync() {
         // Pass the settings flags by inserting them in a bundle
@@ -105,13 +109,34 @@ public class SyncAdapterHelper {
                 minutes * 3600);
     }
 
+    public void periodicSync(Account mAccount, int minutes) {
+        // Get the content resolver for your app
+        context.getContentResolver();
+        /*
+         * Turn on periodic syncing
+         */
+        ContentResolver.addPeriodicSync(
+                mAccount,
+                AUTHORITY,
+                Bundle.EMPTY,
+                minutes * 60);
+    }
+
     public void turnOnSync() {
         context.getContentResolver();
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
     }
 
     public void turnOffSync() {
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, false);
+    }
+
+    public void turnOnSync(Account mAccount) {
         context.getContentResolver();
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+    }
+
+    public void turnOffSync(Account mAccount) {
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, false);
     }
 }
