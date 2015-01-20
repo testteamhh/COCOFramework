@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 
 import com.cocosw.adapter.MultiTypeAdapter;
-import com.cocosw.framework.uiquery.CocoQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,10 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
             this.dataList = dataList;
     }
 
+    @Override
+    public List<T> getItems() {
+        return dataList;
+    }
 
     @Override
     public T getItem(int position) {

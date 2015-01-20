@@ -58,6 +58,11 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
         this.dataList = new ArrayList<T>();
     }
 
+    @Override
+    public List<T> getItems() {
+        return dataList;
+    }
+
     /**
      * @param dataList
      */

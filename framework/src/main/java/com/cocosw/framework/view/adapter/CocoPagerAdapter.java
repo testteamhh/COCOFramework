@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.cocosw.framework.uiquery.CocoQuery;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +22,6 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
     private final LayoutInflater mInflater;
     private List<T> dataList;
     protected Context context;
-    protected CocoQuery q;
     protected View.OnClickListener onViewClickInListListener;
     private boolean loading = true;
 
@@ -35,7 +32,6 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.dataList = new ArrayList<T>();
-        q = new CocoQuery(context);
     }
 
     /**
@@ -48,7 +44,6 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
             dataList = new ArrayList<T>(0);
         }
         this.dataList = dataList;
-        q = new CocoQuery(context);
     }
 
     /**
@@ -67,11 +62,16 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         }
     }
 
+    @Override
+    public List<T> getItems() {
+        return dataList;
+    }
+
     /*
-     * (non-Javadoc)
-     *
-     * @see android.widget.Adapter#getCount()
-     */
+         * (non-Javadoc)
+         *
+         * @see android.widget.Adapter#getCount()
+         */
     @Override
     public int getCount() {
         return dataList.size();
@@ -101,7 +101,6 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        q.recycle(holder.contentView);
         fillView(holder, position, parent);
         return holder.contentView;
     }
