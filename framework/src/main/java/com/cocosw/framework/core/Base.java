@@ -17,6 +17,7 @@
 
 package com.cocosw.framework.core;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -107,27 +108,7 @@ public abstract class Base<T> extends ActionBarActivity implements
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         if (UIUtils.hasKitKat()) {
-            TypedValue typedValue = new TypedValue();
-            try {
-                getTheme().resolveAttribute(getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA).theme, typedValue, true);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            int[] attribute = new int[]{R.attr.colorPrimary, R.attr.colorPrimaryDark, R.attr.navigationBarColor, R.attr.statusBarColor};
-            TypedArray array = this.obtainStyledAttributes(typedValue.resourceId, attribute);
-
-            int colorPrimary = array.getResourceId(0, R.color.black);
-            int colorPrimaryDark = array.getResourceId(1, -1);
-            int navigationBarColor = array.getResourceId(2, -1);
-            int statusBarColor = array.getResourceId(3, -1);
-
-            colorPrimaryDark = colorPrimaryDark < 0 ? colorPrimary : colorPrimaryDark;
-            navigationBarColor = navigationBarColor < 0 ? colorPrimaryDark : navigationBarColor;
-            statusBarColor = statusBarColor < 0 ? colorPrimaryDark : statusBarColor;
-
-            tintManager.setStatusBarTintResource(statusBarColor);
-            tintManager.setNavigationBarTintResource(navigationBarColor);
+            initTint(tintManager);
         }
 
         ButterKnife.inject(this);
@@ -155,6 +136,31 @@ public abstract class Base<T> extends ActionBarActivity implements
         }
         onStartLoading();
         getSupportLoaderManager().initLoader(this.hashCode(), getIntent().getExtras(), this);
+    }
+
+    @TargetApi(19)
+    private void initTint(SystemBarTintManager tintManager) {
+        TypedValue typedValue = new TypedValue();
+        try {
+            getTheme().resolveAttribute(getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA).theme, typedValue, true);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        int[] attribute = new int[]{R.attr.colorPrimary, R.attr.colorPrimaryDark, R.attr.navigationBarColor, R.attr.statusBarColor};
+        TypedArray array = this.obtainStyledAttributes(typedValue.resourceId, attribute);
+
+        int colorPrimary = array.getResourceId(0, R.color.black);
+        int colorPrimaryDark = array.getResourceId(1, -1);
+        int navigationBarColor = array.getResourceId(2, -1);
+        int statusBarColor = array.getResourceId(3, -1);
+
+        colorPrimaryDark = colorPrimaryDark < 0 ? colorPrimary : colorPrimaryDark;
+        navigationBarColor = navigationBarColor < 0 ? colorPrimaryDark : navigationBarColor;
+        statusBarColor = statusBarColor < 0 ? colorPrimaryDark : statusBarColor;
+
+        tintManager.setStatusBarTintResource(statusBarColor);
+        tintManager.setNavigationBarTintResource(navigationBarColor);
     }
 
 
