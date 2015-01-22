@@ -115,7 +115,8 @@ public class LogActivity extends ActionBarActivity {
                 showFilterDialog(newInstance);
                 break;
             case ACTION_SHARE:
-                IntentUtil.shareText("Log", getLog());
+                startActivity(IntentUtil.shareText("Log", getLog()));
+                break;
             default:
                 break;
         }
@@ -123,7 +124,6 @@ public class LogActivity extends ActionBarActivity {
     }
 
     private void updateLogDisplay() {
-
         ArrayList<LogEntry> data = Log.getLogBuffer();
 
         if (data != null) {
