@@ -17,13 +17,13 @@
 package com.readystatesoftware.notificationlog;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -31,11 +31,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.cocosw.accessory.utils.IntentUtil;
 import com.cocosw.accessory.utils.UIUtils;
 
 import java.util.ArrayList;
 
-public class LogActivity extends Activity {
+public class LogActivity extends ActionBarActivity {
 
     public static final String ARG_ACTION = "com.readystatesoftware.notificationlog.ARG_ACTION";
 
@@ -43,6 +44,7 @@ public class LogActivity extends Activity {
     public static final int ACTION_FILTER = 2;
     public static final int ACTION_LEVEL = 3;
     public static final int ACTION_CLEAR = 4;
+    private static final int ACTION_SHARE = 5;
 
     WebView wv;
     int action;
@@ -75,19 +77,16 @@ public class LogActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuItem item = menu.add(0, ACTION_FILTER, 0, "Filter");
-        if (Build.VERSION.SDK_INT >= 11) {
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        }
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 
         item = menu.add(0, ACTION_LEVEL, 0, "Level");
-        if (Build.VERSION.SDK_INT >= 11) {
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        }
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 
         item = menu.add(0, ACTION_CLEAR, 0, "Clear");
-        if (Build.VERSION.SDK_INT >= 11) {
-            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        }
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
+
+        item = menu.add(0, ACTION_SHARE, 0, "Share");
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 
         return true;
     }
@@ -115,6 +114,8 @@ public class LogActivity extends Activity {
             case ACTION_FILTER:
                 showFilterDialog(newInstance);
                 break;
+            case ACTION_SHARE:
+                IntentUtil.shareText("Log", getLog());
             default:
                 break;
         }
@@ -123,6 +124,16 @@ public class LogActivity extends Activity {
 
     private void updateLogDisplay() {
 
+        ArrayList<LogEntry> data = Log.getLogBuffer();
+
+        if (data != null) {
+            wv.loadDataWithBaseURL("file:///android_asset/", getLog(), "text/html", "utf-8", null);
+
+        }
+
+    }
+
+    private String getLog() {
         ArrayList<LogEntry> data = Log.getLogBuffer();
 
         if (data != null) {
@@ -138,11 +149,11 @@ public class LogActivity extends Activity {
                 }
             }
             body.append("</pre></body></html>");
-            wv.loadDataWithBaseURL("file:///android_asset/", body.toString(), "text/html", "utf-8", null);
-
+            return body.toString();
         }
-
+        return null;
     }
+
 
     private void showFilterDialog(final boolean finishOnOk) {
 
