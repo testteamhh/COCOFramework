@@ -43,8 +43,6 @@ dependencies {
     compile 'com.jakewharton.timber:timber:+'
     compile 'com.jakewharton.madge:madge:+'
     compile 'com.jakewharton.scalpel:scalpel:+'
-    compile 'com.squareup.dagger:dagger:+'
-    compile 'com.squareup.dagger:dagger-compiler:+'
     compile 'net.daverix.logcatviewer:LogcatViewer:+'
     compile 'im.dino:dbinspector:+@aar'
     compile 'com.squareup.picasso:picasso:+'

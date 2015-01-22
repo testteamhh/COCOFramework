@@ -24,16 +24,7 @@ import com.cocosw.framework.debug.BuildConfig;
 import com.cocosw.framework.debug.R;
 import com.jakewharton.madge.MadgeFrameLayout;
 import com.jakewharton.scalpel.ScalpelFrameLayout;
-import com.jakewharton.u2020.data.AnimationSpeed;
-import com.jakewharton.u2020.data.ApiEndpoint;
 import com.jakewharton.u2020.data.ApiEndpoints;
-import com.jakewharton.u2020.data.NetworkProxy;
-import com.jakewharton.u2020.data.PicassoDebugging;
-import com.jakewharton.u2020.data.PixelGridEnabled;
-import com.jakewharton.u2020.data.PixelRatioEnabled;
-import com.jakewharton.u2020.data.ScalpelEnabled;
-import com.jakewharton.u2020.data.ScalpelWireframeEnabled;
-import com.jakewharton.u2020.data.SeenDebugDrawer;
 import com.jakewharton.u2020.data.prefs.BooleanPreference;
 import com.jakewharton.u2020.data.prefs.IntPreference;
 import com.jakewharton.u2020.data.prefs.StringPreference;
@@ -51,8 +42,6 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TimeZone;
 
-
-
 import timber.log.Timber;
 
 import static android.view.View.GONE;
@@ -62,17 +51,17 @@ import static java.net.Proxy.Type.HTTP;
 public class DebugAppContainer extends Activity {
     private static final DateFormat DATE_DISPLAY_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
 
-    private  OkHttpClient client;
-    private  Picasso picasso;
-    private  StringPreference networkEndpoint;
-    private  StringPreference networkProxy;
-    private  IntPreference animationSpeed;
-    private  BooleanPreference picassoDebugging;
-    private  BooleanPreference pixelGridEnabled;
-    private  BooleanPreference pixelRatioEnabled;
-    private  BooleanPreference scalpelEnabled;
-    private  BooleanPreference scalpelWireframeEnabled;
-    private  BooleanPreference seenDebugDrawer;
+    private OkHttpClient client;
+    private Picasso picasso;
+    private StringPreference networkEndpoint;
+    private StringPreference networkProxy;
+    private IntPreference animationSpeed;
+    private BooleanPreference picassoDebugging;
+    private BooleanPreference pixelGridEnabled;
+    private BooleanPreference pixelRatioEnabled;
+    private BooleanPreference scalpelEnabled;
+    private BooleanPreference scalpelWireframeEnabled;
+    private BooleanPreference seenDebugDrawer;
 
 
     public DebugAppContainer() {
@@ -205,7 +194,6 @@ public class DebugAppContainer extends Activity {
         picassoTransformedAvgView = (TextView) findViewById(R.id.debug_picasso_transformed_avg);
 
 
-
         setContentView(R.layout.debug_activity_frame);
 
         // Manually find the debug drawer and inflate the drawer layout inside of it.
@@ -215,7 +203,7 @@ public class DebugAppContainer extends Activity {
         // Set up the contextual actions to watch views coming in and out of the content area.
         Set<ContextualDebugActions.DebugAction<?>> debugActions = Collections.emptySet();
         ContextualDebugActions contextualActions = new ContextualDebugActions(this, debugActions);
-      //  content.setOnHierarchyChangeListener(HierarchyTreeChangeListener.wrap(contextualActions));
+        //  content.setOnHierarchyChangeListener(HierarchyTreeChangeListener.wrap(contextualActions));
 
         refreshPicassoStats();
 
@@ -582,6 +570,6 @@ public class DebugAppContainer extends Activity {
 //        Intent newApp = new Intent(this, MainActivity.class);
 //        newApp.setFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
 //        this.startActivity(newApp);
-       // U2020App.get(app).buildObjectGraphAndInject();
+        // U2020App.get(app).buildObjectGraphAndInject();
     }
 }

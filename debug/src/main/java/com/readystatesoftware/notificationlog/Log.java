@@ -344,11 +344,10 @@ public final class Log {
      *            the class or activity where the log call occurs.
      * @param msg The message you would like logged.
      */
-    public static int v(String tag, String msg) {
+    public static void v(String tag, String msg) {
         if (sLog.mContext != null) {
             sLog.doNotify(VERBOSE, tag, msg);
         }
-        return android.util.Log.v(tag, msg);
     }
 
     /**
@@ -359,11 +358,10 @@ public final class Log {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public static int v(String tag, String msg, Throwable tr) {
+    public static void v(String tag, String msg, Throwable tr) {
         if (sLog.mContext != null) {
             sLog.doNotify(VERBOSE, tag, msg);
         }
-        return android.util.Log.v(tag, msg, tr);
     }
 
     /**
@@ -373,11 +371,10 @@ public final class Log {
      *            the class or activity where the log call occurs.
      * @param msg The message you would like logged.
      */
-    public static int d(String tag, String msg) {
+    public static void d(String tag, String msg) {
         if (sLog.mContext != null) {
             sLog.doNotify(DEBUG, tag, msg);
         }
-        return android.util.Log.d(tag, msg);
     }
 
     /**
@@ -388,11 +385,10 @@ public final class Log {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public static int d(String tag, String msg, Throwable tr) {
+    public static void d(String tag, String msg, Throwable tr) {
         if (sLog.mContext != null) {
             sLog.doNotify(DEBUG, tag, msg);
         }
-        return android.util.Log.d(tag, msg, tr);
     }
 
     /**
@@ -402,11 +398,10 @@ public final class Log {
      *            the class or activity where the log call occurs.
      * @param msg The message you would like logged.
      */
-    public static int i(String tag, String msg) {
+    public static void i(String tag, String msg) {
         if (sLog.mContext != null) {
             sLog.doNotify(INFO, tag, msg);
         }
-        return android.util.Log.i(tag, msg);
     }
 
     /**
@@ -417,11 +412,10 @@ public final class Log {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public static int i(String tag, String msg, Throwable tr) {
+    public static void i(String tag, String msg, Throwable tr) {
         if (sLog.mContext != null) {
             sLog.doNotify(INFO, tag, msg);
         }
-        return android.util.Log.i(tag, msg, tr);
     }
 
     /**
@@ -431,11 +425,10 @@ public final class Log {
      *            the class or activity where the log call occurs.
      * @param msg The message you would like logged.
      */
-    public static int w(String tag, String msg) {
+    public static void w(String tag, String msg) {
         if (sLog.mContext != null) {
             sLog.doNotify(WARN, tag, msg);
         }
-        return android.util.Log.w(tag, msg);
     }
 
     /**
@@ -446,11 +439,10 @@ public final class Log {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public static int w(String tag, String msg, Throwable tr) {
+    public static void w(String tag, String msg, Throwable tr) {
         if (sLog.mContext != null) {
             sLog.doNotify(WARN, tag, msg);
         }
-        return android.util.Log.w(tag, msg, tr);
     }
 
     /**
@@ -490,11 +482,10 @@ public final class Log {
      *            the class or activity where the log call occurs.
      * @param msg The message you would like logged.
      */
-    public static int e(String tag, String msg) {
+    public static void e(String tag, String msg) {
         if (sLog.mContext != null) {
             sLog.doNotify(ERROR, tag, msg);
         }
-        return android.util.Log.e(tag, msg);
     }
 
     /**
@@ -505,11 +496,10 @@ public final class Log {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public static int e(String tag, String msg, Throwable tr) {
+    public static void e(String tag, String msg, Throwable tr) {
         if (sLog.mContext != null) {
             sLog.doNotify(ERROR, tag, msg);
         }
-        return android.util.Log.e(tag, msg, tr);
     }
 
     /**
@@ -523,11 +513,10 @@ public final class Log {
      * @param msg The message you would like logged.
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public static int wtf(String tag, String msg) {
+    public static void wtf(String tag, String msg) {
         if (sLog.mContext != null) {
             sLog.doNotify(WTF, tag, msg);
         }
-        return android.util.Log.wtf(tag, msg);
     }
 
     /**
@@ -551,11 +540,10 @@ public final class Log {
      * @param tr  An exception to log.  May be null.
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public static int wtf(String tag, String msg, Throwable tr) {
+    public static void wtf(String tag, String msg, Throwable tr) {
         if (sLog.mContext != null) {
             sLog.doNotify(WTF, tag, msg);
         }
-        return android.util.Log.wtf(tag, msg, tr);
     }
 
     /**

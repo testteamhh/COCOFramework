@@ -6,31 +6,26 @@
     <application>
         <activity
             android:name="im.dino.dbinspector.activities.DbInspectorActivity"
-            android:label="DbInspector"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:label="DbInspector" />
 
         <activity
             android:name=".DebugWindow"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".CatLogWindow"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="com.jakewharton.u2020.ui.debug.DebugAppContainer"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:launchMode="singleTop" />
 
 
         <activity
             android:name="com.readystatesoftware.notificationlog.LogActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:launchMode="singleTop" />
 
     </application>
 

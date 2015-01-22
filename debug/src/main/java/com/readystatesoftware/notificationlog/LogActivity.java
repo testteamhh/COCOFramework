@@ -16,6 +16,7 @@
 
 package com.readystatesoftware.notificationlog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,6 +30,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.cocosw.accessory.utils.UIUtils;
 
 import java.util.ArrayList;
 
@@ -45,6 +48,7 @@ public class LogActivity extends Activity {
     int action;
     int selected;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +57,8 @@ public class LogActivity extends Activity {
         setContentView(wv, new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         setTitle("Log");
         wv.setWebViewClient(new Callback());
-        wv.setFitsSystemWindows(true);
+        if (UIUtils.hasICS())
+            wv.setFitsSystemWindows(true);
         action = getIntent().getIntExtra(ARG_ACTION, ACTION_VIEW);
         init(true);
 

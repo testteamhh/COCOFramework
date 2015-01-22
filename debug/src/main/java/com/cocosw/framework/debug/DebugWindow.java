@@ -8,9 +8,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.common.collect.Lists;
 import com.jakewharton.u2020.ui.debug.DebugAppContainer;
 
+import java.util.Arrays;
 import java.util.List;
 
 import im.dino.dbinspector.activities.DbInspectorActivity;
@@ -30,7 +30,7 @@ public class DebugWindow extends Activity implements AdapterView.OnItemClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coco_debug_ui_debug_window);
         ListView listview = (ListView) findViewById(R.id.listView);
-        List<String> list = Lists.newArrayList("DB Inspector", "CatLog", "DebugDrawer");
+        List<String> list = Arrays.asList("DB Inspector", "CatLog", "DebugDrawer");
         mAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(mAdapter);
