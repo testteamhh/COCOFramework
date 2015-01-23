@@ -1,11 +1,11 @@
 package com.jakewharton.u2020.ui.debug;
 
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +48,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static java.net.Proxy.Type.HTTP;
 
-public class DebugAppContainer extends Activity {
+public class DebugAppContainer extends ActionBarActivity {
     private static final DateFormat DATE_DISPLAY_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
 
     private OkHttpClient client;

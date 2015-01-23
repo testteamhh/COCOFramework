@@ -3,15 +3,15 @@ package com.cocosw.framework.debug;/*
  */
 
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 
 /**
  * Project: insight
  * Created by LiaoKai(soarcn) on 2014/5/16.
  */
-public class CatLogWindow extends Activity {
+public class CatLogWindow extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
