@@ -2,6 +2,7 @@ package com.cocosw.framework.core.cursor;
 
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.CursorLoader;
@@ -232,6 +233,14 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
         if (adapter instanceof BaseAdapter) {
             ((BaseAdapter) adapter).notifyDataSetChanged();
         }
+    }
+
+    /**
+     * helper method to create a cursor
+     */
+    protected Cursor query(Uri uri, String[] projection,
+                           String selection, String[] selectionArgs, String sortOrder) {
+        return context.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
 
