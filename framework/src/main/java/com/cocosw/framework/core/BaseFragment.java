@@ -45,7 +45,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     protected static final int ONCREATE = 0;
     protected Context context;
     private T items;
-    protected ThrowableLoader<T> loader;
+    protected Loader<T> loader;
     CocoDialog parentDialog;
     protected CocoQuery q;
     protected View v;
@@ -115,7 +115,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     public ThrowableLoader<T> getLoader() {
-        return loader;
+        return (ThrowableLoader<T>) loader;
     }
 
     /**

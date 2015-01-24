@@ -16,7 +16,7 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -29,11 +29,9 @@ allprojects {
     version = POM_VERSION
 
     repositories {
-        mavenLocal()
         jcenter()
         mavenCentral()
         maven { url LOCALMVNGIT }
-        //     maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     tasks.withType(JavaCompile) {

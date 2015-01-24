@@ -18,6 +18,7 @@ import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ExceptionManager;
+import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
@@ -275,8 +276,10 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         if (!isUsable()) {
             return;
         }
-        if (getLoaderManager().hasRunningLoaders() && loader != null) {
-            loader.cancelLoad();
+        if (isLoaderRunning() && loader != null) {
+            if (loader instanceof ThrowableLoader) {
+                ((ThrowableLoader<T>) loader).cancelLoad();
+            }
         }
         if (hideListWhenRefreshing()) {
             hide(emptyView);
@@ -382,11 +385,6 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     protected void scrollDown(final int firstItem) {
 
     }
-
-    protected void updateList(final List<T> items) {
-        getAdapter().updateList(items);
-    }
-
 
     protected AdapterViewFragment<T, A> show(final View view) {
         ViewUtils.setGone(view, false);
