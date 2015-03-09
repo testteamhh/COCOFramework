@@ -1,4 +1,4 @@
-package com.cocosw.framework.core;
+package com.cocosw.framework.core.cursor;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,35 +10,21 @@ import android.widget.TextView;
 import com.cocosw.accessory.views.adapter.HeaderFooterListAdapter;
 import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
-import com.cocosw.framework.view.adapter.CocoAdapter;
-
-import java.util.List;
 
 /**
- * Project: cocoframework
- * Created by LiaoKai(soarcn) on 2014/9/18.
+ * Created by liaokai on 15/1/24.
  */
-public abstract class ListAdapterViewFragment<T, A extends AbsListView> extends AdapterViewFragment<T, A> {
+public abstract class ListAdapterViewFragment<A extends AbsListView> extends AdapterViewFragment<A> {
 
     protected HeaderFooterListAdapter<BaseAdapter> wrapAdapter;
     private View footerView;
     private View headerView;
 
-    /**
-     * Create adapter to display items
-     *
-     * @return adapter
-     * @throws Exception
-     */
-    private HeaderFooterListAdapter<BaseAdapter> createAdapter()
-            throws Exception {
-        mAdapter = (BaseAdapter) createAdapter(items);
-        wrapAdapter = new HeaderFooterListAdapter<>(wrapperAdapter(mAdapter), context);
-        return wrapAdapter;
-    }
 
     protected void constractAdapter() throws Exception {
-        ((AdapterView) getList()).setAdapter(createAdapter());
+        mAdapter = createAdapter();
+        wrapAdapter = new HeaderFooterListAdapter<>(wrapperAdapter(mAdapter), context);
+        ((AdapterView) getList()).setAdapter(wrapperAdapter(mAdapter));
     }
 
     public View getHeaderView() {
