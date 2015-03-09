@@ -68,6 +68,19 @@ public class Presenter {
         return options(ActivityOptionsCompat.makeThumbnailScaleUpAnimation(v, bitmap, 0, 0).toBundle());
     }
 
+    public Intent intent() {
+        if (extra == null)
+            extra = new Intent();
+
+        // start activity from fragment
+        if (from != null) {
+            fromAct = from.getActivity();
+        }
+
+        return new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
+                .setAction(target.getName()).putExtras(extra);
+    }
+
     /**
      * Open target fragment in target container
      */
@@ -82,8 +95,7 @@ public class Presenter {
                 return;
 
             if (!(fromAct instanceof DualPaneActivity) || blank) {
-                ActivityCompat.startActivity(fromAct, new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
-                        .setAction(target.getName()).putExtras(extra), options);
+                ActivityCompat.startActivity(fromAct, intent(), options);
             } else {
                 // open target fragment in current DualPaneActivity
                 ((DualPaneActivity) fromAct).openDetail(target, extra);
@@ -91,8 +103,7 @@ public class Presenter {
         } else {
             if (!(fromAct instanceof DualPaneActivity) || blank) {
                 // open target fragment in a new container
-                ActivityCompat.startActivity(fromAct, new Intent(fromAct, container == null ? SinglePaneActivity.class : container)
-                        .setAction(target.getName()).putExtras(extra), options);
+                ActivityCompat.startActivity(fromAct, intent(), options);
             } else {
                 // open target fragment in current DualPaneActivity
                 ((DualPaneActivity) fromAct).openDetail(target, extra);

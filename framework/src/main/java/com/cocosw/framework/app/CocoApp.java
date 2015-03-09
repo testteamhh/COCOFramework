@@ -32,7 +32,7 @@ public abstract class CocoApp extends Application {
 
     // looks hacky but no better way yet
     @Inject
-    OkHttpClient client;
+    protected OkHttpClient client;
 
     /**
      * Create main application
@@ -62,7 +62,10 @@ public abstract class CocoApp extends Application {
             NetworkConnectivity.getInstance(this);
         } catch (SecurityException ignore) {
         }
-        TAG = getString(getApplicationInfo().labelRes);
+        try {
+            TAG = getString(getApplicationInfo().labelRes);
+        } catch (Exception ignore) {
+        }
         CocoQuery.setQueryClass(CocoQuery.ExtViewQuery.class);
         buildObjectGraphAndInject();
         if (getCrashTree() != null) {
