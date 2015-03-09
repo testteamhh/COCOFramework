@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Snowdream Mobile <yanghui1986527@gmail.com>
+ * Copyright (C) 2014-2015 soarcn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,6 @@
  * limitations under the License.
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:+'
-        classpath 'com.jakewharton.hugo:hugo-plugin:+'
-    }
-}
 
 //apply from: 'D:\\develop\\gradle\\android-library.gradle'
 //apply from: 'D:\\develop\\gradle\\maven_push.gradle'
@@ -39,6 +29,8 @@ dependencies {
     compile 'com.cocosw.accessory:views:+'
     compile 'com.cocosw:lifecycle:+'
     compile 'com.cocosw:query:+'
+    compile 'com.facebook.stetho:stetho:1.+'
+    compile 'com.facebook.stetho:stetho-okhttp:1.+'
     compile 'com.github.kevinsawicki:http-request:5.5'
     compile 'com.squareup.okhttp:okhttp:2.+'
     compile 'com.jakewharton.timber:timber:+'

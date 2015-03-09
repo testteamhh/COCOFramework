@@ -5,11 +5,6 @@
 
     <application>
         <activity
-            android:name="im.dino.dbinspector.activities.DbInspectorActivity"
-            android:label="DbInspector"
-            android:theme="@style/Theme.AppCompat.Light" />
-
-        <activity
             android:name=".DebugWindow"
             android:exported="true"
             android:launchMode="singleTop"

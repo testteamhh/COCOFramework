@@ -6,6 +6,7 @@ import android.os.StrictMode;
 
 import com.cocosw.accessory.utils.UIUtils;
 import com.cocosw.accessory.utils.Utils;
+import com.facebook.stetho.Stetho;
 
 /**
  * Created by Administrator on 14-2-18.
@@ -35,6 +36,14 @@ public class DebugUtils {
             StrictMode.setThreadPolicy(threadPolicyBuilder.build());
             StrictMode.setVmPolicy(vmPolicyBuilder.build());
         }
+    }
+
+    public static void setupStetho(Context context) {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(context)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(context))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(context))
+                        .build());
     }
 
 
