@@ -550,7 +550,7 @@ public final class Log {
      * Sets the terrible failure handler, for testing.
      *
      * @return the old handler
-     * @hide
+
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
     public static Object setWtfHandler(Object handler) {
@@ -580,24 +580,24 @@ public final class Log {
     }
 
     /**
-     * @hide
+
      */
     public static final int LOG_ID_MAIN = 0;
     /**
-     * @hide
+
      */
     public static final int LOG_ID_RADIO = 1;
     /**
-     * @hide
+
      */
     public static final int LOG_ID_EVENTS = 2;
     /**
-     * @hide
+
      */
     public static final int LOG_ID_SYSTEM = 3;
 
     /**
-     * @hide
+
      */
     public static native int println_native(int bufID,
                                             int priority, String tag, String msg);

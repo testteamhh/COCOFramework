@@ -39,5 +39,6 @@ dependencies {
     compile 'net.daverix.logcatviewer:LogcatViewer:+'
     compile 'im.dino:dbinspector:+@aar'
     compile 'com.squareup.picasso:picasso:+'
+    compile 'com.github.prashamtrivedi:sharedpreferenceinspector:+'
     //  compile 'com.mattprecious.telescope:telescope:1.+@aar'
 }

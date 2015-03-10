@@ -1,9 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cocosw.framework.debug">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application>
+
+        <activity android:name="im.dino.dbinspector.activities.DbInspectorActivity">
+            <intent-filter tools:node="removeAll">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".DebugWindow"
             android:exported="true"
@@ -27,6 +36,10 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light" />
 
+
+        <activity
+            android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"
+            android:theme="@style/Theme.AppCompat.Light" />
 
     </application>
 
