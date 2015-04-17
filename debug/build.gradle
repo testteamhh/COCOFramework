@@ -23,8 +23,8 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 
 dependencies {
-    compile 'com.android.support:support-v4:21.+'
-    compile 'com.android.support:appcompat-v7:21.+'
+    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.cocosw.accessory:utils:+'
     compile 'com.cocosw.accessory:views:+'
     compile 'com.cocosw:lifecycle:+'
@@ -40,5 +40,4 @@ dependencies {
     compile 'im.dino:dbinspector:+@aar'
     compile 'com.squareup.picasso:picasso:+'
     compile 'com.github.prashamtrivedi:sharedpreferenceinspector:+'
-    //  compile 'com.mattprecious.telescope:telescope:1.+@aar'
 }

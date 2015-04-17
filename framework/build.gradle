@@ -19,8 +19,8 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 dependencies {
     compile 'com.afollestad:material-dialogs:0.6.0'
-    compile 'com.android.support:appcompat-v7:21.+'
-    compile 'com.android.support:support-v4:21.+'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:support-v4:22.0.0'
     compile 'com.cocosw.accessory:utils:0.+'
     compile 'com.cocosw.accessory:views:0.+'
     compile 'com.cocosw.accessory:adapter:0.+'
@@ -38,7 +38,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.+'
     compile 'com.squareup.picasso:picasso:2.+'
     compile 'com.jakewharton:butterknife:6.+'
-    compile 'com.jakewharton.timber:timber:2.+'
+    compile 'com.jakewharton.timber:timber:3.+'
     compile 'com.iconic:iconic:0.1@aar'
 }
 

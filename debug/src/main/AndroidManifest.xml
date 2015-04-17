@@ -37,10 +37,6 @@
             android:theme="@style/Theme.AppCompat.Light" />
 
 
-        <activity
-            android:name="com.ceelites.sharedpreferenceinspector.SharedPrefsBrowser"
-            android:theme="@style/Theme.AppCompat.Light" />
-
     </application>
 
 </manifest>

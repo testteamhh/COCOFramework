@@ -85,12 +85,7 @@ public class SystemModule {
     @Provides
     @Singleton
     Cache provideCache(Application app) {
-        try {
-            return new Cache(createDefaultCacheDir(app), calculateDiskCacheSize(createDefaultCacheDir(app)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new Cache(createDefaultCacheDir(app), calculateDiskCacheSize(createDefaultCacheDir(app)));
     }
 
     @Provides

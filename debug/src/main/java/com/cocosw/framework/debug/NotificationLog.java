@@ -11,7 +11,7 @@ import timber.log.Timber;
  * Project: cocoframework
  * Created by LiaoKai(soarcn) on 2014/6/3.
  */
-public class NotificationLog implements Timber.TaggedTree {
+public class NotificationLog extends Timber.DebugTree {
     @Override
     public void v(String message, Object... args) {
         Log.v(createTag(), formatString(message, args));
@@ -60,11 +60,6 @@ public class NotificationLog implements Timber.TaggedTree {
     @Override
     public void e(Throwable t, String message, Object... args) {
         Log.e(createTag(), formatString(message, args), t);
-    }
-
-    @Override
-    public void tag(String tag) {
-        NEXT_TAG.set(tag);
     }
 
     private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
