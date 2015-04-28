@@ -31,6 +31,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -65,7 +66,7 @@ import butterknife.ButterKnife;
 /**
  * Activity
  */
-public abstract class Base<T> extends ActionBarActivity implements
+public abstract class Base<T> extends AppCompatActivity implements
         DialogResultListener, CocoLoader<T> {
 
     protected CocoQuery q;

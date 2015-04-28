@@ -34,7 +34,7 @@ def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    buildToolsVersion '22.0.1'
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
         preDexLibraries = preDexEnabled && !isTravis
@@ -118,5 +118,5 @@ dependencies {
     compile 'org.markdownj:markdownj-core:+'
     //    compile 'com.balysv:material-ripple:+@aar'
     compile project(':debug')
-    compile 'com.android.support:palette-v7:21.+'
+    compile 'com.android.support:palette-v7:22.1.1'
 }
