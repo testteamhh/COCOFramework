@@ -18,9 +18,8 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 
 dependencies {
-    compile 'com.afollestad:material-dialogs:0.6.0'
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:support-v4:22.1.1'
     compile 'com.cocosw.accessory:utils:0.+'
     compile 'com.cocosw.accessory:views:0.+'
     compile 'com.cocosw.accessory:adapter:0.+'

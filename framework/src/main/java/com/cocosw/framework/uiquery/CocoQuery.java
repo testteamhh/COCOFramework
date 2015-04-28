@@ -1,14 +1,14 @@
 package com.cocosw.framework.uiquery;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialog;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,8 +16,6 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.MaterialDialogCompat;
 import com.atermenji.android.iconicdroid.IconicFontDrawable;
 import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.accessory.views.ViewUtils;
@@ -78,11 +76,20 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
      * @param message
      */
     public void alert(final String title, final CharSequence message) {
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
                 getContext());
-        builder.title(title);
-        builder.content(message);
-        builder.positiveText(android.R.string.ok);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+                        final AlertDialog ad = builder.create();
+                        ad.cancel();
+                    }
+                });
         builder.show();
     }
 
@@ -93,6 +100,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
      * @param message
      */
     public void alert(final int title, final int message) {
+        new AlertDialog.Builder(getContext());
         alert(getContext().getString(title),
                 getContext().getString(message));
     }
@@ -105,26 +113,32 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
      */
     public void confirm(final int title, final int message,
                         final DialogInterface.OnClickListener onClickListener) {
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
                 getContext());
-        builder.title(title).content(message);
-        builder.positiveText(android.R.string.ok);
-        builder.negativeText(android.R.string.cancel);
-        builder.callback(new MaterialDialog.ButtonCallback() {
-            @Override
-            public void onPositive(MaterialDialog dialog) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                }
-            }
+        builder.setTitle(title).setIcon(android.R.drawable.ic_dialog_info).setMessage(message);
+        builder.setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onNegative(MaterialDialog dialog) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                }
-            }
-        });
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+                        if (onClickListener != null) {
+                            onClickListener.onClick(dialog, which);
+                        }
+
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+                        if (onClickListener != null) {
+                            onClickListener.onClick(dialog, which);
+                        }
+                    }
+                });
         builder.show();
     }
 
@@ -138,10 +152,11 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
     public void alert(final int title, final int message,
                       final DialogInterface.OnClickListener onClickListener) {
 
-        final MaterialDialogCompat.Builder builder = new MaterialDialogCompat.Builder(
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
                 getContext());
         builder.setTitle(title);
         builder.setMessage(message);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -165,7 +180,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
      * @param listener
      */
     public void dialog(final int title, int list, DialogInterface.OnClickListener listener) {
-        MaterialDialogCompat.Builder builder = new MaterialDialogCompat.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(title)
                 .setItems(list, listener);
         builder.create().show();
@@ -179,11 +194,12 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
      * @param listener
      */
     public void dialog(final int title, CharSequence[] list, DialogInterface.OnClickListener listener) {
-        MaterialDialogCompat.Builder builder = new MaterialDialogCompat.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(title)
                 .setItems(list, listener);
         builder.create().show();
     }
+
 
     /**
      * Show huge amount info with a dialog, HTML is allowed
@@ -192,17 +208,21 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         create(content, title).show();
     }
 
-    private Dialog create(String mLicensesText, CharSequence str) {
+    private AppCompatDialog create(String mLicensesText, CharSequence str) {
         //Get resources
         final WebView webView = new WebView(getContext());
         webView.loadDataWithBaseURL(null, mLicensesText, "text/html", "utf-8", null);
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(getContext())
 
-                .customView(webView, false)
-                .positiveText(R.string.ok);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setView(webView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
         if (str != null)
-            builder.title(str);
-        return builder.build();
+            builder.setTitle(str);
+        return builder.create();
     }
 
 
