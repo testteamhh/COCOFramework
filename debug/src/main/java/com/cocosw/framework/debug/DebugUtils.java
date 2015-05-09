@@ -1,5 +1,6 @@
 package com.cocosw.framework.debug;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
@@ -7,6 +8,7 @@ import android.os.StrictMode;
 import com.cocosw.accessory.utils.UIUtils;
 import com.cocosw.accessory.utils.Utils;
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by Administrator on 14-2-18.
@@ -46,5 +48,8 @@ public class DebugUtils {
                         .build());
     }
 
+    public static void setupLeakCanary(Application app) {
+        LeakCanary.install(app);
+    }
 
 }
