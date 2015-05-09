@@ -92,4 +92,8 @@
     <string name="skip_button_label">跳过</string>
     <string name="activity_not_found">打开应用失败</string>
 
+    <string name="unknown_exception">发生未知错误，稍后重试</string>
+    <string name="network_exception">当前网络出了一些问题，请稍后重试</string>
+    <string name="server_exception">当前服务器出了一些问题，请稍后重试</string>
+
 </resources>

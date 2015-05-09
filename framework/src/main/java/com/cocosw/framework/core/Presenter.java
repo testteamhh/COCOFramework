@@ -18,7 +18,7 @@ public class Presenter {
     private Fragment from;
     private Activity fromAct;
 
-    private Class<? extends BaseFragment> target;
+    private Class<? extends Fragment> target;
 
     private Class<? extends Activity> container;
 
@@ -34,7 +34,7 @@ public class Presenter {
         this.fromAct = fromAct;
     }
 
-    public Presenter target(Class<? extends BaseFragment> target) {
+    public Presenter target(Class<? extends Fragment> target) {
         this.target = target;
         return this;
     }

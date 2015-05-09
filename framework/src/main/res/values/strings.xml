@@ -50,7 +50,7 @@
     <!-- Menu -->
     <string name="homepage">首页</string>
     <string name="more">更多</string>
-    <string name="refresh">刷新</string>
+    <string name="refresh">Refresh</string>
     <string name="search">搜索</string>
 
     <string name="lastupdatetime">最后更新:</string>
@@ -78,10 +78,10 @@
     <string name="nickname">昵称</string>
     <string name="password">密码</string>
     <string name="success">成功</string>
-    <string name="register">注册</string>
+    <string name="register">Register</string>
     <string name="input_your_email">Email</string>
-    <string name="input_your_password">密码</string>
-    <string name="network_error">没有可用的网络连接。</string>
+    <string name="input_your_password">Input your password</string>
+    <string name="network_error">Please check your network connection.</string>
 
     <!--  Strings for possible PreferenceActivity Back/Next buttons -->
     <string name="back_button_label">Back</string>
@@ -89,6 +89,10 @@
 
     <!-- Optional button to Skip a PreferenceActivity [CHAR LIMIT=20] -->
     <string name="skip_button_label">Skip</string>
-    <string name="activity_not_found">打开应用失败</string>
+    <string name="activity_not_found">Fail to open</string>
+
+    <string name="unknown_exception">Oops,something is wrong</string>
+    <string name="network_exception">Oops,something is wrong</string>
+    <string name="server_exception">Oops,something is wrong</string>
 
 </resources>

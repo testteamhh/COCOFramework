@@ -125,7 +125,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
         return detail;
     }
 
-    public void openDetail(Class<? extends BaseFragment> target, Intent extra) {
+    public void openDetail(Class<? extends Fragment> target, Intent extra) {
         detail = Fragment.instantiate(this, target.getName());
         detail.setArguments(intentToFragmentArguments(extra));
         getSupportFragmentManager().beginTransaction()
@@ -134,7 +134,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
         mPanel.closePane();
     }
 
-    public void openDetail(Class<? extends BaseFragment> target, Fragment from, Intent extra, int requestCode) {
+    public void openDetail(Class<? extends Fragment> target, Fragment from, Intent extra, int requestCode) {
         detail = Fragment.instantiate(this, target.getName());
         detail.setArguments(intentToFragmentArguments(extra));
         detail.setTargetFragment(from, requestCode);

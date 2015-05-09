@@ -2,6 +2,7 @@ package com.cocosw.framework.network;
 
 import android.content.Context;
 
+import com.cocosw.framework.R;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.log.Log;
 import com.github.kevinsawicki.http.HttpRequest;
@@ -41,12 +42,14 @@ public class Network {
     protected static Gson GSON = new GsonBuilder().setDateFormat(
             "yyyy-MM-dd").create();
     private static Map<String, String> headers;
+    private static Context context;
 
     /**
      * use for app initialization
      */
     public static void init(Context context, OkHttpClient client) {
         HttpRequest.setConnectionFactory(new OkConnectionFactory(client, context));
+        Network.context = context;
         if (SDK_INT <= FROYO)
             HttpRequest.keepAlive(false);
     }
@@ -104,7 +107,7 @@ public class Network {
         if (rawjson != null)
             request.send(rawjson);
         if (!request.ok()) {
-            throw new CocoException("当前网络出了一些问题，请稍后重试");
+            throw new CocoException(context.getString(R.string.network_exception));
         }
 
         return request;
@@ -116,7 +119,7 @@ public class Network {
             return GSON.fromJson(reader, target);
         } catch (JsonParseException e) {
             e.printStackTrace();
-            throw new CocoException("当前服务器出了一些问题，请稍后重试", e);
+            throw new CocoException(context.getString(R.string.server_exception), e);
         } finally {
             try {
                 reader.close();

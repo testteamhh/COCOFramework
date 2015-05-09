@@ -9,7 +9,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,11 +65,11 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     public ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+        return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
-    public ActionBarActivity getActionBarActivity() {
-        return ((ActionBarActivity) getActivity());
+    public AppCompatActivity getActionBarActivity() {
+        return ((AppCompatActivity) getActivity());
     }
 
     /**
@@ -144,7 +144,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         LifecycleDispatcher.get().onFragmentActivityCreated(this, savedInstanceState);
-        if (getLoaderOn() == BaseFragment.ONCREATE && reloadNeeded(savedInstanceState)) {
+        if (getLoaderOn() == ONCREATE && reloadNeeded(savedInstanceState)) {
             onStartLoading();
             getLoaderManager().initLoader(this.hashCode(), getArguments(), this);
         }

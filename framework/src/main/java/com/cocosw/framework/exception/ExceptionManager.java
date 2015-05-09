@@ -3,6 +3,7 @@ package com.cocosw.framework.exception;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.cocosw.framework.R;
 import com.cocosw.framework.log.Log;
 import com.github.kevinsawicki.http.HttpRequest;
 
@@ -74,7 +75,7 @@ public class ExceptionManager {
         if (e instanceof CocoException) {
             throw (CocoException) e;
         }
-        throw new CocoException("发生未知错误，稍后重试", e);
+        throw new CocoException(ctx.getString(R.string.unknown_exception), e);
     }
 
     public static void setHandler(ExceptionHandler handler) {
