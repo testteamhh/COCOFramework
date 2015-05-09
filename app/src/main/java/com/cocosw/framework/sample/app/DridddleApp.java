@@ -33,7 +33,7 @@ public class DridddleApp extends CocoApp {
     @Override
     protected Timber.Tree getCrashTree() {
         // Umeng exception analysis service
-        return new Timber.HollowTree() {
+        return new Timber.DebugTree() {
 
             @Override
             public void w(String s, Object... objects) {
