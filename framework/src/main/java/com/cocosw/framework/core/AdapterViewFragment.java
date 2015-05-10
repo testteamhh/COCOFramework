@@ -75,6 +75,12 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
     }
 
     @Override
+    public Loader<List<T>> onCreateLoader(int id, Bundle args) {
+        setListShown(false);
+        return super.onCreateLoader(id, args);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         save(DATA, getAdapter().getItems());
@@ -227,6 +233,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         if (exception != null) {
             showError(exception);
             showList();
+            onStopLoading();
             return;
         }
 
@@ -239,6 +246,7 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
         }
         onLoaderDone(items);
         showList();
+        onStopLoading();
     }
 
     /**
