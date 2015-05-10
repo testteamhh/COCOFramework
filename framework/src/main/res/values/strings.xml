@@ -41,8 +41,8 @@
     <string name="update_success">发送成功.</string>
     <string name="unable_to_update">无法发送信息...</string>
     <string name="timeout">网络超时.</string>
-    <string name="page_label_get_more">获取更多</string>
-    <string name="empty_list">内容为空</string>
+    <string name="page_label_get_more">More</string>
+    <string name="empty_list">Nothing is here</string>
     <!-- User页面 -->
 
     <string name="signup">注册</string>

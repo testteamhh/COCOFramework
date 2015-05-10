@@ -59,7 +59,7 @@ public abstract class BaseFragment<T> extends Fragment implements
      * @throws CocoException
      */
     protected void checkNetwork() throws CocoException {
-        if (!NetworkConnectivity.getInstance().isConnected()) {
+        if (!NetworkConnectivity.getInstance().checkConnected()) {
             throw new CocoException(getString(R.string.network_error));
         }
     }
