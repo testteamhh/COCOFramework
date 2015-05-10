@@ -20,7 +20,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:+'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 
@@ -40,13 +40,6 @@ allprojects {
 
     tasks.withType(Javadoc) {
         options.encoding = "UTF-8"
-    }
-
-    configurations {
-        provided
-        preprocess
-
-        all*.exclude group: 'com.google.android', module: 'support-v4'
     }
 }
 
