@@ -118,10 +118,14 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
      */
     @Override
     public void notifyDataChange() {
-        this.loading = false;
         notifyDataSetChanged();
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        this.loading = false;
+        super.notifyDataSetChanged();
+    }
 
     @Override
     public long getItemId(final int position) {

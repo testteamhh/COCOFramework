@@ -85,8 +85,13 @@ public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapte
      */
     @Override
     public void notifyDataChange() {
-        this.loading = false;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        this.loading = false;
+        super.notifyDataSetChanged();
     }
 
     public void updateList(final List<T> values) {

@@ -178,8 +178,13 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
      */
     @Override
     public void notifyDataChange() {
-        this.loading = false;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        this.loading = false;
+        super.notifyDataSetChanged();
     }
 
     @Override

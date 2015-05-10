@@ -2,12 +2,9 @@ package com.cocosw.framework.view.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.cocosw.adapter.SingleTypeAdapter;
-import com.cocosw.framework.uiquery.CocoQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,10 +89,14 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
      */
     @Override
     public void notifyDataChange() {
-        this.loading = false;
         notifyDataSetChanged();
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        this.loading = false;
+        super.notifyDataSetChanged();
+    }
 
     @Override
     public long getItemId(final int position) {
@@ -103,7 +104,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
     }
 
     /**
-     * Check whether a {@link android.app.LauncherActivity.ListItem} is already in this adapter.
+     * Check whether an item is already in this adapter.
      *
      * @param item Item to be verified whether it is in the adapter.
      */

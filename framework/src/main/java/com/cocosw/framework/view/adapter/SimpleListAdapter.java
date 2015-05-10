@@ -219,8 +219,13 @@ public abstract class SimpleListAdapter<T, V extends ViewHolder> extends BaseAda
      */
     @Override
     public void notifyDataChange() {
-        this.loading = false;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        this.loading = false;
+        super.notifyDataSetChanged();
     }
 
     /**
