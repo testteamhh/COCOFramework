@@ -106,7 +106,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * }
  * </pre>
  */
-class ViewServer implements Runnable {
+public class ViewServer implements Runnable {
     /**
      * The default port used to start view servers.
      */
@@ -206,6 +206,7 @@ class ViewServer implements Runnable {
      * @throws IOException If the server cannot be created.
      * @see #stop()
      * @see #isRunning()
+     * @see WindowManagerService#startViewServer(int)
      */
     public boolean start() throws IOException {
         if (mThread != null) {
@@ -226,6 +227,7 @@ class ViewServer implements Runnable {
      * server wasn't started.
      * @see #start()
      * @see #isRunning()
+     * @see WindowManagerService#stopViewServer()
      */
     public boolean stop() {
         if (mThread != null) {
@@ -273,6 +275,7 @@ class ViewServer implements Runnable {
      * @return True if the server is running, false otherwise.
      * @see #start()
      * @see #stop()
+     * @see WindowManagerService#isViewServerRunning()
      */
     public boolean isRunning() {
         return mThread != null && mThread.isAlive();
@@ -331,11 +334,21 @@ class ViewServer implements Runnable {
      * @see #addWindow(View, String)
      */
     public void removeWindow(View view) {
+        View rootView;
         mWindowsLock.writeLock().lock();
         try {
-            mWindows.remove(view.getRootView());
+            rootView = view.getRootView();
+            mWindows.remove(rootView);
         } finally {
             mWindowsLock.writeLock().unlock();
+        }
+        mFocusLock.writeLock().lock();
+        try {
+            if (mFocusedWindow == rootView) {
+                mFocusedWindow = null;
+            }
+        } finally {
+            mFocusLock.writeLock().unlock();
         }
         fireWindowsChangedEvent();
     }
