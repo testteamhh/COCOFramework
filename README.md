@@ -25,8 +25,8 @@ The sample application is called Dridddle, a simple client for dribbble.com:
 - Support dualpane layout and screen rotation
 - Endless data loading
 - Parallex scrolling & Actionbar fading
-- Powerful debug tools(TODO)
-- Integrate online statistics tools(TODO)
+- Powerful debug tools
+- Integrate online statistics tools
 
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port1.png)
 ![UndoBar Sample](https://raw.githubusercontent.com/soarcn/COCOFramework/master/arts/port2.png)
