@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Module</string>
     <string name="coco_dev_strict_mode">开启严格模式</string>
     <string name="coco_dev_preference_inspector">Perference Inspector</string>
     <string name="coco_dev_alarm_inspector">Alarm Inspector</string>

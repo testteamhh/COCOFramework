@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2015. www.cocosw.com
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.cocosw.framework.preference.SwitchPreferenceCompat
+        android:title="@string/coco_dev_notification_log"
+        android:key="lognotification"
+        android:defaultValue="false" />
+
+    <Preference
+        android:title="@string/coco_dev_reboot"
+        android:key="reboot"
+        android:summary="" />
+
+    <Preference
+        android:title="@string/coco_dev_db_inspector"
+        android:key="dbinspector" />
+
+    <Preference
+        android:title="@string/coco_dev_logcat_viewer"
+        android:key="logcat" />
+
+    <Preference
+        android:title="@string/coco_dev_alarm_inspector"
+        android:key="alarm" />
+
+    <Preference
+        android:title="@string/coco_dev_preference_inspector"
+        android:key="_dev_pref" />
+
+
+    <com.cocosw.framework.preference.SwitchPreferenceCompat
+        android:key="strictmode"
+        android:title="@string/coco_dev_strict_mode"
+        android:defaultValue="false"/>
+
+</PreferenceScreen>
