@@ -23,22 +23,13 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 
 dependencies {
-    compile 'com.android.support:support-v4:22.1.1'
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.cocosw.accessory:utils:+'
-    compile 'com.cocosw.accessory:views:+'
-    compile 'com.cocosw:lifecycle:+'
-    compile 'com.cocosw:query:+'
-    compile 'com.facebook.stetho:stetho:1.+'
-    compile 'com.facebook.stetho:stetho-okhttp:1.+'
-    compile 'com.github.kevinsawicki:http-request:5.5'
-    compile 'com.squareup.okhttp:okhttp:2.3.0'
-    compile 'com.jakewharton.timber:timber:3.0.2'
+    compile project(':framework')
+    compile 'com.facebook.stetho:stetho:1.1.1'
+    compile 'com.facebook.stetho:stetho-okhttp:1.1.1'
     compile 'com.jakewharton.madge:madge:1.1.2'
     compile 'com.jakewharton.scalpel:scalpel:1.1.2'
     compile 'com.github.pedrovgs:lynx:1.5'
     compile 'im.dino:dbinspector:3.1.0@aar'
-    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.prashamtrivedi:sharedpreferenceinspector:2.1'
     compile 'com.squareup.leakcanary:leakcanary-android:1.3'
 }

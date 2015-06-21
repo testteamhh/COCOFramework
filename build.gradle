@@ -30,22 +30,17 @@ allprojects {
 
     repositories {
         jcenter()
-        mavenCentral()
-        maven { url LOCALMVNGIT }
     }
 
     tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-    }
-
-    tasks.withType(Javadoc) {
         options.encoding = "UTF-8"
     }
 }
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
+    gradleVersion = '2.4.0'
 }
+
 
 
