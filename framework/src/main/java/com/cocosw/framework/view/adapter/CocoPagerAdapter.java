@@ -15,7 +15,6 @@ import java.util.List;
  * Project: app-parent
  * User: Liao Kai(soarcn@gmail.com)
  * Date: 13-12-12
- * Time: 下午4:41
  */
 public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implements CocoAdapter<T> {
 
@@ -25,9 +24,7 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
     protected View.OnClickListener onViewClickInListListener;
     private boolean loading = true;
 
-    /**
-     * 默认会构造为arraylist以后可以换
-     */
+
     public CocoPagerAdapter(final Context context) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -46,12 +43,6 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         this.dataList = dataList;
     }
 
-    /**
-     * 如果为空,那么Gone,否则visible
-     *
-     * @param view
-     * @param obj
-     */
     protected boolean notEmptyView(final View view, final Object obj) {
         if (obj == null) {
             view.setVisibility(View.GONE);
@@ -67,11 +58,7 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         return dataList;
     }
 
-    /*
-         * (non-Javadoc)
-         *
-         * @see android.widget.Adapter#getCount()
-         */
+
     @Override
     public int getCount() {
         return dataList.size();
@@ -109,14 +96,11 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         return context;
     }
 
-    // 创建一个新的View
     public abstract ViewHolder newView(int position);
 
-    // 填充这个View
     public abstract void fillView(ViewHolder viewHolder, int position,
                                   ViewGroup parent);
 
-    // 展开一个View
     public View inflate(final int resourceId) {
         return this.mInflater.inflate(resourceId, null);
     }
@@ -129,11 +113,7 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         this.dataList = values;
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void add(final List<T> values) {
         if (values != null) {
@@ -141,11 +121,7 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         }
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param value
-     */
+
     @Override
     public void add(final T value) {
         if (value != null) {
@@ -153,29 +129,18 @@ public abstract class CocoPagerAdapter<T> extends RecyclingPagerAdapter implemen
         }
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
     @Override
     public void append(final List<T> values) {
         this.dataList.addAll(0, values);
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void append(final T values) {
         this.dataList.add(0, values);
     }
 
-    /**
-     * 通知UI更新
-     */
+
     @Override
     public void notifyDataChange() {
         notifyDataSetChanged();

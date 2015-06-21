@@ -8,14 +8,9 @@ import java.util.List;
 /**
  * QuickAdapter
  * <p/>
- * <p/>
- * <p/>
- * <p/>
- * <p/>
  * Project: cocoframework
  * User: Liao Kai(soarcn@gmail.com)
  * Date: 14-1-14
- * Time: 下午8:29
  */
 public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapter<T> implements CocoAdapter<T> {
 
@@ -31,11 +26,6 @@ public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapte
     }
 
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param values
-     */
     @Override
     public void add(final List<T> values) {
         if (values != null) {
@@ -43,11 +33,7 @@ public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapte
         }
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param value
-     */
+
     @Override
     public void add(final T value) {
         if (value != null) {
@@ -55,21 +41,12 @@ public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapte
         }
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void append(final List<T> values) {
         addAll(values);
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
     @Override
     public void append(final T values) {
         add(values);
@@ -80,9 +57,6 @@ public abstract class QuickAdapter<T> extends com.joanzapata.android.QuickAdapte
         remove(position);
     }
 
-    /**
-     * 通知UI更新
-     */
     @Override
     public void notifyDataChange() {
         notifyDataSetChanged();

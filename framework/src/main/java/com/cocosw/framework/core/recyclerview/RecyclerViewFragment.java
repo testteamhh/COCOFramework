@@ -52,8 +52,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
      * The actual adapter without any wrapper
      */
     RecyclerView.Adapter mAdapter;
-    private boolean updated;
-
 
 
     private A mListContainer;
@@ -118,11 +116,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
     protected abstract CocoAdapter<T> createAdapter(final List<T> items)
             throws Exception;
 
-    /**
-     * 设置如果列表为空时显示的View
-     *
-     * @return
-     */
     protected View emptyView() {
         return LayoutInflater.from(context).inflate(R.layout.empty, null);
     }
@@ -158,13 +151,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         return this;
     }
 
-
-    /**
-     * 内容为空时显示的文字消息
-     *
-     * @param e
-     * @return
-     */
     protected String refreshText(final CocoException e) {
         if (e != null) {
             return e.getMessage();
@@ -172,20 +158,11 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         return getString(R.string.empty_list);
     }
 
-    /**
-     * 按了refresh后的反应
-     */
+
     protected void refreshAction() {
         refresh();
     }
 
-    /**
-     * 初始化界面
-     *
-     * @param view
-     * @param bundle
-     * @throws Exception
-     */
     protected abstract void init(View view, Bundle bundle) throws Exception;
 
     @Override
@@ -313,19 +290,9 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
     public abstract List<T> pendingData(Bundle args) throws Exception;
 
 
-    /**
-     * Set list shown or progress bar show
-     *
-     * @param shown
-     * @return this fragment
-     */
 
-    /**
-     * 刷新当前页面内容
-     */
     @Override
     public void refresh(final Bundle b) {
-        Log.i("页面有更新,刷新中");
         if (!isUsable()) {
             return;
         }
@@ -485,14 +452,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         return this;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (updated) {
-            refresh();
-            updated = false;
-        }
-    }
 
     /**
      * Set the list to be shown
@@ -501,17 +460,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         setListShown(true);
     }
 
-
-    /**
-     * 重新加载页面的数据
-     *
-     * @param force 是否强制刷新,否则需要判断是否有数据更新
-     */
-    public void reload(final boolean force) {
-        if (force || updated) {
-            refresh();
-        }
-    }
 
     @Override
     protected int getLoaderOn() {

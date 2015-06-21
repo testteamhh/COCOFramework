@@ -6,12 +6,4 @@
         <attr name="navigationBarColor" format="color" />
         <attr name="statusBarColor" format="color" />
     </declare-styleable>
-    <declare-styleable name="FloatLabel">
-        <attr name="android:hint" />
-        <attr name="android:layout" />
-        <attr name="android:text" />
-        <attr name="android:textColorHint" />
-        <attr name="android:inputType" />
-        <attr name="floatLabelColor" format="color" />
-    </declare-styleable>
 </resources>

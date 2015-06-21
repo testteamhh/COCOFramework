@@ -2,31 +2,36 @@ package com.cocosw.framework.loader;
 
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.widget.Toast;
 
-public interface CocoLoader<T> extends LoaderCallbacks<T> {
+public interface CocoLoader<T> extends LoaderManager.LoaderCallbacks<T>
+{
+
 
     /**
-     * 后台的操作或者数据读取
+     * Called on a worker thread to perform the actual load. meaning this will not block your UI thread
+     * You can do whatever you want here, if any exception was thrown, showError will be triggered or on LoaderDone will be executed instead
      *
-     * @param arg
-     * @return
+     * @param arg parameters
+     * @return data
      * @throws Exception
      */
     T pendingData(Bundle arg) throws Exception;
 
+
     /**
-     * 完成数据载入后的接口
+     * The callback of loader, result will be passed into as a parameter.
      *
-     * @param items
+     * @param items callback result
      */
     void onLoaderDone(final T items);
 
+
     /**
-     * Show exception in a {@link Toast}
+     * The failback of loader, a exception which catched in pendingData will be passed
      *
-     * @param e
+     * @param e exception
      */
     void showError(final Exception e);
+
 
 }

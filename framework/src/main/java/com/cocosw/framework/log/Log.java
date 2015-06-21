@@ -11,11 +11,7 @@ import timber.log.Timber;
  */
 public class Log {
 
-    /**
-     * 打印log
-     *
-     * @param obj
-     */
+
     private static void dout(final Object obj) {
         if (obj != null) {
             Timber.d("obj>>>>>>>>>>>>>" + obj.getClass().getName()
@@ -76,12 +72,6 @@ public class Log {
     }
 
 
-    /**
-     * 把游标内容显示出来
-     *
-     * @param cur
-     * @return
-     */
     private static String cur2Str(final Cursor cur) {
         final StringBuffer buf = new StringBuffer();
         final String[] col = cur.getColumnNames();

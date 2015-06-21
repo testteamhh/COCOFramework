@@ -29,7 +29,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Project: cocoframework
  * User: Liao Kai(soarcn@gmail.com)
  * Date: 13-12-19
- * Time: 下午9:35
  */
 public abstract class PagedRecyclerViewFragment<T, A extends RecyclerView> extends RecyclerViewFragment<T, A> {
 

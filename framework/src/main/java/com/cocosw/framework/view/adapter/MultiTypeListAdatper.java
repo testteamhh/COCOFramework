@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * User: Administrator
  * Date: 13-7-17
- * Time: 下午6:32
  */
 public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implements
         CocoAdapter<T> {
@@ -53,11 +52,6 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
     public abstract int getType(T obj);
 
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param values
-     */
     @Override
     public void add(final List<T> values) {
         if (values != null && values.size() > 0) {
@@ -68,11 +62,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
         }
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param value
-     */
+
     @Override
     public void add(final T value) {
         if (value != null) {
@@ -81,21 +71,12 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
         }
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void append(final List<T> values) {
         this.dataList.addAll(0, values);
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
     @Override
     public void append(final T values) {
         this.dataList.add(0, values);
@@ -113,9 +94,7 @@ public abstract class MultiTypeListAdatper<T> extends MultiTypeAdapter<T> implem
         removeItem(position);
     }
 
-    /**
-     * 通知UI更新
-     */
+
     @Override
     public void notifyDataChange() {
         notifyDataSetChanged();

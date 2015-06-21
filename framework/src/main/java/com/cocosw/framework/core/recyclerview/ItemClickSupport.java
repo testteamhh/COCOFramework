@@ -1,6 +1,5 @@
 package com.cocosw.framework.core.recyclerview;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
 import android.view.SoundEffectConstants;
@@ -10,6 +9,7 @@ import com.cocosw.framework.R;
 
 
 public class ItemClickSupport {
+
     /**
      * Interface definition for a callback to be invoked when an item in the
      * RecyclerView has been clicked.

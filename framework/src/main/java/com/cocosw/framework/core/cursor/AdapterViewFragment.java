@@ -49,7 +49,6 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
      */
     CursorAdapter mAdapter;
     int lastVisibleItem = 0;
-    private boolean updated;
 
     private A mListContainer;
     private View progressBar;
@@ -103,9 +102,9 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
             throws Exception;
 
     /**
-     * 设置如果列表为空时显示的View
+     * The emptyview which will be shown if list is empty
      *
-     * @return
+     * @return emptyview
      */
     protected View emptyView() {
         return LayoutInflater.from(context).inflate(R.layout.empty, null);
@@ -136,7 +135,7 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
 
 
     /**
-     * 内容为空时显示的文字消息
+     * Text will be shown if exception is got or list is empty
      *
      * @param e
      * @return
@@ -149,7 +148,7 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
     }
 
     /**
-     * 按了refresh后的反应
+     * Action when user press refresh button
      */
     protected void refreshAction() {
         refresh();
@@ -175,7 +174,7 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
     public abstract Cursor pendingData(Bundle arg);
 
     /**
-     * 初始化界面
+     * Ui init
      *
      * @param view
      * @param bundle
@@ -245,18 +244,12 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
 
 
     /**
-     * Set list shown or progress bar show
+     * Reload current loader with arguments
      *
-     * @param shown
-     * @return this fragment
-     */
-
-    /**
-     * 刷新当前页面内容
+     * @param b arguments
      */
     @Override
     public void refresh(final Bundle b) {
-        Log.i("页面有更新,刷新中");
         if (!isUsable()) {
             return;
         }
@@ -370,14 +363,6 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
         return this;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (updated) {
-            refresh();
-            updated = false;
-        }
-    }
 
     /**
      * Set the list to be shown
@@ -386,17 +371,6 @@ public abstract class AdapterViewFragment<A extends AdapterView> extends BaseFra
         setListShown(true);
     }
 
-
-    /**
-     * 重新加载页面的数据
-     *
-     * @param force 是否强制刷新,否则需要判断是否有数据更新
-     */
-    public void reload(final boolean force) {
-        if (force || updated) {
-            refresh();
-        }
-    }
 
     @Override
     protected int getLoaderOn() {

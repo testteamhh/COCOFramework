@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.cocosw.framework.preference.PreferenceFragment;
 import com.cocosw.framework.uiquery.CocoQuery;
@@ -39,7 +40,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 
 
     protected ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+        return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
 

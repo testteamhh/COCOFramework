@@ -247,11 +247,6 @@ public abstract class BaseDialog<T> extends DialogFragment implements
         return null;
     }
 
-    /**
-     * 完成数据载入后的接口
-     *
-     * @param items
-     */
     @Override
     public void onLoaderDone(final T items) {
 

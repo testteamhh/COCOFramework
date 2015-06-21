@@ -36,7 +36,6 @@ public class ViewHolder {
         ViewUtils.setGone(view, false);
     }
 
-    // 快速初始化的辅助接口
     protected TextView textView(final int id) {
         return view(id);
     }

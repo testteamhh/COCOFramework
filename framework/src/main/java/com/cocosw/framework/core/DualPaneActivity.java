@@ -40,6 +40,7 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.coco_master, master, MASTER)
                     .commit();
+            detail = onCreateDetailPane();
         } else {
             master = getSupportFragmentManager().findFragmentByTag(
                     MASTER);
@@ -115,6 +116,15 @@ public class DualPaneActivity extends Base<Void> implements TwoPanelsLayout.Pane
      */
     protected Fragment onCreateMasterPane() {
         return Fragment.instantiate(this, getIntent().getAction());
+    }
+
+    /**
+     * Called in <code>onCreate</code> when the fragment constituting this
+     * activity is needed. The returned fragment's arguments will be set to the
+     * intent used to invoke this activity.
+     */
+    protected Fragment onCreateDetailPane() {
+        return null;
     }
 
     public Fragment getMaster() {

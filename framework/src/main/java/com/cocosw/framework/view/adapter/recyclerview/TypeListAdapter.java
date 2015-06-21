@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * User: Administrator
  * Date: 13-7-17
- * Time: 下午6:32
  */
 public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         CocoAdapter<T> {
@@ -41,11 +40,6 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         getItems().remove(position);
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param values
-     */
     @Override
     public void add(final List<T> values) {
         if (values != null) {
@@ -53,11 +47,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         }
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param value
-     */
+
     @Override
     public void add(final T value) {
         if (value != null) {
@@ -65,21 +55,13 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         }
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void append(final List<T> values) {
         getItems().addAll(0, values);
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void append(final T values) {
         getItems().add(0, values);
@@ -90,9 +72,6 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         setItems(values);
     }
 
-    /**
-     * 通知UI更新
-     */
     @Override
     public void notifyDataChange() {
         this.loading = false;

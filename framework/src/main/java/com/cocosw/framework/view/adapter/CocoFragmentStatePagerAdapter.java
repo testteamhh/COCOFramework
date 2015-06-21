@@ -11,11 +11,7 @@ import com.cocosw.framework.core.BaseFragment;
 
 import java.util.WeakHashMap;
 
-/**
- * 对应用中广泛使用的pager的adapter的封装
- *
- * @author kaliao
- */
+
 public class CocoFragmentStatePagerAdapter extends
         FixedFragmentStatePagerAdapter {
 
@@ -86,7 +82,7 @@ public class CocoFragmentStatePagerAdapter extends
     }
 
     /**
-     * 返回当前所有的Fragment
+     * Get all fragments in this viewpager
      *
      * @return
      */

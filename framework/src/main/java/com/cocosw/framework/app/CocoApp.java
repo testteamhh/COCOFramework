@@ -74,9 +74,7 @@ public abstract class CocoApp extends Application {
         if (config() != null) {
             config().run();
         }
-        if (getAppModule() != null) {
-            Injector.init(getAppModule(), this);
-        }
+
         if (client != null)
             Network.init(this, client);
     }
@@ -116,6 +114,10 @@ public abstract class CocoApp extends Application {
         Injector.init(new SystemModule(this));
         Injector.init(new AndroidModule());
         long diff = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
+
+        if (getAppModule() != null) {
+            Injector.init(getAppModule(), this);
+        }
         Log.i("Global object graph creation took %sms", diff);
     }
 

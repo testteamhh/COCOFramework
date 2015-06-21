@@ -35,11 +35,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         this.getItems().remove(position);
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void add(final List<T> values) {
         if (values != null) {
@@ -47,11 +43,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         }
     }
 
-    /**
-     * 往数据后面加入数据
-     *
-     * @param value
-     */
+
     @Override
     public void add(final T value) {
         if (value != null) {
@@ -59,21 +51,12 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         }
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
     @Override
     public void append(final List<T> values) {
         this.getItems().addAll(0, values);
     }
 
-    /**
-     * 往数据前面加入数据
-     *
-     * @param values
-     */
+
     @Override
     public void append(final T values) {
         this.getItems().add(0, values);
@@ -84,9 +67,7 @@ public abstract class TypeListAdapter<T> extends SingleTypeAdapter<T> implements
         setItems(values);
     }
 
-    /**
-     * 通知UI更新
-     */
+
     @Override
     public void notifyDataChange() {
         notifyDataSetChanged();

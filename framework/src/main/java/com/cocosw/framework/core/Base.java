@@ -64,7 +64,10 @@ import butterknife.ButterKnife;
 
 
 /**
- * Activity
+ * Base activity for all other activities
+ * We could put some shared methods and properties into this class to simply the UI development
+ *
+ * Created by kai on 19/05/15.
  */
 public abstract class Base<T> extends AppCompatActivity implements
         DialogResultListener, CocoLoader<T> {
@@ -180,7 +183,6 @@ public abstract class Base<T> extends AppCompatActivity implements
             public T loadData() throws Exception {
                 return pendingData(arg);
             }
-
         };
 
         return loader;
@@ -266,7 +268,7 @@ public abstract class Base<T> extends AppCompatActivity implements
     public abstract int layoutId();
 
     /**
-     * 初始化完成后执行的方法
+     * Set up your fragment ui, which exactly like you did in {@link #onCreate(Bundle)} with inflated view
      *
      * @param saveBundle
      */
@@ -457,9 +459,9 @@ public abstract class Base<T> extends AppCompatActivity implements
     private long exitTime;
 
     /**
-     * 带有确认的退出，需要的时候，在onBackPressed中调用
+     * Finish acitivity with confirm
      *
-     * @return 如果确实退出了, 返回ture
+     * @return return true if activity got be closed.
      */
     protected boolean finishWithConfirm() {
         if (System.currentTimeMillis() - exitTime > 3000) {

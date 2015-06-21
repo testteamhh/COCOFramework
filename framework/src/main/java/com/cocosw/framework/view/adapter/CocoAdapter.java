@@ -8,49 +8,45 @@ import java.util.List;
 public interface CocoAdapter<T> {
 
     /**
-     * 往数据后面加入数据
+     * Append data at the end of the list
      *
      * @param values
      */
     public void add(List<T> values);
 
     /**
-     * 往数据后面加入数据
+     * Append data at the end of the list
      *
      * @param value
      */
     public void add(T value);
 
     /**
-     * 往数据前面加入数据
+     * Append data in the front of the list
      *
      * @param values
      */
     public void append(List<T> values);
 
     /**
-     * 往数据前面加入数据
+     * Append data in the front of the list
      *
      * @param values
      */
     public void append(T values);
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.widget.Adapter#getItem(int)
-     */
+
     T getItem(int i);
 
     void updateList(List<T> values);
 
     /**
-     * 通知UI更新
+     * Notify UI update
      */
     public void notifyDataChange();
 
     /**
-     * 用于设置在List上面有View需要额外监控触摸事件的监控器
+     * Set onclick listener for item view click
      *
      * @param listener
      */

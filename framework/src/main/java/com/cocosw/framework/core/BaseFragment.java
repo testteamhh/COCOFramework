@@ -34,14 +34,24 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 /**
- * BaseFragment integrate loader/bus/butterkniff/CocoQuery/exception handler upon fragment.
+ * Base Fragment, all other fragments in this application should extend from this class.
  *
- * @param <T>
+ * - Loader has been integrated in, so you could simply running async background task in pendingdata()
+ * - ButterKnife integrated
+ * - Safely launch intent
+ *
+ * Created by kai on 19/05/15.
  */
 public abstract class BaseFragment<T> extends Fragment implements
         DialogResultListener, CocoLoader<T>, Base.OnActivityInsetsCallback {
 
+    /**
+     * Loader would not be initialized by fragment.
+     */
     protected static final int NEVER = -1;
+    /**
+     * Loader will be initialized when fragment was created
+     */
     protected static final int ONCREATE = 0;
     protected Context context;
     private T items;
@@ -138,6 +148,10 @@ public abstract class BaseFragment<T> extends Fragment implements
         return getActivity() != null;
     }
 
+    /**
+     * The layout file which will be inflated for this fragment
+     * @return layout file id
+     */
     public abstract int layoutId();
 
     @Override
@@ -298,13 +312,16 @@ public abstract class BaseFragment<T> extends Fragment implements
         // Intentionally left blank
     }
 
+    /**
+     * A handy way of findViewById
+     * @param resourceId view id
+     * @return view instance
+     */
     protected final <E extends View> E view(int resourceId) {
         return (E) v.findViewById(resourceId);
     }
 
-    /**
-     * @param items
-     */
+
     @Override
     public void onLoaderDone(final T items) {
 
@@ -339,25 +356,36 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     /**
-     * 带参数的刷新
+     * Reload current loader with arguments
      *
-     * @param b
+     * @param b arguments
      */
     protected void refresh(final Bundle b) {
         onStartLoading();
         getLoaderManager().restartLoader(this.hashCode(), b, this);
     }
 
+    /**
+     * Is current loader running or not
+     * @return Is current loader running or not
+     */
     protected boolean isLoaderRunning() {
         return loaderRunning;
     }
 
+    /**
+     * Set up your fragment ui, which exactly like you did in {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)} with inflated view
+     *
+     * @param view
+     * @param bundle
+     * @throws Exception
+     */
     protected abstract void setupUI(View view, Bundle bundle) throws Exception;
 
     /**
-     * Show exception
+     * Failback of loader, meaning there is a exception been catched in {@link #pendingData(Bundle)}
      *
-     * @param e
+     * @param e the catch exception in loader
      */
     @Override
     public void showError(final Exception e) {
@@ -427,6 +455,10 @@ public abstract class BaseFragment<T> extends Fragment implements
         return true;
     }
 
+    /**
+     * Safely start a intent without worry activity not found
+     * @param intent the intent try to launch
+     */
     public void startActivitySafely(Intent intent) {
         try {
             super.startActivity(intent);
@@ -437,6 +469,10 @@ public abstract class BaseFragment<T> extends Fragment implements
         }
     }
 
+    /**
+     * Safely start a intent for result without worry activity not found
+     * @param intent the intent try to launch
+     */
     public void startActivityForResultSafely(Intent intent, int requestCode) {
         try {
             super.startActivityForResult(intent, requestCode);
