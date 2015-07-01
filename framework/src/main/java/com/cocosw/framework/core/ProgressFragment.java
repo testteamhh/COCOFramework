@@ -80,23 +80,6 @@ public abstract class ProgressFragment<T> extends BaseFragment<T> {
         setContentView(contentView);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setContentView(layoutId());
-        v = getContentView();
-        ButterKnife.inject(this, v);
-        if (q==null)
-            q= new CocoQuery(v);
-        else
-            q.recycle(v);
-        try {
-            setupUI(v, savedInstanceState);
-        } catch (final Exception e) {
-            ExceptionManager.handle(e, context, this);
-        }
-    }
-
     /**
      * Set the content view to an explicit view. If the content view was installed earlier,
      * the content will be replaced with a new view.
@@ -123,6 +106,23 @@ public abstract class ProgressFragment<T> extends BaseFragment<T> {
             mContentView = view;
         } else {
             throw new IllegalStateException("Can't be used with a custom content view");
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setContentView(layoutId());
+        v = getContentView();
+        ButterKnife.bind(this, v);
+        if (q == null)
+            q = new CocoQuery(v);
+        else
+            q.recycle(v);
+        try {
+            setupUI(v, savedInstanceState);
+        } catch (final Exception e) {
+            ExceptionManager.handle(e, context, this);
         }
     }
 

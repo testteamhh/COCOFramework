@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.framework.R;
-import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ExceptionManager;
@@ -27,7 +26,6 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
-import com.squareup.otto.Bus;
 
 import java.util.List;
 
@@ -54,12 +52,11 @@ public abstract class BaseFragment<T> extends Fragment implements
      */
     protected static final int ONCREATE = 0;
     protected Context context;
-    private T items;
     protected Loader<T> loader;
-    CocoDialog parentDialog;
     protected CocoQuery q;
     protected View v;
-    protected Bus bus = CocoBus.getInstance();
+    CocoDialog parentDialog;
+    private T items;
     private boolean loaderRunning;
 
 
@@ -229,7 +226,7 @@ public abstract class BaseFragment<T> extends Fragment implements
                              final ViewGroup container, final Bundle savedInstanceState) {
         LifecycleDispatcher.get().onFragmentCreateView(this, inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), null);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
         if (q == null)
             q = new CocoQuery(v);
         else
@@ -245,8 +242,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        bus.unregister(this);
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
         v = null;
         q = null;
         loader = null;
@@ -257,7 +253,6 @@ public abstract class BaseFragment<T> extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LifecycleDispatcher.get().onFragmentViewCreated(this, view, savedInstanceState);
-        bus.register(this);
     }
 
     @Override
@@ -450,9 +445,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected boolean hasActionBarBlock() {
-        if (getActionBar() == null || !getActionBar().isShowing())
-            return false;
-        return true;
+        return !(getActionBar() == null || !getActionBar().isShowing());
     }
 
     /**

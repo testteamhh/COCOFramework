@@ -4,27 +4,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialog;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.atermenji.android.iconicdroid.IconicFontDrawable;
-import com.atermenji.android.iconicdroid.icon.Icon;
 import com.cocosw.accessory.views.ViewUtils;
 import com.cocosw.accessory.views.textview.StyledText;
 import com.cocosw.framework.R;
 import com.cocosw.query.AbstractViewQuery;
 import com.cocosw.undobar.UndoBarController;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.typeface.IIcon;
 
 
 public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery> {
@@ -228,11 +226,8 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
     public static class ExtViewQuery extends AbstractViewQuery<ExtViewQuery> {
 
-        Picasso picasso;
-
         public ExtViewQuery(View root) {
             super(root);
-            picasso = Picasso.with(root.getContext());
         }
 
         /**
@@ -248,137 +243,10 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
             return self();
         }
 
-        /**
-         * Load network image to current ImageView with cache
-         *
-         * @param url
-         * @return
-         */
-        public ExtViewQuery image(String url) {
-            if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                picasso.load(url).into((ImageView) view);
-            }
-            return self();
-        }
 
         @Override
-        public ExtViewQuery image(int imgId) {
-            if (view instanceof ImageView) {
-                picasso.load(imgId).into((ImageView) view);
-            }
-            return self();
-        }
-
-        /**
-         * Load network image to current ImageView with cache control
-         *
-         * @param url
-         * @param cache
-         * @return
-         */
-        public ExtViewQuery image(String url, boolean cache) {
-            if (cache) {
-                image(url);
-            } else {
-                picasso.load(url).skipMemoryCache().into((ImageView) view);
-            }
-            return this;
-        }
-
-        /**
-         * Load image to current ImageView
-         *
-         * @param uri
-         * @return
-         */
-        public ExtViewQuery image(Uri uri) {
-            picasso.load(uri).into((ImageView) view);
-            return this;
-        }
-
-        /**
-         * Load image to current ImageView with holder image
-         *
-         * @param uri
-         * @param holder
-         * @return
-         */
-        public ExtViewQuery image(Uri uri, int holder) {
-            picasso.load(uri).placeholder(holder).into((ImageView) view);
-            return self();
-        }
-
-
-        /**
-         * Load network image to current ImageView with holder image
-         *
-         * @param url
-         * @param holder
-         * @return
-         */
-        public ExtViewQuery image(String url, int holder) {
-            if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                picasso.load(url).placeholder(holder).into((ImageView) view);
-            }
-            return self();
-        }
-
-        /**
-         * Load network image to current ImageView with holder image
-         *
-         * @param url
-         * @param holder
-         * @return
-         */
-        public ExtViewQuery image(String url, Drawable holder) {
-            if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                picasso.load(url).placeholder(holder).into((ImageView) view);
-            }
-            return self();
-        }
-
-        /**
-         * Load network image to current ImageView with holder image and fallback image
-         *
-         * @param url
-         * @param holder
-         * @param fallbackId
-         * @return
-         */
-        public ExtViewQuery image(String url, Drawable holder, int fallbackId) {
-            if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                picasso.load(url).error(fallbackId).placeholder(holder).into((ImageView) view);
-            }
-            return self();
-        }
-
-        /**
-         * Load network image to current ImageView with holder image and fallback image
-         *
-         * @param url
-         * @param holder
-         * @param fallbackId
-         * @return
-         */
-        public ExtViewQuery image(String url, Drawable holder, Drawable fallbackId) {
-            if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                picasso.load(url).error(fallbackId).placeholder(holder).into((ImageView) view);
-            }
-            return self();
-        }
-
-
-        /**
-         * Load network image to current ImageView with callback
-         *
-         * @param url
-         * @param callback
-         * @return
-         */
-        public ExtViewQuery image(String url, Callback callback) {
-            if (!TextUtils.isEmpty(url) && view instanceof ImageView) {
-                picasso.load(url).into((ImageView) view, callback);
-            }
+        public ExtViewQuery image(@DrawableRes int imgId) {
+            ((ImageView) view).setImageResource(imgId);
             return self();
         }
 
@@ -389,10 +257,8 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @param color
          * @return
          */
-        public ExtViewQuery image(Icon icon, int color) {
-            IconicFontDrawable draw = new IconicFontDrawable(context, icon);
-            draw.setIconColor(context.getResources().getColor(color));
-            return background(draw);
+        public ExtViewQuery image(IIcon icon, int color) {
+            return background(new IconicsDrawable(context, icon).color(color));
         }
 
         /**
@@ -402,11 +268,10 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @param color
          * @return
          */
-        public ExtViewQuery image(Icon icon, int sizedp, int color) {
-            IconicFontDrawable draw = new IconicFontDrawable(context, icon);
-            draw.setIconColor(context.getResources().getColor(color));
-            draw.setIntrinsicHeight(dip2pixel(sizedp));
-            draw.setIntrinsicWidth(dip2pixel(sizedp));
+        public ExtViewQuery image(IIcon icon, int sizedp, @ColorRes int color) {
+            IconicsDrawable draw = new IconicsDrawable(context, icon);
+            draw.colorRes(color);
+            draw.sizeDp(sizedp);
             return image(draw);
         }
 
@@ -419,12 +284,12 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         public ExtViewQuery iconColor(int color) {
             if (view instanceof ImageView) {
                 Drawable d = ((ImageView) view).getDrawable();
-                if (d != null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable) d).setIconColor(color);
+                if (d != null && d instanceof IconicsDrawable) {
+                    ((IconicsDrawable) d).color(color);
                 }
                 d = (view).getBackground();
-                if (d != null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable) d).setIconColor(color);
+                if (d != null && d instanceof IconicsDrawable) {
+                    ((IconicsDrawable) d).color(color);
                 }
             }
             return self();
@@ -447,7 +312,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @param icon
          * @return
          */
-        public ExtViewQuery leftDrawable(Icon icon) {
+        public ExtViewQuery leftDrawable(IIcon icon) {
             if (view instanceof TextView) {
                 return leftDrawable(icon, -1, -1);
             }
@@ -463,8 +328,8 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         public ExtViewQuery leftDrawableColor(int color) {
             if (view instanceof TextView) {
                 Drawable d = ((TextView) view).getCompoundDrawables()[0];
-                if (d != null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable) d).setIconColor(color);
+                if (d != null && d instanceof IconicsDrawable) {
+                    ((IconicsDrawable) d).color(color);
                 }
             }
             return self();
@@ -490,8 +355,8 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         public ExtViewQuery rightDrawableColor(int color) {
             if (view instanceof TextView) {
                 Drawable d = ((TextView) view).getCompoundDrawables()[2];
-                if (d != null && d instanceof IconicFontDrawable) {
-                    ((IconicFontDrawable) d).setIconColor(color);
+                if (d != null && d instanceof IconicsDrawable) {
+                    ((IconicsDrawable) d).color(color);
                 }
             }
             return self();
@@ -513,21 +378,17 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @param icon
          * @return
          */
-        public ExtViewQuery leftDrawable(Icon icon, int sizedp, int padding) {
+        public ExtViewQuery leftDrawable(IIcon icon, int sizedp, int padding) {
             if (view instanceof TextView) {
-                IconicFontDrawable draw = new IconicFontDrawable(context, icon);
-                draw.setIconColor((((TextView) view).getCurrentTextColor()));
+                IconicsDrawable draw = new IconicsDrawable(context, icon);
+                draw.color((((TextView) view).getCurrentTextColor()));
                 if (padding < 0)
-                    padding = dip2pixel(8);
-                else
-                    padding = dip2pixel(padding);
-                draw.setIconPadding(padding);
+                    padding = 8;
+                draw.paddingDp(padding);
                 if (sizedp > 0) {
-                    draw.setIntrinsicHeight(dip2pixel(sizedp));
-                    draw.setIntrinsicWidth(dip2pixel(sizedp));
+                    draw.sizeDp(sizedp);
                 } else {
-                    draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
-                    draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
+                    draw.sizeDp((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(draw, ds[1], ds[2], ds[3]);
@@ -543,7 +404,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @param icon
          * @return
          */
-        public ExtViewQuery rightDrawable(Icon icon) {
+        public ExtViewQuery rightDrawable(IIcon icon) {
             if (view instanceof TextView) {
                 return rightDrawable(icon, -1, -1);
             }
@@ -557,23 +418,18 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
          * @param icon
          * @return
          */
-        public ExtViewQuery rightDrawable(Icon icon, int sizedp, int padding) {
+        public ExtViewQuery rightDrawable(IIcon icon, int sizedp, int padding) {
             if (view instanceof TextView) {
-                IconicFontDrawable draw = new IconicFontDrawable(context, icon);
-                draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
-                draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
-                draw.setIconColor((((TextView) view).getCurrentTextColor()));
+                IconicsDrawable draw = new IconicsDrawable(context, icon);
+                draw.sizeDp((int) ((TextView) view).getTextSize());
+                draw.color((((TextView) view).getCurrentTextColor()));
                 if (padding < 0)
-                    padding = dip2pixel(8);
-                else
-                    padding = dip2pixel(padding);
-                draw.setIconPadding(padding);
+                    padding = 8;
+                draw.paddingDp(padding);
                 if (sizedp > 0) {
-                    draw.setIntrinsicHeight(dip2pixel(sizedp));
-                    draw.setIntrinsicWidth(dip2pixel(sizedp));
+                    draw.sizeDp(sizedp);
                 } else {
-                    draw.setIntrinsicWidth((int) ((TextView) view).getTextSize());
-                    draw.setIntrinsicHeight((int) ((TextView) view).getTextSize());
+                    draw.sizeDp((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(ds[0], ds[1], draw, ds[3]);

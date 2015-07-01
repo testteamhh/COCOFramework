@@ -26,7 +26,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Project: ToDoList
@@ -34,7 +34,7 @@ import butterknife.InjectView;
  */
 public class PopularList extends PagedListFragment<Bean.Shot, GridView> implements SwipeRefreshLayout.OnRefreshListener {
 
-    @InjectView(R.id.swipe)
+    @Bind(R.id.swipe)
     SwipeRefreshLayout mSwipe;
 
     @Inject
@@ -42,7 +42,7 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
 
     @Inject
     PaletteManager pm;
-    @InjectView(R.id.toolbar_actionbar)
+    @Bind(R.id.toolbar_actionbar)
     Toolbar mToolbarActionbar;
 
     @Override
@@ -95,6 +95,22 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
         );
     }
 
+    @Override
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+        MenuItem item = menu.add(Menu.NONE, 2, Menu.NONE, R.string.about);
+        MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_NEVER);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 2:
+                q.alert(R.string.about, R.string.about);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     class ShotAdapter extends TypeListAdapter<Bean.Shot> {
 
         public ShotAdapter(Context context, List<Bean.Shot> items) {
@@ -112,22 +128,5 @@ public class PopularList extends PagedListFragment<Bean.Shot, GridView> implemen
             textView(2).setText(item.player.name);
             pm.updatePalette(picasso, item.image_teaser_url, imageView(1), textView(0), view(3));
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        MenuItem item = menu.add(Menu.NONE, 2, Menu.NONE, R.string.about);
-        MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_NEVER);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 2:
-                q.alert(R.string.about, R.string.about);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

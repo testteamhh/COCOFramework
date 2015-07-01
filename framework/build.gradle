@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/android-library.gradle'
 apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.gradle'
 
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.android.support:support-v4:22.1.1'
-    compile 'com.cocosw.accessory:utils:0.+'
-    compile 'com.cocosw.accessory:views:0.+'
-    compile 'com.cocosw.accessory:adapter:0.+'
-    compile 'com.cocosw.accessory:connectivity:0.+'
-    compile 'com.cocosw:query:0.+'
-    compile 'com.cocosw:lifecycle:0.+'
-    compile 'com.cocosw:undobar:1.+@aar'
-    compile 'com.squareup:otto:1.+'
-    compile 'com.joanzapata.android:base-adapter-helper:1.+'
-    compile 'com.github.kevinsawicki:http-request:5.+'
-    compile 'com.google.code.gson:gson:2.+'
-    compile 'com.squareup.dagger:dagger:1.+'
-    compile 'com.squareup.dagger:dagger-compiler:1.+'
-    compile 'com.squareup.okhttp:okhttp:2.+'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.+'
-    compile 'com.squareup.picasso:picasso:2.+'
-    compile 'com.jakewharton:butterknife:6.+'
-    compile 'com.jakewharton.timber:timber:3.+'
-    compile 'com.iconic:iconic:0.1@aar'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.cocosw.accessory:utils:0.7.7'
+    compile 'com.cocosw.accessory:views:0.9.3'
+    compile 'com.cocosw.accessory:adapter:0.2.1'
+    compile 'com.cocosw.accessory:connectivity:0.6.0'
+    compile 'com.cocosw:query:0.2.2'
+    compile 'com.cocosw:lifecycle:0.1.2'
+    compile 'com.cocosw:undobar:1.8.1@aar'
+    compile 'com.github.kevinsawicki:http-request:5.6'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.squareup.dagger:dagger:1.2.2'
+    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
+    compile 'com.jakewharton:butterknife:7.0.0'
+    compile 'com.jakewharton.timber:timber:3.1.0'
+    compile 'com.mikepenz:iconics:1.2.0@aar'
+    //compile 'com.iconic:iconic:0.1@aar'
 }
-

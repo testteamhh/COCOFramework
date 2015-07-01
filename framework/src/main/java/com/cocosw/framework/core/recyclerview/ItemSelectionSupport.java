@@ -18,33 +18,56 @@ import static android.os.Build.VERSION_CODES.HONEYCOMB;
 
 class ItemSelectionSupport {
     public static final int INVALID_POSITION = -1;
-
-    public static enum ChoiceMode {
-        NONE,
-        SINGLE,
-        MULTIPLE
-    }
-
-    private final RecyclerView mRecyclerView;
-    private final TouchListener mTouchListener;
-
-    private ChoiceMode mChoiceMode = ChoiceMode.NONE;
-    private CheckedStates mCheckedStates;
-    private CheckedIdStates mCheckedIdStates;
-    private int mCheckedCount;
-
     private static final String STATE_KEY_CHOICE_MODE = "choiceMode";
     private static final String STATE_KEY_CHECKED_STATES = "checkedStates";
     private static final String STATE_KEY_CHECKED_ID_STATES = "checkedIdStates";
     private static final String STATE_KEY_CHECKED_COUNT = "checkedCount";
-
     private static final int CHECK_POSITION_SEARCH_DISTANCE = 20;
+    private final RecyclerView mRecyclerView;
+    private final TouchListener mTouchListener;
+    private ChoiceMode mChoiceMode = ChoiceMode.NONE;
+    private CheckedStates mCheckedStates;
+    private CheckedIdStates mCheckedIdStates;
+    private int mCheckedCount;
 
     private ItemSelectionSupport(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
 
         mTouchListener = new TouchListener(recyclerView);
         recyclerView.addOnItemTouchListener(mTouchListener);
+    }
+
+    public static ItemSelectionSupport addTo(RecyclerView recyclerView) {
+        ItemSelectionSupport itemSelectionSupport = from(recyclerView);
+        if (itemSelectionSupport == null) {
+            itemSelectionSupport = new ItemSelectionSupport(recyclerView);
+            recyclerView.setTag(R.id.item_selection_support, itemSelectionSupport);
+        } else {
+            // TODO: Log warning
+        }
+
+        return itemSelectionSupport;
+    }
+
+    public static void removeFrom(RecyclerView recyclerView) {
+        final ItemSelectionSupport itemSelection = from(recyclerView);
+        if (itemSelection == null) {
+            // TODO: Log warning
+            return;
+        }
+
+        itemSelection.clearChoices();
+
+        recyclerView.removeOnItemTouchListener(itemSelection.mTouchListener);
+        recyclerView.setTag(R.id.item_selection_support, null);
+    }
+
+    public static ItemSelectionSupport from(RecyclerView recyclerView) {
+        if (recyclerView == null) {
+            return null;
+        }
+
+        return (ItemSelectionSupport) recyclerView.getTag(R.id.item_selection_support);
     }
 
     private void updateOnScreenCheckedViews() {
@@ -342,40 +365,25 @@ class ItemSelectionSupport {
         // TODO confirm ids here
     }
 
-    public static ItemSelectionSupport addTo(RecyclerView recyclerView) {
-        ItemSelectionSupport itemSelectionSupport = from(recyclerView);
-        if (itemSelectionSupport == null) {
-            itemSelectionSupport = new ItemSelectionSupport(recyclerView);
-            recyclerView.setTag(R.id.item_selection_support, itemSelectionSupport);
-        } else {
-            // TODO: Log warning
-        }
-
-        return itemSelectionSupport;
-    }
-
-    public static void removeFrom(RecyclerView recyclerView) {
-        final ItemSelectionSupport itemSelection = from(recyclerView);
-        if (itemSelection == null) {
-            // TODO: Log warning
-            return;
-        }
-
-        itemSelection.clearChoices();
-
-        recyclerView.removeOnItemTouchListener(itemSelection.mTouchListener);
-        recyclerView.setTag(R.id.item_selection_support, null);
-    }
-
-    public static ItemSelectionSupport from(RecyclerView recyclerView) {
-        if (recyclerView == null) {
-            return null;
-        }
-
-        return (ItemSelectionSupport) recyclerView.getTag(R.id.item_selection_support);
+    public enum ChoiceMode {
+        NONE,
+        SINGLE,
+        MULTIPLE
     }
 
     private static class CheckedStates extends SparseBooleanArray implements Parcelable {
+        public static final Parcelable.Creator<CheckedStates> CREATOR
+                = new Parcelable.Creator<CheckedStates>() {
+            @Override
+            public CheckedStates createFromParcel(Parcel in) {
+                return new CheckedStates(in);
+            }
+
+            @Override
+            public CheckedStates[] newArray(int size) {
+                return new CheckedStates[size];
+            }
+        };
         private static final int FALSE = 0;
         private static final int TRUE = 1;
 
@@ -409,22 +417,22 @@ class ItemSelectionSupport {
                 parcel.writeInt(valueAt(i) ? TRUE : FALSE);
             }
         }
-
-        public static final Parcelable.Creator<CheckedStates> CREATOR
-                = new Parcelable.Creator<CheckedStates>() {
-            @Override
-            public CheckedStates createFromParcel(Parcel in) {
-                return new CheckedStates(in);
-            }
-
-            @Override
-            public CheckedStates[] newArray(int size) {
-                return new CheckedStates[size];
-            }
-        };
     }
 
     private static class CheckedIdStates extends LongSparseArray<Integer> implements Parcelable {
+        public static final Creator<CheckedIdStates> CREATOR
+                = new Creator<CheckedIdStates>() {
+            @Override
+            public CheckedIdStates createFromParcel(Parcel in) {
+                return new CheckedIdStates(in);
+            }
+
+            @Override
+            public CheckedIdStates[] newArray(int size) {
+                return new CheckedIdStates[size];
+            }
+        };
+
         public CheckedIdStates() {
             super();
         }
@@ -455,19 +463,6 @@ class ItemSelectionSupport {
                 parcel.writeInt(valueAt(i));
             }
         }
-
-        public static final Creator<CheckedIdStates> CREATOR
-                = new Creator<CheckedIdStates>() {
-            @Override
-            public CheckedIdStates createFromParcel(Parcel in) {
-                return new CheckedIdStates(in);
-            }
-
-            @Override
-            public CheckedIdStates[] newArray(int size) {
-                return new CheckedIdStates[size];
-            }
-        };
     }
 
     private class TouchListener extends ClickItemTouchListener {
@@ -528,6 +523,11 @@ class ItemSelectionSupport {
         @Override
         boolean performItemLongClick(RecyclerView parent, View view, int position, long id) {
             return true;
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
         }
     }
 }

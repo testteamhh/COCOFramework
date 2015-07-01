@@ -1,7 +1,7 @@
 package com.cocosw.framework.loader;
 
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.app.LoaderManager;
 
 public interface CocoLoader<T> extends LoaderManager.LoaderCallbacks<T>
 {

@@ -30,7 +30,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -44,7 +43,6 @@ import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.accessory.utils.UIUtils;
 import com.cocosw.accessory.views.QuickReturn;
 import com.cocosw.framework.R;
-import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ExceptionManager;
@@ -54,7 +52,6 @@ import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.LifecycleDispatcher;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoListener;
-import com.squareup.otto.Bus;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -72,16 +69,29 @@ import butterknife.ButterKnife;
 public abstract class Base<T> extends AppCompatActivity implements
         DialogResultListener, CocoLoader<T> {
 
+    private static final String TAG_RETAINED_STATE_FRAGMENT = "_retainedStateFragment";
+    /**
+     * Flag for a window belonging to an activity that responds to {@link KeyEvent#KEYCODE_MENU}
+     * and therefore needs a Menu key. For devices where Menu is a physical button this flag is
+     * ignored, but on devices where the Menu key is drawn in software it may be hidden unless
+     * this flag is set.
+     * <p/>
+     * (Note that Action Bars, when available, are the preferred way to offer additional
+     * functions otherwise accessed via an options menu.)
+     * <p/>
+     * {@hide}
+     */
+    private static final int FLAG_NEEDS_MENU_KEY = 0x08000000;
     protected CocoQuery q;
+    RetainedFragment retainedFragment;
     private ThrowableLoader<T> loader;
-    protected Bus bus = CocoBus.getInstance();
     private HashSet<OnActivityInsetsCallback> mInsetCallbacks;
     private SystemBarTintManager.SystemBarConfig mInsets;
     private SystemBarTintManager tintManager;
-    RetainedFragment retainedFragment;
     private QuickReturn qr;
-
-    private static final String TAG_RETAINED_STATE_FRAGMENT = "_retainedStateFragment";
+    private ProgressDialog dialog;
+    private boolean mCompatMenuKeyEnabled = false;
+    private long exitTime;
 
     @Override
     public void onDialogResult(final int requestCode, final int resultCode,
@@ -115,7 +125,7 @@ public abstract class Base<T> extends AppCompatActivity implements
             initTint(tintManager);
         }
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         // use Retained Fragment to handle runtime changes
         if (hasRetainData()) {
             FragmentManager fm = getSupportFragmentManager();
@@ -166,7 +176,6 @@ public abstract class Base<T> extends AppCompatActivity implements
         tintManager.setStatusBarTintResource(statusBarColor);
         tintManager.setNavigationBarTintResource(navigationBarColor);
     }
-
 
     protected SystemBarTintManager getTintManager() {
         return tintManager;
@@ -274,8 +283,6 @@ public abstract class Base<T> extends AppCompatActivity implements
      */
     protected abstract void init(Bundle saveBundle) throws Exception;
 
-    private ProgressDialog dialog;
-
     /**
      * Restart current activity
      */
@@ -308,7 +315,6 @@ public abstract class Base<T> extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        bus.register(this);
         supportInvalidateOptionsMenu();
         LifecycleDispatcher.get().onActivityStarted(this);
     }
@@ -321,22 +327,6 @@ public abstract class Base<T> extends AppCompatActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    /**
-     * Flag for a window belonging to an activity that responds to {@link KeyEvent#KEYCODE_MENU}
-     * and therefore needs a Menu key. For devices where Menu is a physical button this flag is
-     * ignored, but on devices where the Menu key is drawn in software it may be hidden unless
-     * this flag is set.
-     * <p/>
-     * (Note that Action Bars, when available, are the preferred way to offer additional
-     * functions otherwise accessed via an options menu.)
-     * <p/>
-     * {@hide}
-     */
-    private static final int FLAG_NEEDS_MENU_KEY = 0x08000000;
-
-    private boolean mCompatMenuKeyEnabled = false;
 
     /**
      * Enable the compatibility menu button on devices that don't have
@@ -394,16 +384,13 @@ public abstract class Base<T> extends AppCompatActivity implements
         getSupportLoaderManager().restartLoader(this.hashCode(), new Bundle(), this);
     }
 
-
     protected final <E extends View> E view(int resourceId) {
         return (E) findViewById(resourceId);
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
-        bus.unregister(this);
         LifecycleDispatcher.get().onActivityStopped(this);
     }
 
@@ -412,7 +399,6 @@ public abstract class Base<T> extends AppCompatActivity implements
         super.onSaveInstanceState(outState);
         LifecycleDispatcher.get().onActivitySaveInstanceState(this, outState);
     }
-
 
     protected void onStartLoading() {
 
@@ -455,8 +441,6 @@ public abstract class Base<T> extends AppCompatActivity implements
             dialog.dismiss();
         }
     }
-
-    private long exitTime;
 
     /**
      * Finish acitivity with confirm
@@ -516,10 +500,6 @@ public abstract class Base<T> extends AppCompatActivity implements
         setInsetTopAlpha(255);
     }
 
-    protected static interface OnActivityInsetsCallback {
-        public void onInsetsChanged(@NonNull SystemBarTintManager.SystemBarConfig insets);
-    }
-
     protected boolean hasRetainData() {
         return true;
     }
@@ -562,6 +542,10 @@ public abstract class Base<T> extends AppCompatActivity implements
 
     protected Object load(Object obj) {
         return obj = load(obj.getClass().getName());
+    }
+
+    protected interface OnActivityInsetsCallback {
+        void onInsetsChanged(@NonNull SystemBarTintManager.SystemBarConfig insets);
     }
 
 }

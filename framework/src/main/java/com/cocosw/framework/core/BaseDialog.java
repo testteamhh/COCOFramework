@@ -15,12 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.cocosw.framework.app.CocoBus;
 import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
-import com.squareup.otto.Bus;
 
 import butterknife.ButterKnife;
 
@@ -47,7 +45,6 @@ public abstract class BaseDialog<T> extends DialogFragment implements
      */
     private static final String ARG_REQUEST_CODE = "requestCode";
 
-    protected Bus bus = CocoBus.getInstance();
 
     protected Context context;
     protected View v;
@@ -56,6 +53,58 @@ public abstract class BaseDialog<T> extends DialogFragment implements
     private ThrowableLoader<T> loader;
 
     private boolean result = false;
+
+    public static void show(final FragmentManager fm, final DialogFragment d) {
+
+        final FragmentTransaction ft = fm.beginTransaction();
+        final Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        d.show(ft, null);
+    }
+
+    public static void showForResult(final FragmentManager fm,
+                                     final DialogFragment d, final int requestCode) {
+
+        final FragmentTransaction ft = fm.beginTransaction();
+        final Fragment prev = fm.findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        if (d.getArguments() == null) {
+            d.setArguments(BaseDialog.createArguments(null, null, requestCode));
+        } else {
+            d.getArguments().putInt(BaseDialog.ARG_REQUEST_CODE, requestCode);
+        }
+
+        d.show(ft, null);
+    }
+
+    /**
+     * Create bundle with standard arguments
+     *
+     * @param title
+     * @param message
+     * @param requestCode
+     * @return bundle
+     */
+    protected static Bundle createArguments(final String title,
+                                            final String message, final int requestCode) {
+        final Bundle arguments = new Bundle();
+        arguments.putInt(BaseDialog.ARG_REQUEST_CODE, requestCode);
+        arguments.putString(BaseDialog.ARG_TITLE, title);
+        arguments.putString(BaseDialog.ARG_MESSAGE, message);
+        return arguments;
+    }
+
+    public static void show(final FragmentManager fm, final DialogFragment d,
+                            final Bundle arg) {
+        d.setArguments(arg);
+        BaseDialog.show(fm, d);
+    }
 
     /**
      * Is this fragment usable from the UI-thread
@@ -101,8 +150,7 @@ public abstract class BaseDialog<T> extends DialogFragment implements
                              final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         v = inflater.inflate(layoutId(), container, false);
-        bus.register(this);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
         q = new CocoQuery(getActivity(), v);
         try {
             setupUI(v, savedInstanceState);
@@ -112,56 +160,9 @@ public abstract class BaseDialog<T> extends DialogFragment implements
         return v;
     }
 
-    public static void show(final FragmentManager fm, final DialogFragment d) {
-
-        final FragmentTransaction ft = fm.beginTransaction();
-        final Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        d.show(ft, null);
-    }
-
-    public static void showForResult(final FragmentManager fm,
-                                     final DialogFragment d, final int requestCode) {
-
-        final FragmentTransaction ft = fm.beginTransaction();
-        final Fragment prev = fm.findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        if (d.getArguments() == null) {
-            d.setArguments(BaseDialog.createArguments(null, null, requestCode));
-        } else {
-            d.getArguments().putInt(BaseDialog.ARG_REQUEST_CODE, requestCode);
-        }
-
-        d.show(ft, null);
-    }
-
-
     public abstract int layoutId();
 
     protected abstract void setupUI(View view, Bundle bundle) throws Exception;
-
-    /**
-     * Create bundle with standard arguments
-     *
-     * @param title
-     * @param message
-     * @param requestCode
-     * @return bundle
-     */
-    protected static Bundle createArguments(final String title,
-                                            final String message, final int requestCode) {
-        final Bundle arguments = new Bundle();
-        arguments.putInt(BaseDialog.ARG_REQUEST_CODE, requestCode);
-        arguments.putString(BaseDialog.ARG_TITLE, title);
-        arguments.putString(BaseDialog.ARG_MESSAGE, message);
-        return arguments;
-    }
 
     /**
      * Call back to the activity with the dialog result
@@ -210,17 +211,10 @@ public abstract class BaseDialog<T> extends DialogFragment implements
         onResult(Activity.RESULT_OK);
     }
 
-    public static void show(final FragmentManager fm, final DialogFragment d,
-                            final Bundle arg) {
-        d.setArguments(arg);
-        BaseDialog.show(fm, d);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        bus.unregister(this);
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
     }
 
     @Override

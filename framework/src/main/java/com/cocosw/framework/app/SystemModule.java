@@ -2,20 +2,13 @@ package com.cocosw.framework.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.net.Uri;
 import android.os.StatFs;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
-import com.cocosw.framework.log.Log;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.otto.Bus;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.inject.Singleton;
 
@@ -30,7 +23,11 @@ import dagger.Provides;
 
 public class SystemModule {
 
+    private static final String HTTP_CACHE = "coco-http";
+    private static final int MIN_DISK_CACHE_SIZE = 5 * 1024 * 1024; // 5MB
+    private static final int MAX_DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
     private final Application app;
+
 
     public SystemModule(CocoApp app) {
         this.app = app;
@@ -48,13 +45,6 @@ public class SystemModule {
         return app;
     }
 
-
-    @Provides
-    @Singleton
-    Bus provideBus() {
-        return CocoBus.getInstance();
-    }
-
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient(Application app, Cache cache) {
@@ -65,35 +55,9 @@ public class SystemModule {
 
     @Provides
     @Singleton
-    Picasso providePicasso(Application app, OkHttpClient client, com.squareup.picasso.Cache cache) {
-        return new Picasso.Builder(app)
-                .downloader(new OkHttpDownloader(client))
-                .memoryCache(cache)
-                .listener(new Picasso.Listener() {
-                    @Override
-                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
-                        Log.d("Failed to load image: %s", uri);
-                    }
-                })
-                .build();
-    }
-
-    private static final String HTTP_CACHE = "coco-http";
-    private static final int MIN_DISK_CACHE_SIZE = 5 * 1024 * 1024; // 5MB
-    private static final int MAX_DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
-
-    @Provides
-    @Singleton
     Cache provideCache(Application app) {
         return new Cache(createDefaultCacheDir(app), calculateDiskCacheSize(createDefaultCacheDir(app)));
     }
-
-    @Provides
-    @Singleton
-    com.squareup.picasso.Cache providePicassoCache(Application app) {
-        return new LruCache(app);
-    }
-
 
     private File createDefaultCacheDir(Context context) {
         File cache = new File(context.getApplicationContext().getCacheDir(), HTTP_CACHE);

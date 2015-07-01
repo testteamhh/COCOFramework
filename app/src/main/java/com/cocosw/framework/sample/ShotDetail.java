@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Project: ToDoList
@@ -32,23 +32,21 @@ import butterknife.InjectView;
 public class ShotDetail extends BaseFragment implements ObservableScrollView.OnScrollChangedListener, View.OnClickListener {
 
     public static final String TODO = "todo";
-    @InjectView(R.id.description)
+    @Bind(R.id.description)
     TextView mDescription;
-    @InjectView(R.id.scrollview)
+    @Bind(R.id.scrollview)
     StickyScrollView mScrollview;
-    @InjectView(R.id.header_image)
+    @Bind(R.id.header_image)
     BackdropImageView mHeader;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @InjectView(R.id.backdrop_toolbar)
+    @Bind(R.id.backdrop_toolbar)
     FrameLayout mBackdropToolbar;
-    private ToolbarHelper abhelper;
-
     @Inject
     Picasso picasso;
-
     @Inject
     PaletteManager pm;
+    private ToolbarHelper abhelper;
 
     @Override
     public int layoutId() {

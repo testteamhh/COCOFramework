@@ -112,10 +112,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':framework')
     debugCompile project(':debug')
-    //  compile 'com.melnykov:floatingactionbutton:1.0.3'
-    compile 'com.crashlytics.android:crashlytics:1.+'
-    compile 'org.markdownj:markdownj-core:+'
-    //    compile 'com.balysv:material-ripple:+@aar'
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
+    compile 'org.markdownj:markdownj-core:0.4'
     compile project(':debug')
     compile 'com.android.support:palette-v7:22.2.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

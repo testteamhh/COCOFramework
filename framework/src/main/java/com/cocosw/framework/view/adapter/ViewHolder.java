@@ -13,14 +13,14 @@ import butterknife.ButterKnife;
 
 public class ViewHolder {
 
-    protected CocoQuery q;
     public View contentView;
+    protected CocoQuery q;
     int position;
     ViewGroup parent;
 
     public ViewHolder(final View view) {
         setContentView(view);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     private void setContentView(View contentView) {

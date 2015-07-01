@@ -11,10 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -27,7 +25,6 @@ import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.exception.CocoException;
 import com.cocosw.framework.exception.ExceptionManager;
 import com.cocosw.framework.loader.ThrowableLoader;
-import com.cocosw.framework.log.Log;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.framework.view.adapter.CocoAdapter;
 
@@ -43,24 +40,21 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
 
 
     private final static String DATA = "_adatperview_data";
+    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     protected List<T> items;
     protected boolean listShown;
-
+    protected RecyclerView.LayoutManager mLayoutManager;
     View emptyView;
     Rect mInsets;
     /**
      * The actual adapter without any wrapper
      */
     RecyclerView.Adapter mAdapter;
-
-
     private A mListContainer;
     private View progressBar;
     private RecyclerView.OnScrollListener externalListener;
-    protected RecyclerView.LayoutManager mLayoutManager;
     private LayoutManagerType mCurrentLayoutManagerType;
     private int SPAN_COUNT = 2;
-    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
 
     protected void setOnScrollListener(@NonNull final RecyclerView.OnScrollListener listener) {
         externalListener = listener;
@@ -178,12 +172,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         }
     }
 
-    protected enum LayoutManagerType {
-        GRID_LAYOUT_MANAGER,
-        LINEAR_LAYOUT_MANAGER, STAGGEREDGRID_LAYOUT_MANAGER,
-
-    }
-
     /**
      * Set RecyclerView's LayoutManager to the one given.
      *
@@ -228,7 +216,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         emptyView = null;
         super.onDestroyView();
     }
-
 
     /**
      * Handle item click event
@@ -289,8 +276,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
     @Override
     public abstract List<T> pendingData(Bundle args) throws Exception;
 
-
-
     @Override
     public void refresh(final Bundle b) {
         if (!isUsable()) {
@@ -311,7 +296,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
     protected boolean hideListWhenRefreshing() {
         return true;
     }
-
 
     /**
      * Set list shown or progress bar show
@@ -358,6 +342,11 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         try {
             mListContainer = view(R.id.list);
             mListContainer.addOnItemTouchListener(new ClickItemTouchListener(mListContainer) {
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
 
                 @Override
                 boolean performItemClick(RecyclerView parent, View view, int position, long id) {
@@ -418,8 +407,6 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         }
     }
 
-
-
     protected void constractAdapter() throws Exception {
         mAdapter = (RecyclerView.Adapter) createAdapter(items);
         getList().setAdapter(wrapperAdapter(mAdapter));
@@ -446,12 +433,10 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         getAdapter().updateList(items);
     }
 
-
     protected RecyclerViewFragment<T, A> show(final View view) {
         ViewUtils.setGone(view, false);
         return this;
     }
-
 
     /**
      * Set the list to be shown
@@ -460,10 +445,16 @@ public abstract class RecyclerViewFragment<T, A extends RecyclerView> extends Ba
         setListShown(true);
     }
 
-
     @Override
     protected int getLoaderOn() {
         return BaseFragment.ONCREATE;
+    }
+
+
+    protected enum LayoutManagerType {
+        GRID_LAYOUT_MANAGER,
+        LINEAR_LAYOUT_MANAGER, STAGGEREDGRID_LAYOUT_MANAGER,
+
     }
 
 }

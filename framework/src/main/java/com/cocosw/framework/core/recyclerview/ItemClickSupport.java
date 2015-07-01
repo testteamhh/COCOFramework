@@ -10,6 +10,80 @@ import com.cocosw.framework.R;
 
 public class ItemClickSupport {
 
+    private final RecyclerView mRecyclerView;
+    private final TouchListener mTouchListener;
+    private OnItemClickListener mItemClickListener;
+    private OnItemLongClickListener mItemLongClickListener;
+
+
+    private ItemClickSupport(RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
+
+
+        mTouchListener = new TouchListener(recyclerView);
+        recyclerView.addOnItemTouchListener(mTouchListener);
+    }
+
+    public static ItemClickSupport addTo(RecyclerView recyclerView) {
+        ItemClickSupport itemClickSupport = from(recyclerView);
+        if (itemClickSupport == null) {
+            itemClickSupport = new ItemClickSupport(recyclerView);
+            recyclerView.setTag(R.id.list_item_click_support, itemClickSupport);
+        } else {
+            // TODO: Log warning
+        }
+
+
+        return itemClickSupport;
+    }
+
+    public static void removeFrom(RecyclerView recyclerView) {
+        final ItemClickSupport itemClickSupport = from(recyclerView);
+        if (itemClickSupport == null) {
+            // TODO: Log warning
+            return;
+        }
+
+
+        recyclerView.removeOnItemTouchListener(itemClickSupport.mTouchListener);
+        recyclerView.setTag(R.id.list_item_click_support, null);
+    }
+
+    public static ItemClickSupport from(RecyclerView recyclerView) {
+        if (recyclerView == null) {
+            return null;
+        }
+
+
+        return (ItemClickSupport) recyclerView.getTag(R.id.list_item_click_support);
+    }
+
+    /**
+     * Register a callback to be invoked when an item in the
+     * RecyclerView has been clicked.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mItemClickListener = listener;
+    }
+
+    /**
+     * Register a callback to be invoked when an item in the
+     * RecyclerView has been clicked and held.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        if (!mRecyclerView.isLongClickable()) {
+            mRecyclerView.setLongClickable(true);
+        }
+
+
+        mItemLongClickListener = listener;
+    }
+
+
     /**
      * Interface definition for a callback to be invoked when an item in the
      * RecyclerView has been clicked.
@@ -46,88 +120,6 @@ public class ItemClickSupport {
         boolean onItemLongClick(RecyclerView parent, View view, int position, long id);
     }
 
-
-    private final RecyclerView mRecyclerView;
-    private final TouchListener mTouchListener;
-
-
-    private OnItemClickListener mItemClickListener;
-    private OnItemLongClickListener mItemLongClickListener;
-
-
-    private ItemClickSupport(RecyclerView recyclerView) {
-        mRecyclerView = recyclerView;
-
-
-        mTouchListener = new TouchListener(recyclerView);
-        recyclerView.addOnItemTouchListener(mTouchListener);
-    }
-
-
-    /**
-     * Register a callback to be invoked when an item in the
-     * RecyclerView has been clicked.
-     *
-     * @param listener The callback that will be invoked.
-     */
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mItemClickListener = listener;
-    }
-
-
-    /**
-     * Register a callback to be invoked when an item in the
-     * RecyclerView has been clicked and held.
-     *
-     * @param listener The callback that will be invoked.
-     */
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        if (!mRecyclerView.isLongClickable()) {
-            mRecyclerView.setLongClickable(true);
-        }
-
-
-        mItemLongClickListener = listener;
-    }
-
-
-    public static ItemClickSupport addTo(RecyclerView recyclerView) {
-        ItemClickSupport itemClickSupport = from(recyclerView);
-        if (itemClickSupport == null) {
-            itemClickSupport = new ItemClickSupport(recyclerView);
-            recyclerView.setTag(R.id.list_item_click_support, itemClickSupport);
-        } else {
-            // TODO: Log warning
-        }
-
-
-        return itemClickSupport;
-    }
-
-
-    public static void removeFrom(RecyclerView recyclerView) {
-        final ItemClickSupport itemClickSupport = from(recyclerView);
-        if (itemClickSupport == null) {
-            // TODO: Log warning
-            return;
-        }
-
-
-        recyclerView.removeOnItemTouchListener(itemClickSupport.mTouchListener);
-        recyclerView.setTag(R.id.list_item_click_support, null);
-    }
-
-
-    public static ItemClickSupport from(RecyclerView recyclerView) {
-        if (recyclerView == null) {
-            return null;
-        }
-
-
-        return (ItemClickSupport) recyclerView.getTag(R.id.list_item_click_support);
-    }
-
-
     private class TouchListener extends ClickItemTouchListener {
         TouchListener(RecyclerView recyclerView) {
             super(recyclerView);
@@ -156,6 +148,11 @@ public class ItemClickSupport {
 
 
             return false;
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
         }
     }
 }

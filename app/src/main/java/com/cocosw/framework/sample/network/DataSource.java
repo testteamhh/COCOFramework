@@ -8,7 +8,6 @@ import com.google.gson.JsonParseException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Project: cocoframework
@@ -22,13 +21,6 @@ public class DataSource extends Network {
 
     public static void setApiUrl(String url) {
         APISITE = url;
-    }
-
-    public static class ShotWrap {
-        public int page;
-        public int per_page;
-        public int pages;
-        public ArrayList<Bean.Shot> shots;
     }
 
     public static ShotWrap getShots(long page) {
@@ -51,15 +43,10 @@ public class DataSource extends Network {
         }
     }
 
-    /**
-     * 天气网站专用的request接口,因为返回的数据有结束点的问题
-     *
-     * @param url
-     * @param target
-     * @param <T>
-     * @return
-     */
-    protected static <T extends Object> T request(String url, Class<T> target) {
-        return fromRequest(requestHttp(url, null), target);
+    public static class ShotWrap {
+        public int page;
+        public int per_page;
+        public int pages;
+        public ArrayList<Bean.Shot> shots;
     }
 }

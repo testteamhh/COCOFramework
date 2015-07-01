@@ -8,8 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.jakewharton.u2020.ui.debug.DebugAppContainer;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,9 +43,6 @@ public class DebugWindow extends Activity implements AdapterView.OnItemClickList
                 break;
             case 1:
                 startActivity(new Intent(this, CatLogWindow.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                break;
-            case 2:
-                startActivity(new Intent(this, DebugAppContainer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
         }
         //   hide(this,DebugWindow.class,StandOutWindow.DEFAULT_ID);
