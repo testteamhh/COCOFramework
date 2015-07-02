@@ -15,8 +15,7 @@ import android.view.View;
 import com.cocosw.framework.core.Presenter;
 import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.core.recyclerview.PagedRecyclerViewFragment;
-import com.cocosw.framework.core.recyclerview.RecyclerViewFragment;
-import com.cocosw.framework.log.Log;
+
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.network.DataSource;
 import com.cocosw.framework.sample.utils.PaletteManager;
@@ -28,7 +27,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
+
 
 /**
  * Project: ToDoList
@@ -36,7 +36,7 @@ import butterknife.InjectView;
  */
 public class PopularRecyclerList extends PagedRecyclerViewFragment<Bean.Shot, RecyclerView> implements SwipeRefreshLayout.OnRefreshListener {
 
-    @InjectView(R.id.swipe)
+    @Bind(R.id.swipe)
     SwipeRefreshLayout mSwipe;
 
     @Inject
@@ -44,7 +44,7 @@ public class PopularRecyclerList extends PagedRecyclerViewFragment<Bean.Shot, Re
 
     @Inject
     PaletteManager pm;
-    @InjectView(R.id.toolbar_actionbar)
+    @Bind(R.id.toolbar_actionbar)
     Toolbar mToolbarActionbar;
 
     @Override

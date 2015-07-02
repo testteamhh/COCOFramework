@@ -1,9 +1,12 @@
 package com.cocosw.framework.sample.app;
 
+import android.content.Context;
+
 import com.cocosw.framework.sample.PopularList;
 import com.cocosw.framework.sample.PopularRecyclerList;
 import com.cocosw.framework.sample.ShotDetail;
 import com.cocosw.framework.sample.utils.PaletteManager;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Singleton;
 
@@ -44,5 +47,10 @@ public class DridddleModule {
     @Singleton
     PaletteManager providePaletteManager() {
         return new PaletteManager();
+    }
+
+    @Provides
+    Picasso providePicasso(Context context) {
+        return Picasso.with(context);
     }
 }
