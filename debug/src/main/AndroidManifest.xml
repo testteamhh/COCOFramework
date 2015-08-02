@@ -1,10 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cocosw.framework.debug">
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_LOGS"/>
-
     <application>
 
         <activity android:name="im.dino.dbinspector.activities.DbInspectorActivity">
@@ -15,28 +13,23 @@
         </activity>
 
         <activity android:name="com.github.pedrovgs.lynx.LynxActivity"/>
+
         <activity
             android:name=".DebugWindow"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/Theme.AppCompat.Light"/>
 
         <activity
             android:name=".CatLogWindow"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light" />
-
-        <activity
-            android:name="com.jakewharton.u2020.ui.debug.DebugAppContainer"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light" />
-
+            android:theme="@style/Theme.AppCompat.Light"/>
 
         <activity
             android:name="com.readystatesoftware.notificationlog.LogActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/Theme.AppCompat.Light"/>
 
 
     </application>

@@ -1,7 +1,6 @@
 package com.cocosw.framework.core;
 
 import android.app.Activity;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
@@ -251,13 +250,10 @@ public abstract class AdapterViewFragment<T, A extends AdapterView> extends Base
      */
     protected void updateAdapter() {
         Adapter adapter = mListContainer.getAdapter();
-        if (adapter instanceof HeaderFooterListAdapter) {
-            ((HeaderFooterListAdapter) adapter).getWrappedAdapter().notifyDataSetChanged();
-            return;
-        }
         if (adapter instanceof CocoAdapter) {
             ((CocoAdapter) adapter).notifyDataChange();
-            return;
+        } else if (adapter instanceof HeaderFooterListAdapter) {
+            ((HeaderFooterListAdapter) adapter).getWrappedAdapter().notifyDataSetChanged();
         }
     }
 

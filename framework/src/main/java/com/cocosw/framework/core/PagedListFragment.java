@@ -66,7 +66,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
         final Exception exception = getException(loader);
         onStopLoading();
         if (refresh != null) {
-            MenuItemCompat.setActionView(refresh,null);
+            MenuItemCompat.setActionView(refresh, null);
         }
         if (exception != null) {
             ended.set(true);
@@ -203,7 +203,7 @@ public abstract class PagedListFragment<T, A extends AbsListView> extends ListAd
     protected void onStartLoading() {
         super.onStartLoading();
         if (refresh != null) {
-            MenuItemCompat.setActionView(refresh,R.layout.indeterminate_progress_action);
+            MenuItemCompat.setActionView(refresh, R.layout.indeterminate_progress_action);
         }
     }
 

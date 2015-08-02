@@ -23,7 +23,7 @@ apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.g
 
 
 dependencies {
-    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:support-v4:22.2.1'
     compile 'com.cocosw.accessory:utils:0.7.7'
     compile 'com.cocosw.accessory:views:0.9.3'
     compile 'com.cocosw.accessory:adapter:0.2.1'
