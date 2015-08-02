@@ -388,7 +388,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                 if (sizedp > 0) {
                     draw.sizeDp(sizedp);
                 } else {
-                    draw.sizeDp((int) ((TextView) view).getTextSize());
+                    draw.sizePx((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(draw, ds[1], ds[2], ds[3]);
@@ -421,7 +421,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         public ExtViewQuery rightDrawable(IIcon icon, int sizedp, int padding) {
             if (view instanceof TextView) {
                 IconicsDrawable draw = new IconicsDrawable(context, icon);
-                draw.sizeDp((int) ((TextView) view).getTextSize());
+                draw.sizePx((int) ((TextView) view).getTextSize());
                 draw.color((((TextView) view).getCurrentTextColor()));
                 if (padding < 0)
                     padding = 8;
@@ -429,7 +429,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                 if (sizedp > 0) {
                     draw.sizeDp(sizedp);
                 } else {
-                    draw.sizeDp((int) ((TextView) view).getTextSize());
+                    draw.sizePx((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(ds[0], ds[1], draw, ds[3]);
