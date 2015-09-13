@@ -17,10 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cocosw.accessory.views.ViewUtils;
-import com.cocosw.accessory.views.textview.StyledText;
 import com.cocosw.framework.R;
 import com.cocosw.query.AbstractViewQuery;
-import com.cocosw.undobar.UndoBarController;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
 
@@ -42,28 +40,6 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
 
     public CocoQuery(Context context) {
         super(context);
-    }
-
-
-    public CocoQuery info(final int info) {
-        if (act != null) {
-            UndoBarController.show(act, new StyledText().append(getContext().getResources().getDrawable(android.R.drawable.ic_dialog_info)).append(getContext().getString(info)));
-        }
-        return this;
-    }
-
-    public CocoQuery alert(final int info) {
-        if (act != null) {
-            UndoBarController.show(act, new StyledText().append(getContext().getResources().getDrawable(android.R.drawable.ic_dialog_alert)).append(getContext().getString(info)));
-        }
-        return this;
-    }
-
-    public CocoQuery alert(final CharSequence info) {
-        if (act != null & info != null) {
-            UndoBarController.show(act, new StyledText().append(getContext().getResources().getDrawable(android.R.drawable.ic_dialog_info)).append(info));
-        }
-        return this;
     }
 
 
@@ -388,7 +364,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                 if (sizedp > 0) {
                     draw.sizeDp(sizedp);
                 } else {
-                    draw.sizePx((int) ((TextView) view).getTextSize());
+                    draw.sizeDp((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(draw, ds[1], ds[2], ds[3]);
@@ -421,7 +397,6 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         public ExtViewQuery rightDrawable(IIcon icon, int sizedp, int padding) {
             if (view instanceof TextView) {
                 IconicsDrawable draw = new IconicsDrawable(context, icon);
-                draw.sizePx((int) ((TextView) view).getTextSize());
                 draw.color((((TextView) view).getCurrentTextColor()));
                 if (padding < 0)
                     padding = 8;
@@ -429,7 +404,7 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
                 if (sizedp > 0) {
                     draw.sizeDp(sizedp);
                 } else {
-                    draw.sizePx((int) ((TextView) view).getTextSize());
+                    draw.sizeDp((int) ((TextView) view).getTextSize());
                 }
                 Drawable[] ds = ((TextView) view).getCompoundDrawables();
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(ds[0], ds[1], draw, ds[3]);

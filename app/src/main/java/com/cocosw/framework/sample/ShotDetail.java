@@ -7,17 +7,14 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.cocosw.accessory.views.layout.ObservableScrollView;
 import com.cocosw.accessory.views.layout.StickyScrollView;
 import com.cocosw.accessory.views.widgets.BackdropImageView;
 import com.cocosw.framework.core.BaseFragment;
 import com.cocosw.framework.core.SystemBarTintManager;
 import com.cocosw.framework.sample.network.Bean;
 import com.cocosw.framework.sample.utils.PaletteManager;
-import com.cocosw.framework.toolkit.ToolbarHelper;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +26,7 @@ import butterknife.Bind;
  * Project: ToDoList
  * Created by LiaoKai(soarcn) on 2014/6/12.
  */
-public class ShotDetail extends BaseFragment implements ObservableScrollView.OnScrollChangedListener, View.OnClickListener {
+public class ShotDetail extends BaseFragment implements View.OnClickListener {
 
     public static final String TODO = "todo";
     @Bind(R.id.description)
@@ -46,7 +43,6 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
     Picasso picasso;
     @Inject
     PaletteManager pm;
-    private ToolbarHelper abhelper;
 
     @Override
     public int layoutId() {
@@ -76,10 +72,6 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
         });
         q.v(mDescription).html(todo.description);
 
-        abhelper = new ToolbarHelper(mToolbar, mBackdropToolbar)
-                .image(mHeader, getResources().getColor(R.color.primarycolor)).autoHide(true);
-        //   mBackdropToolbar.setTitle(todo.title);
-        mScrollview.setOnScrollChangedListener(this);
         mToolbar.setNavigationOnClickListener(this);
     }
 
@@ -131,11 +123,6 @@ public class ShotDetail extends BaseFragment implements ObservableScrollView.OnS
     @Override
     protected boolean hasActionBarBlock() {
         return false;
-    }
-
-    @Override
-    public void onScrollChanged(ScrollView who, int l, int t, int oldl, int oldt) {
-        abhelper.onScroll(who, t);
     }
 
     @Override

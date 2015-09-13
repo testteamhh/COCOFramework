@@ -5,7 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -24,8 +24,6 @@ import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.LifecycleDispatcher;
-import com.cocosw.undobar.UndoBarController;
-import com.cocosw.undobar.UndoBarController.UndoListener;
 
 import java.util.List;
 
@@ -392,12 +390,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected void showRefresh(final CocoException e) {
-        new UndoBarController.UndoBar(getActivity()).message(e.getMessage()).listener(new UndoListener() {
-            @Override
-            public void onUndo(Parcelable parcelable) {
-                refresh();
-            }
-        }).style(UndoBarController.RETRYSTYLE).show();
+        Snackbar.make(v, e.getMessage(), Snackbar.LENGTH_LONG);
     }
 
     private Base<?> getBase() {

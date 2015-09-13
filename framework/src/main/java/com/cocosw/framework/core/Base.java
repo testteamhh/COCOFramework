@@ -25,8 +25,8 @@ import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -41,7 +41,6 @@ import android.widget.Toast;
 
 import com.cocosw.accessory.connectivity.NetworkConnectivity;
 import com.cocosw.accessory.utils.UIUtils;
-import com.cocosw.accessory.views.QuickReturn;
 import com.cocosw.framework.R;
 import com.cocosw.framework.app.Injector;
 import com.cocosw.framework.exception.CocoException;
@@ -50,8 +49,6 @@ import com.cocosw.framework.loader.CocoLoader;
 import com.cocosw.framework.loader.ThrowableLoader;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.LifecycleDispatcher;
-import com.cocosw.undobar.UndoBarController;
-import com.cocosw.undobar.UndoBarController.UndoListener;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -88,7 +85,6 @@ public abstract class Base<T> extends AppCompatActivity implements
     private HashSet<OnActivityInsetsCallback> mInsetCallbacks;
     private SystemBarTintManager.SystemBarConfig mInsets;
     private SystemBarTintManager tintManager;
-    private QuickReturn qr;
     private ProgressDialog dialog;
     private boolean mCompatMenuKeyEnabled = false;
     private long exitTime;
@@ -245,13 +241,7 @@ public abstract class Base<T> extends AppCompatActivity implements
     }
 
     protected void showRefresh(final CocoException e) {
-        UndoBarController.show(this, e.getMessage(), new UndoListener() {
-
-            @Override
-            public void onUndo(final Parcelable token) {
-                refresh();
-            }
-        }, UndoBarController.RETRYSTYLE);
+        Snackbar.make(findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
     }
 
     /**
@@ -462,7 +452,7 @@ public abstract class Base<T> extends AppCompatActivity implements
      * UI will be shown when confirm activity finishing, call in finishWithConfirm()
      */
     protected void showExitConfirm() {
-        new UndoBarController.UndoBar(this).message(R.string.confirm_opt_exit).duration(3000).show();
+        //   new UndoBarController.UndoBar(this).message(R.string.confirm_opt_exit).duration(3000).show();
     }
 
     protected void addInsetChangedCallback(OnActivityInsetsCallback callback) {
