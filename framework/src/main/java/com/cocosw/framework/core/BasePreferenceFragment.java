@@ -4,19 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.cocosw.framework.preference.PreferenceFragment;
 import com.cocosw.framework.uiquery.CocoQuery;
 import com.cocosw.lifecycle.LifecycleDispatcher;
 
 /**
  * Preference Fragment
  */
-public abstract class BasePreferenceFragment extends PreferenceFragment implements Base.OnActivityInsetsCallback {
+public abstract class BasePreferenceFragment extends PreferenceFragmentCompat implements Base.OnActivityInsetsCallback {
 
     protected CocoQuery q;
+
+    public static void launch(Activity context, Class<BasePreferenceFragment> pref) {
+        context.startActivity(new Intent(context, SinglePaneActivity.class)
+                .setAction(pref.getName()));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
         // Load the preferences from an XML resource
         addPreferencesFromResource(perferenceXML());
     }
-
 
     protected abstract int perferenceXML();
 
@@ -38,15 +41,8 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
         getActionBar().setTitle(title);
     }
 
-
     protected ActionBar getActionBar() {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
-    }
-
-
-    public static void launch(Activity context, Class<BasePreferenceFragment> pref) {
-        context.startActivity(new Intent(context, SinglePaneActivity.class)
-                .setAction(pref.getName()));
     }
 
     @Override
@@ -79,8 +75,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
     }
 
     private boolean hasActionBarBlock() {
-        if (getActionBar() == null || !getActionBar().isShowing())
-            return false;
-        return true;
+        return false;
     }
 }

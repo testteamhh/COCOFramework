@@ -438,7 +438,7 @@ public abstract class BaseFragment<T> extends Fragment implements
     }
 
     protected boolean hasActionBarBlock() {
-        return !(getActionBar() == null || !getActionBar().isShowing());
+        return false;
     }
 
     /**
