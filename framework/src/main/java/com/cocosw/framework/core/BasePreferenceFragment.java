@@ -23,12 +23,9 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat im
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle bundle, String s) {
         q = new CocoQuery(getActivity());
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(perferenceXML());
+        setPreferencesFromResource(perferenceXML(), s);
     }
 
     protected abstract int perferenceXML();

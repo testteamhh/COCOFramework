@@ -19,6 +19,12 @@
         <item name="colorPrimary">@color/black</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:listSelector">@drawable/standard_selector</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="alertDialogTheme">@style/StyledAlertDialog</item>
+    </style>
+
+    <style name="StyledAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.App.Toolbar" parent="Theme.App">

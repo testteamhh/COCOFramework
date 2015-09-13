@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -42,6 +43,13 @@ public class CocoQuery extends com.cocosw.query.CocoQuery<CocoQuery.ExtViewQuery
         super(context);
     }
 
+
+    public CocoQuery info(final int info) {
+        if (act != null) {
+            Snackbar.make(act.findViewById(android.R.id.content), info, Snackbar.LENGTH_LONG);
+        }
+        return this;
+    }
 
     /**
      * Open a alert dialog with title and message
