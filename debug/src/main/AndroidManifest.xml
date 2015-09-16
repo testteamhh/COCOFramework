@@ -4,34 +4,12 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_LOGS"/>
     <application>
-
         <activity android:name="im.dino.dbinspector.activities.DbInspectorActivity">
             <intent-filter tools:node="removeAll">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.github.pedrovgs.lynx.LynxActivity"/>
-
-        <activity
-            android:name=".DebugWindow"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light"/>
-
-        <activity
-            android:name=".CatLogWindow"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light"/>
-
-        <activity
-            android:name="com.readystatesoftware.notificationlog.LogActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light"/>
-
-
     </application>
 
 </manifest>

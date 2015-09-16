@@ -1,5 +1,7 @@
 package com.cocosw.framework.debug;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,12 +25,13 @@ public class AlarmFragment extends Fragment implements AdapterView.OnItemClickLi
 
     private SingleTypeAdapter<AlarmDatabase.Record> mAdapter;
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.coco_debug_ui_debug_window,container,false);
+        View view = inflater.inflate(android.R.layout.list_content,container,false);
 
-        ListView listview = (ListView) view.findViewById(R.id.listView);
+        ListView listview = (ListView) view.findViewById(android.R.id.list);
 
         final List<AlarmDatabase.Record> list = new AlarmDatabase(getActivity().getContentResolver()).getAllAlarm();
 
